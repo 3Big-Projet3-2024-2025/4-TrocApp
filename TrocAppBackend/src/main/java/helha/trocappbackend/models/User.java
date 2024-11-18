@@ -1,10 +1,13 @@
 package helha.trocappbackend.models;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@Table(name = "app_user") // Changez le nom ici
 public class User {
 
     @Id
@@ -18,26 +21,24 @@ public class User {
     private String address;
     private float rating;
 
-    /*@ManyToMany
-    @JoinTable(
-            name = "USER_EXCHANGE",  // Nom de la table de jonction
-            joinColumns = @JoinColumn(name = "USER_ID"),  // Colonne de clé étrangère pour User
-            inverseJoinColumns = @JoinColumn(name = "EXCHANGE_ID")  // Colonne de clé étrangère pour Exchange
-    )
-    private Set<Exchange> exchanges;  // Liste des échanges auxquels l'utilisateur participe
-
-
-    // Liste des échanges où l'utilisateur est l'initiateur (propose un échange)
-    @OneToMany(mappedBy = "initiator", cascade = CascadeType.ALL)
-    private List<Exchange> exchangesAsInitiator;
-
-    // Liste des échanges où l'utilisateur est le récepteur (accepte un échange)
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
-    private List<Exchange> exchangesAsReceiver;
 
     // Liste des objets détenus par l'utilisateur pour l'échange
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Item> items;*/
+    private List<Item> items;
+
+    @OneToMany(mappedBy = "initiator")
+    private List<Exchange> exchangesAsInitiator;
+
+    @OneToMany(mappedBy = "receiver")
+    private List<Exchange> exchangesAsReceiver;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_role", // Nom de la table de jointure
+            joinColumns = @JoinColumn(name = "user_id"), // Colonne pour la clé étrangère vers User
+            inverseJoinColumns = @JoinColumn(name = "role_id") // Colonne pour la clé étrangère vers Role
+    )
+    private Set<Role> roles; // Un utilisateur peut avoir plusieurs rôles
 
     // Autres attributs, getters, et setters
     public int getId() {
