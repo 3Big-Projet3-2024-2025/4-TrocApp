@@ -24,7 +24,7 @@ public class User {
 
     // Liste des objets détenus par l'utilisateur pour l'échange
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Item> items;
+    private List<Object> objects;
 
     @OneToMany(mappedBy = "initiator")
     private List<Exchange> exchangesAsInitiator;
