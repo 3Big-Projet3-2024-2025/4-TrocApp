@@ -18,7 +18,9 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private String address;
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
     private float rating;
 
 
@@ -81,11 +83,11 @@ public class User {
         this.password = password;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
