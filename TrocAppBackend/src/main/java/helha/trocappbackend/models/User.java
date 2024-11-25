@@ -1,5 +1,6 @@
 package helha.trocappbackend.models;
 
+
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
