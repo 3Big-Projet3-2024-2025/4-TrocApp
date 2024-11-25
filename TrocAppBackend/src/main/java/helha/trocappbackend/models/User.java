@@ -19,13 +19,15 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private String address;
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
     private float rating;
 
 
     // Liste des objets détenus par l'utilisateur pour l'échange
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Object> objects;
+    private List<Item> items;
 
     @OneToMany(mappedBy = "initiator")
     private List<Exchange> exchangesAsInitiator;
@@ -82,11 +84,11 @@ public class User {
         this.password = password;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
