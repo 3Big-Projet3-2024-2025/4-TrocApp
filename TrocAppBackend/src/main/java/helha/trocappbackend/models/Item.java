@@ -14,7 +14,7 @@ public class Item {
     private String name;
     private String description;
     private String photo;
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 //    private int ownerId;
@@ -25,9 +25,11 @@ public class Item {
     @JoinColumn(name = "user_id")
     private User owner;
 
+
+
     // Getters and setters
 
-    public int getId() {
+    /*public int getId() {
         return id;
     }
 

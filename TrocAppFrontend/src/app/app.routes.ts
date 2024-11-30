@@ -5,7 +5,7 @@ import { DetailedViewItemComponent } from './detailed-view-item/detailed-view-it
 export const routes: Routes = [
 
     //Path for user management as admin
-    { path: "admin/users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
+    { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
     //Path for viewing items on a map
     { path: "/viewing-items-map", component: ViewingItemsMapComponent },
     //Path for viewing a detailed item
