@@ -1,14 +1,17 @@
 package helha.trocappbackend.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import java.util.List;
 import java.util.Set;
 
+
 @Entity
-@Table(name = "app_user") // Changez le nom ici
+@Table(name = "app_user")
 public class User {
 
     @Id
@@ -19,8 +22,11 @@ public class User {
     private String lastName;
     private String email;
     private String password;
+
+
     @ManyToOne
     @JoinColumn(name = "address_id")
+    @JsonManagedReference
     private Address address;
     private float rating;
 
@@ -35,7 +41,8 @@ public class User {
     @OneToMany(mappedBy = "receiver")
     private List<Exchange> exchangesAsReceiver;
 
-    @ManyToMany
+    @JsonManagedReference
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "user_role", // Nom de la table de jointure
             joinColumns = @JoinColumn(name = "user_id"), // Colonne pour la clé étrangère vers User
@@ -44,6 +51,18 @@ public class User {
     private Set<Role> roles; // Un utilisateur peut avoir plusieurs rôles
 
     // Autres attributs, getters, et setters
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
     public int getId() {
         return id;
     }
@@ -99,6 +118,8 @@ public class User {
     public void setRating(float rating) {
         this.rating = rating;
     }
+
+
 
     /*public List<Exchange> getExchangesAsInitiator() {
         return exchangesAsInitiator;

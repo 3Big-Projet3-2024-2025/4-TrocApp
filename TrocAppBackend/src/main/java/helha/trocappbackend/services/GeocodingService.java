@@ -8,9 +8,9 @@ import org.springframework.web.client.RestTemplate;
 public class GeocodingService {
 
     private final String GEOCODING_URL = "https://nominatim.openstreetmap.org/search?format=json&q=";
-    private final RestTemplate restTemplate;
+    //private final RestTemplate restTemplate;
 
-    public GeocodingService(RestTemplate restTemplate) {
+    /*public GeocodingService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
@@ -37,5 +37,5 @@ public class GeocodingService {
             object.setLocation(location);  // Set the location in the Object entity
         }
         return object;  // Return the object with the geocoded location
-    }
+    }*/
 }

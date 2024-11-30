@@ -12,19 +12,21 @@ public class Item {
     private String name;
     private String description;
     private String photo;
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-    private int ownerId;
+    private int ownerId;*/
 
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;
 
+
+
     // Getters and setters
 
-    public int getId() {
+    /*public int getId() {
         return id;
     }
 
@@ -78,5 +80,5 @@ public class Item {
 
     public void setOwner(User owner) {
         this.owner = owner;
-    }
+    }*/
 }

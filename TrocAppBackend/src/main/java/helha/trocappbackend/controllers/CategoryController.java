@@ -30,7 +30,7 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.updateCategory(id, category));
     }
 
-    @DeleteMapping("/{id}")
+    /*@DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable int id) {
         try {
             categoryService.deleteCategory(id);
@@ -38,5 +38,5 @@ public class CategoryController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-    }
+    }*/
 }

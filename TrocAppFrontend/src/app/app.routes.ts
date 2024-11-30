@@ -3,5 +3,5 @@ import { UsersManagementComponent } from './users-management/users-management.co
 export const routes: Routes = [
 
     //Path for user management as admin
-    { path: "admin/users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
+    { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
 ];

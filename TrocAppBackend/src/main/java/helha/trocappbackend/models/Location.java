@@ -2,12 +2,12 @@ package helha.trocappbackend.models;
 
 public class Location {
     private double latitude;
-    private double lon;
+    private double longitude;
 
     // Constructor
     public Location(double latitude, double longitude) {
         this.latitude = latitude;
-        this.longitude = lon;
+        this.longitude = longitude;
     }
 
     // Getters and Setters
@@ -20,10 +20,10 @@ public class Location {
     }
 
     public double getLon() {
-        return lon;
+        return longitude;
     }
 
     public void setLon(double lon) {
-        this.lon = lon;
+        this.longitude = lon;
     }
 }
