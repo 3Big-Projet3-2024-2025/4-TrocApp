@@ -1,5 +1,20 @@
 package helha.trocappbackend.controllers;
 
+
+import helha.trocappbackend.models.User;
+import helha.trocappbackend.services.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping(path="/users")
 public class UserController {
     @Autowired
     private IUserService userService;
@@ -42,11 +57,5 @@ public class UserController {
     @DeleteMapping(path = "/{id}")
     public void deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
-        
-    }
-
-    @PostMapping("/{userId}/roles/{roleId}")
-    public User addRoleToUser(@PathVariable int userId, @PathVariable int roleId) {
-        return userService.addRoleToUser(userId, roleId);
     }
 }
