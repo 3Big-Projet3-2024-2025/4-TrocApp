@@ -14,10 +14,14 @@ public class Item {
     private String name;
     private String description;
     private String photo;
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+<<<<<<< HEAD
 //    private int ownerId;
+=======
+    private int ownerId;*/
+>>>>>>> 521b5fb (Frontend + Backend)
 
     private boolean available;
 
@@ -25,9 +29,11 @@ public class Item {
     @JoinColumn(name = "user_id")
     private User owner;
 
+
+
     // Getters and setters
 
-    public int getId() {
+    /*public int getId() {
         return id;
     }
 
@@ -81,6 +87,7 @@ public class Item {
 
     public void setOwner(User owner) {
         this.owner = owner;
+<<<<<<< HEAD
     }
 
     public boolean isAvailable() {
@@ -103,4 +110,7 @@ public class Item {
                 ", owner=" + owner +
                 '}';
     }
+=======
+    }*/
+>>>>>>> 521b5fb (Frontend + Backend)
 }

@@ -10,8 +10,9 @@ import jakarta.persistence.Id;
 import java.util.List;
 import java.util.Set;
 
+
 @Entity
-@Table(name = "app_user") // Changez le nom ici
+@Table(name = "app_user")
 public class User {
 
     @Id
@@ -42,9 +43,8 @@ public class User {
     @OneToMany(mappedBy = "receiver")
     private List<Exchange> exchangesAsReceiver;
 
-    //@JsonManagedReference
-    @JsonIgnoreProperties("roles")
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @JsonManagedReference
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "user_role", // Nom de la table de jointure
             joinColumns = @JoinColumn(name = "user_id"), // Colonne pour la clé étrangère vers User
@@ -129,6 +129,8 @@ public class User {
     public void setRating(float rating) {
         this.rating = rating;
     }
+
+
 
     /*public List<Exchange> getExchangesAsInitiator() {
         return exchangesAsInitiator;
