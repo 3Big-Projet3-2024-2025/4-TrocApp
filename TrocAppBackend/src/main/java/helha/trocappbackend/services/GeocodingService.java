@@ -17,11 +17,12 @@ public class GeocodingService {
 
     private final RestTemplate restTemplate; // Field for HTTP requests
 
+    // Constructor
     public GeocodingService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    // Function transforming the address object into coordinates (longitude and latitute)
+    // Function transforming the address object into coordinates (longitude and latitude)
     public Address geocodeAddress(Address address) {
         String formattedAddress = formatAddress(address); // Address in JSON format
         String apiUrl = String.format("%s?q=%s&format=json", nominatimApiUrl, formattedAddress); // Build the API URL with the Nominatim base URL and the data in JSON format
@@ -42,7 +43,7 @@ public class GeocodingService {
                     double latitude = firstResult.path("lat").asDouble();
                     double longitude = firstResult.path("lon").asDouble();
 
-                    // Set the coordinates (longitude and lagitude)
+                    // Set the coordinates (longitude and latitude)
                     address.setLatitude(latitude);
                     address.setLongitude(longitude);
                 }
@@ -56,7 +57,7 @@ public class GeocodingService {
     }
 
     // Transform Address attributes into a string for JSON format
-    private String formatAddress(Address address) {
+    public String formatAddress(Address address) {
         return address.getStreet() + ", " +
                 address.getNumber() + ", " +
                 address.getCity() + ", " +
