@@ -14,23 +14,44 @@ public class ItemService {
     private ItemRepository itemRepository;
 
     public Item addItem(Item item) {
-        return itemRepository.save(item);
+        try {
+            return itemRepository.save(item);
+        } catch (Exception e) {
+            //e.printStackTrace();
+            throw new RuntimeException("Ajout de item a echoué " + e.getMessage());
+        }
     }
 
     public Item getItem(int id) {
-        Optional<Item> item = itemRepository.findById(id);
-        return item.orElse(null);
+        try {
+            Optional<Item> item = itemRepository.findById(id);
+            return item.orElse(null);
+        } catch (Exception e) {
+            throw new RuntimeException("Get de item a echoué " + e.getMessage());
+        }
     }
 
     public List<Item> getAllItems() {
-        return itemRepository.findAll();
+        try {
+            return itemRepository.findAll();
+        } catch (Exception e) {
+            throw new RuntimeException("Get des items a echoué " + e.getMessage());
+        }
     }
 
     public void deleteItem(int id) {
-        itemRepository.deleteById(id);
+        try {
+            itemRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Suppression de item a echoué " + e.getMessage());
+        }
     }
 
     public Item updateItem(Item item) {
-        return itemRepository.save(item);
+        try {
+            return itemRepository.save(item);
+        } catch (Exception e) {
+            throw new RuntimeException("La mise a jour de item a echoué " + e.getMessage());
+        }
     }
 }
