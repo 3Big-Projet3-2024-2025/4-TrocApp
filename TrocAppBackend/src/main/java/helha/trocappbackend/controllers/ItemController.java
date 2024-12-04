@@ -1,6 +1,8 @@
 package helha.trocappbackend.controllers;
 
+import helha.trocappbackend.models.Category;
 import helha.trocappbackend.models.Item;
+import helha.trocappbackend.repositories.CategoryRepository;
 import helha.trocappbackend.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +14,26 @@ import java.util.List;
 public class ItemController {
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @PostMapping
     public Item addItem(@RequestBody Item item) {
-        return itemService.addItem(item);
+        Item item1 = new Item();
+        item1.setName(item.getName());
+        item1.setDescription(item.getDescription());
+        item1.setAvailable(item.isAvailable());
+        item1.setOwner(item.getOwner());
+        item1.setOwnerId(item.getOwnerId());
+        item1.setPhoto(item.getPhoto());
+        Integer idCategory = item.getCategory().getId();
+        if (idCategory != null) {
+            Category category = categoryRepository.findById(idCategory)
+                    .orElseThrow(() -> new RuntimeException("Category not found"));
+            item1.setCategory(category);
+        }
+        System.out.println("voici l'id category " + idCategory+ "item:"+item+"item1"+item1);
+        return itemService.addItem(item1);
     }
 
 //    @GetMapping("/all")
