@@ -24,7 +24,7 @@ public class ItemController {
         item1.setDescription(item.getDescription());
         item1.setAvailable(item.isAvailable());
         item1.setOwner(item.getOwner());
-        item1.setOwnerId(item.getOwnerId());
+        //item1.setOwnerId(item.getOwnerId());
         item1.setPhoto(item.getPhoto());
         Integer idCategory = item.getCategory().getId();
         if (idCategory != null) {
@@ -32,7 +32,7 @@ public class ItemController {
                     .orElseThrow(() -> new RuntimeException("Category not found"));
             item1.setCategory(category);
         }
-        System.out.println("voici l'id category " + idCategory+ "item:"+item+"item1"+item1);
+        //System.out.println("voici l'id category " + idCategory+ "item:"+item+"item1"+item1);
         return itemService.addItem(item1);
     }
 
