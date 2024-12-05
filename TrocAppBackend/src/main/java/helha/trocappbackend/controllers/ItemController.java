@@ -1,6 +1,5 @@
 package helha.trocappbackend.controllers;
 
-import helha.trocappbackend.models.Category;
 import helha.trocappbackend.models.Item;
 import helha.trocappbackend.repositories.CategoryRepository;
 import helha.trocappbackend.services.ItemService;
