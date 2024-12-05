@@ -1,7 +1,6 @@
 package helha.trocappbackend.serviceTest;
 
 import helha.trocappbackend.models.Category;
-import helha.trocappbackend.models.Item;
 import helha.trocappbackend.repositories.CategoryRepository;
 import helha.trocappbackend.services.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
