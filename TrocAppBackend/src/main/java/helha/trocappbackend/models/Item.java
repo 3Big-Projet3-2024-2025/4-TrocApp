@@ -1,5 +1,6 @@
 package helha.trocappbackend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -16,8 +17,9 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-    private int ownerId;
+//    private int ownerId;
 
+    private boolean available;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -65,13 +67,13 @@ public class Item {
         this.category = category;
     }
 
-    public int getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
-    }
+//    public int getOwnerId() {
+//        return ownerId;
+//    }
+//
+//    public void setOwnerId(int ownerId) {
+//        this.ownerId = ownerId;
+//    }
 
     public User getOwner() {
         return owner;
@@ -79,6 +81,14 @@ public class Item {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     @Override
@@ -89,7 +99,7 @@ public class Item {
                 ", description='" + description + '\'' +
                 ", photo='" + photo + '\'' +
                 ", category=" + category +
-                ", ownerId=" + ownerId +
+               // ", ownerId=" + ownerId +
                 ", owner=" + owner +
                 '}';
     }
