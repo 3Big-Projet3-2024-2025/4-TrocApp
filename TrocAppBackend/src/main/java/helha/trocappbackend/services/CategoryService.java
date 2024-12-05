@@ -1,6 +1,5 @@
 package helha.trocappbackend.services;
 
-import helha.trocappbackend.models.Category;
 import helha.trocappbackend.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
