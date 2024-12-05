@@ -1,0 +1,17 @@
+<h1> Welcome to the detailed view of the selected item</h1>
+
+<h3>Selected Item</h3>
+<table class="table table-striped">
+<tbody>
+  <tr>
+    <td>{{ item.photo }}</td>
+    <td>{{ item.name }}</td>
+    <td>{{ item.description }}</td>
+    <td>{{ item.category }}</td>
+    <td>{{ item.ownerid.getPseudo }}</td>
+    <td>
+      <button class="btn btn-primary" (click)="proposeExchange(item.itemId)">Propose an exchange</button>
+    </td>
+  </tr>
+</tbody>
+</table>
