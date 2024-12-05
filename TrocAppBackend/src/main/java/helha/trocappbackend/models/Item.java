@@ -2,6 +2,10 @@ package helha.trocappbackend.models;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import com.fasterxml.jackson.annotation.JsonIgnore;
+>>>>>>> e25602b (Correction of Item class)
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 =======
 >>>>>>> db6fef4a2f880341729f97cdde25efb8279003b2
@@ -23,8 +27,9 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-    private int ownerId;
+//    private int ownerId;
 
+    private boolean available;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -72,13 +77,13 @@ public class Item {
         this.category = category;
     }
 
-    public int getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
-    }
+//    public int getOwnerId() {
+//        return ownerId;
+//    }
+//
+//    public void setOwnerId(int ownerId) {
+//        this.ownerId = ownerId;
+//    }
 
     public User getOwner() {
         return owner;
@@ -92,6 +97,14 @@ public class Item {
 =======
 >>>>>>> f0339e0 (Modification de la classe Item)
 
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
@@ -100,7 +113,7 @@ public class Item {
                 ", description='" + description + '\'' +
                 ", photo='" + photo + '\'' +
                 ", category=" + category +
-                ", ownerId=" + ownerId +
+               // ", ownerId=" + ownerId +
                 ", owner=" + owner +
                 '}';
     }
