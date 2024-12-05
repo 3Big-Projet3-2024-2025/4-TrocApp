@@ -1,17 +1,7 @@
 package helha.trocappbackend.models;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 import com.fasterxml.jackson.annotation.JsonIgnore;
->>>>>>> e25602b (Correction of Item class)
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-=======
->>>>>>> db6fef4a2f880341729f97cdde25efb8279003b2
-=======
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
->>>>>>> f0339e0 (Modification de la classe Item)
 import jakarta.persistence.*;
 
 
@@ -92,10 +82,6 @@ public class Item {
     public void setOwner(User owner) {
         this.owner = owner;
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> f0339e0 (Modification de la classe Item)
 
     public boolean isAvailable() {
         return available;
@@ -117,9 +103,4 @@ public class Item {
                 ", owner=" + owner +
                 '}';
     }
-<<<<<<< HEAD
-=======
->>>>>>> db6fef4a2f880341729f97cdde25efb8279003b2
-=======
->>>>>>> f0339e0 (Modification de la classe Item)
 }
