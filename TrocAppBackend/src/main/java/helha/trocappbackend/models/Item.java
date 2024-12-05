@@ -1,6 +1,9 @@
 package helha.trocappbackend.models;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+=======
+>>>>>>> db6fef4a2f880341729f97cdde25efb8279003b2
 import jakarta.persistence.*;
 
 
@@ -80,6 +83,7 @@ public class Item {
     public void setOwner(User owner) {
         this.owner = owner;
     }
+<<<<<<< HEAD
 
     @Override
     public String toString() {
@@ -93,4 +97,6 @@ public class Item {
                 ", owner=" + owner +
                 '}';
     }
+=======
+>>>>>>> db6fef4a2f880341729f97cdde25efb8279003b2
 }
