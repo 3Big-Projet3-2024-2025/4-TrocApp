@@ -1,3 +1,13 @@
 import { Routes } from '@angular/router';
+import { UsersManagementComponent } from './users-management/users-management.component';
+import { ViewingItemsMapComponent } from './viewing-items-map/viewing-items-map.component';
+import { DetailedViewItemComponent } from './detailed-view-item/detailed-view-item.component';
+export const routes: Routes = [
 
-export const routes: Routes = [];
+    //Path for user management as admin
+    { path: "admin/users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
+    //Path for viewing items on a map
+    { path: "/viewing-items-map", component: ViewingItemsMapComponent },
+    //Path for viewing a detailed item
+    { path: "/detailed-view-item", component: DetailedViewItemComponent }
+];

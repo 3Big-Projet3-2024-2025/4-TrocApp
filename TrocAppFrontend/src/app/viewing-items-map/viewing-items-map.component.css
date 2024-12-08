@@ -1,0 +1,23 @@
+h1 {
+  text-align: center;
+  background-color: lightblue;
+  color: white;
+  padding: 10px;
+}
+
+div[leaflet] {
+  height: 75%;
+  width: 75%;
+  margin: auto;
+}
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
