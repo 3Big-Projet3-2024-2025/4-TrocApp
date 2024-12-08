@@ -1,6 +1,7 @@
 package helha.trocappbackend.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -24,9 +25,10 @@ public class User {
     private String password;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id")
-    @JsonManagedReference
+    //@JsonManagedReference
+    @JsonIgnoreProperties("users")
     private Address address;
     private float rating;
 
@@ -41,8 +43,9 @@ public class User {
     @OneToMany(mappedBy = "receiver")
     private List<Exchange> exchangesAsReceiver;
 
-    @JsonManagedReference
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    //@JsonManagedReference
+    @JsonIgnoreProperties("roles")
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "user_role", // Nom de la table de jointure
             joinColumns = @JoinColumn(name = "user_id"), // Colonne pour la clé étrangère vers User
@@ -60,9 +63,20 @@ public class User {
         this.roles = roles;
     }
 
+    /*public void addRole(Role role) {
+        this.roles.add(role);
+    }*/
+
     public void addRole(Role role) {
         this.roles.add(role);
+        role.getUsers().add(this);
     }
+
+    public void removeRole(Role role) {
+        this.roles.remove(role);
+        role.getUsers().remove(this);
+    }
+
     public int getId() {
         return id;
     }
