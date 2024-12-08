@@ -1,5 +1,9 @@
 package helha.trocappbackend.models;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -18,8 +22,12 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    @ManyToOne
+
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id")
+    //@JsonManagedReference
+    @JsonIgnoreProperties("users")
     private Address address;
     private float rating;
 
@@ -34,7 +42,9 @@ public class User {
     @OneToMany(mappedBy = "receiver")
     private List<Exchange> exchangesAsReceiver;
 
-    @ManyToMany
+    //@JsonManagedReference
+    @JsonIgnoreProperties("roles")
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "user_role", // Nom de la table de jointure
             joinColumns = @JoinColumn(name = "user_id"), // Colonne pour la clé étrangère vers User
@@ -43,6 +53,29 @@ public class User {
     private Set<Role> roles; // Un utilisateur peut avoir plusieurs rôles
 
     // Autres attributs, getters, et setters
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    /*public void addRole(Role role) {
+        this.roles.add(role);
+    }*/
+
+    public void addRole(Role role) {
+        this.roles.add(role);
+        role.getUsers().add(this);
+    }
+
+    public void removeRole(Role role) {
+        this.roles.remove(role);
+        role.getUsers().remove(this);
+    }
+
     public int getId() {
         return id;
     }
