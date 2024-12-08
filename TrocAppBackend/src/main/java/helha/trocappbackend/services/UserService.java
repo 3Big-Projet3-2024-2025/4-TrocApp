@@ -1,7 +1,9 @@
 package helha.trocappbackend.services;
 
 
+import helha.trocappbackend.models.Role;
 import helha.trocappbackend.models.User;
+import helha.trocappbackend.repositories.RoleRepository;
 import helha.trocappbackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -20,6 +22,9 @@ public class UserService implements IUserService{
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public Page<User> getUsers(Pageable page) {
@@ -62,6 +67,18 @@ public class UserService implements IUserService{
     @Override
     public Optional<User> getUserById(int id) {
         return userRepository.findById(id);  // Retourne un Optional<User>
+    }
+
+    @Override
+    public User addRoleToUser(int userId, int roleId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Utilisateur avec ID " + userId + " introuvable."));
+
+        Role role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new RuntimeException("Rôle avec ID " + roleId + " introuvable."));
+
+        user.addRole(role);
+        return userRepository.save(user);
     }
 
     /*

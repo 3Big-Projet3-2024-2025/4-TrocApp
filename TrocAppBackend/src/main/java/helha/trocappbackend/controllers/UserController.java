@@ -58,4 +58,9 @@ public class UserController {
     public void deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
     }
+
+    @PostMapping("/{userId}/roles/{roleId}")
+    public User addRoleToUser(@PathVariable int userId, @PathVariable int roleId) {
+        return userService.addRoleToUser(userId, roleId);
+    }
 }
