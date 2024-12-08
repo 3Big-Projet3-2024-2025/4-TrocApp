@@ -27,5 +27,5 @@ public interface IUserService {
     Optional<User> getUserById(int id);
 
     // Ajouter un rôle à un utilisateur
-    //public User addRoleToUser(int userId, String role);
+    public User addRoleToUser(int userId, int roleId);
 }

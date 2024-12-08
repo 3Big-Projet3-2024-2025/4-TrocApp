@@ -1,6 +1,7 @@
 package helha.trocappbackend.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -18,8 +19,9 @@ public class Address {
     private double latitude;
     private double longitude;
 
-    @JsonBackReference
+    //@JsonBackReference
     @OneToMany(mappedBy = "address")
+    @JsonIgnoreProperties("address")
     private List<User> users;
 
     public String getStreet() {
