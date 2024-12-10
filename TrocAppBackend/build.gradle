@@ -21,6 +21,8 @@ dependencies {
 	/*implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'*/
+	implementation 'io.jsonwebtoken:jjwt:0.12.6'
+	implementation 'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'org.postgresql:postgresql'
@@ -35,6 +37,8 @@ dependencies {
 	// JSON management for conversion into coordinates
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	annotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {

@@ -10,3 +10,8 @@ spring:
       ddl-auto: update
     properties:
       hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect  #Dialecte PostgreSQL pour Hibernate
+
+jwt:
+  secret: fjkdfngdbjzebnhubvshubsgdvgbjhn435345fsdnbvxhcbghxcbvxcvxfjkdfngdbjzebnhubvshubsgdvgbjhn435345fsdnbvxhcbghxcbvxcvx
+  expirationTokenMs: 3600000
+  expirationRefreshTokenMs: 604800000
