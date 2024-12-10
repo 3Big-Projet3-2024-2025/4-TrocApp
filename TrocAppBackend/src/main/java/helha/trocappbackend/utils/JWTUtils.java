@@ -33,7 +33,7 @@ public class JWTUtils {
     private String generateToken(User user,long expiration) {
         return Jwts.builder()
                 .claims(Jwts.claims()
-                        .subject(user.getFirstName() + " " + user.getLastName())
+                        .subject(user.getUsername())
                         .issuedAt(new Date())
                         .expiration(new Date(new Date().getTime()+expiration))
                         .add("roles",user.getAuthorities())
