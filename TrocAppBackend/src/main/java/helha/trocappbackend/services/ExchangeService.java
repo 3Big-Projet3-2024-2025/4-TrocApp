@@ -1,6 +1,7 @@
 package helha.trocappbackend.services;
 
 import helha.trocappbackend.models.Exchange;
+import helha.trocappbackend.models.Item;
 import helha.trocappbackend.repositories.ExchangeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,12 +13,18 @@ import java.util.Optional;
 public class ExchangeService {
     @Autowired
     private ExchangeRepository exchangeRepository;
+    @Autowired
+    private ItemService itemService;
 
     public Exchange addExchange(Exchange exchange) {
         try {
+            int requestedObjectId = exchange.getRequestedObjectId();
+            int offeredObjectId = exchange.getOfferedObjectId();
+            itemService.getItemById(requestedObjectId).setAvailable(false);
+            itemService.getItemById(offeredObjectId).setAvailable(false);
             return exchangeRepository.save(exchange);
         } catch (Exception e) {
-            throw new RuntimeException("Ajout de Exchange a echoué " + e.getMessage());
+            throw new RuntimeException("Adding an Exchange failed " + e.getMessage());
         }
     }
 
@@ -25,7 +32,7 @@ public class ExchangeService {
         try {
             return exchangeRepository.findAll();
         } catch (Exception e) {
-            throw new RuntimeException("Get des Exchanges a echoué " + e.getMessage());
+            throw new RuntimeException("Get of all Exchanges failed " + e.getMessage());
         }
     }
 
@@ -34,7 +41,7 @@ public class ExchangeService {
             Optional<Exchange> exchange = exchangeRepository.findById(id);
             return exchange.orElse(null);
         } catch (Exception e) {
-            throw new RuntimeException("Get de Exchange a echoué " + e.getMessage());
+            throw new RuntimeException("Get of an Exchange failed " + e.getMessage());
         }
     }
 
@@ -42,15 +49,18 @@ public class ExchangeService {
         try {
             exchangeRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Suppression de Exchange a echoué " + e.getMessage());
+            throw new RuntimeException("Deletion of an Exchange failed " + e.getMessage());
         }
     }
 
     public Exchange updateExchange(Exchange exchange) {
         try {
+            if (!exchangeRepository.existsById(exchange.getId_exchange())) {
+                throw new RuntimeException("Exchange not found with ID: " + exchange.getId_exchange());
+            }
             return exchangeRepository.save(exchange);
         } catch (Exception e) {
-            throw new RuntimeException("Mise a jour de Exchange a echoué " + e.getMessage());
+            throw new RuntimeException("Updating of an Exchange failed " + e.getMessage());
         }
     }
 
