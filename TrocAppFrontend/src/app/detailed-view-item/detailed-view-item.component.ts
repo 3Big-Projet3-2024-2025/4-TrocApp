@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-detailed-view-item',
   standalone: true,
-  imports: [],
+  imports: [HttpClientModule],
   templateUrl: './detailed-view-item.component.html',
   styleUrl: './detailed-view-item.component.css'
 })

@@ -5,10 +5,20 @@
 <tbody>
   <tr>
     <td>{{ item.photo }}</td>
+  </tr>
+  <tr>    
     <td>{{ item.name }}</td>
+  </tr>
+  <tr>
     <td>{{ item.description }}</td>
+  </tr>
+  <tr>
     <td>{{ item.category }}</td>
+  </tr>
+  <tr>
     <td>{{ item.ownerid.getPseudo }}</td>
+  </tr>
+  <tr>
     <td>
       <button class="btn btn-primary" (click)="proposeExchange(item.itemId)">Propose an exchange</button>
     </td>
