@@ -24,6 +24,9 @@ public class GeocodingService {
 
     // Function transforming the address object into coordinates (longitude and latitude)
     public Address geocodeAddress(Address address) {
+        address.setLatitude(Double.NaN); // Initialize the coordinates as Not A Number
+        address.setLongitude(Double.NaN);
+
         String formattedAddress = formatAddress(address); // Address in JSON format
         String apiUrl = String.format("%s?q=%s&format=json", nominatimApiUrl, formattedAddress); // Build the API URL with the Nominatim base URL and the data in JSON format
         try {
@@ -42,10 +45,6 @@ public class GeocodingService {
                     JsonNode firstResult = jsonNode.get(0);
                     double latitude = firstResult.path("lat").asDouble();
                     double longitude = firstResult.path("lon").asDouble();
-
-                    // Set the coordinates (longitude and latitude)
-                    address.setLatitude(latitude);
-                    address.setLongitude(longitude);
                 }
             }
         } catch (Exception e) {
