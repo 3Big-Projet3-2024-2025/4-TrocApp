@@ -24,4 +24,8 @@ export class UsersService {
     return this.http.get<PaginatedResponse>(this.apiUrl);
   }
 
+  deleteUser(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
 }

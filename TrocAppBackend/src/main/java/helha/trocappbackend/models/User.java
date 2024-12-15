@@ -30,7 +30,16 @@ public class User {
     //@JsonManagedReference
     @JsonIgnoreProperties("users")
     private Address address;
+
     private float rating;
+
+    // Liste des évaluations postées par l'utilisateur
+    @OneToMany(mappedBy = "poster", cascade = CascadeType.ALL)
+    private List<Rating> postedRatings;
+
+    // Liste des évaluations reçues par l'utilisateur
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    private List<Rating> receivedRatings;
 
 
     // Liste des objets détenus par l'utilisateur pour l'échange
@@ -132,6 +141,12 @@ public class User {
     public void setRating(float rating) {
         this.rating = rating;
     }
+
+    public List<Rating> getPostedRatings() { return postedRatings; }
+    public void setPostedRatings(List<Rating> postedRatings) { this.postedRatings = postedRatings; }
+
+    public List<Rating> getReceivedRatings() { return receivedRatings; }
+    public void setReceivedRatings(List<Rating> receivedRatings) { this.receivedRatings = receivedRatings; }
 
 
 
