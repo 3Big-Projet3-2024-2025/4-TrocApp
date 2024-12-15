@@ -2,11 +2,14 @@ spring:
   application:
     name: TrocAppBackend
   datasource:
-    url: jdbc:postgresql://localhost:5432/TrocApp  # Nom de ta base de données
-    username: postgres  # Utilisateur PostgreSQL
-    password: main01  # Mot de passe PostgreSQL
+    url: jdbc:postgresql://localhost:5432/TrocApp  # Name of the database
+    username: postgres  # User PostgreSQL
+    password: main01  # Password PostgreSQL
   jpa:
     hibernate:
       ddl-auto: update
     properties:
-      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect  #Dialecte PostgreSQL pour Hibernate
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect  #Dialect PostgreSQL for Hibernate
+nominatim:
+  api:
+    url: https://nominatim.openstreetmap.org/ # URL for the Nominatim API
