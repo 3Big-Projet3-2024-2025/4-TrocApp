@@ -37,11 +37,22 @@ public class ExchangeController {
         }
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Exchange>> getExchangesByUserId(@PathVariable int id) {
+        try {
+            List<Exchange> exchangesOfUserId = exchangeService.getAllExchangesByUserID(id);
+            return ResponseEntity.ok(exchangesOfUserId);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(null);
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Exchange> getExchangeById(@PathVariable int id) {
         try {
             Exchange exchange = exchangeService.getExchangeById(id);
-            if (exchange != null) {
+            if (exchange == null) {
                 return ResponseEntity.notFound().build();
             }
             return ResponseEntity.ok(exchange);
@@ -62,9 +73,10 @@ public class ExchangeController {
         }
     }
 
-    @PutMapping
-    public ResponseEntity<Exchange> updateExchange(@RequestBody Exchange exchange) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Exchange> updateExchange(@PathVariable int id,@RequestBody Exchange exchange) {
         try {
+            exchange.setId_exchange(id);
             Exchange exchange1 = exchangeService.updateExchange(exchange);
             return ResponseEntity.ok(exchange1);
         } catch (RuntimeException e) {
