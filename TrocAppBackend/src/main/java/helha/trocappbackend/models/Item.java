@@ -11,18 +11,30 @@ public class Item {
 
     private String name;
     private String description;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
     private String photo;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-    private int ownerId;
 
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;
 
+    public Item(String name, String description, String photo, Category category, boolean available, User owner) {
+        //this.id = id;
+        this.name = name;
+        this.description = description;
+        this.photo = photo;
+        this.category = category;
+        this.available = available;
+        this.owner = owner;
+    }
 
+
+    public Item() {}
 
     // Getters and setters
 
