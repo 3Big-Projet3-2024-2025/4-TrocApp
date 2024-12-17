@@ -44,11 +44,11 @@ public class CategoryService {
         }        return categoryRepository.save(existingCategory);
     }
 
-    /*public void deleteCategory(int id) {
+    public void deleteCategory(int id) {
         Category category = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
         if (!category.getItems().isEmpty()) {
             throw new RuntimeException("Cannot delete category containing items");
         }
         categoryRepository.delete(category);
-    }*/
+    }
 }

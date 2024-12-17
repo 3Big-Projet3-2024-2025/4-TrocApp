@@ -24,7 +24,7 @@
     <tr *ngFor="let user of users">
       <td>{{ user.firstName }} {{ user.lastName }}</td>
       <td>{{ user.email }}</td>
-      <td>{{ user.address }}</td>
+      <td>{{ formatAddress(user.address) }}</td>
       <td>{{ user.rating }}</td>
       <td>
         <ul>
@@ -32,9 +32,10 @@
         </ul>
       </td>
       <td>
-        <button class="btn btn-warning">Modifier</button>
-        <button  class="btn btn-danger">Supprimer</button>
+        <button class="btn btn-warning" (click)="editUser(user.id)">Modify</button>
+        <button  class="btn btn-danger"  (click)="confirmDelete(user.id)">Delete</button>
       </td>
     </tr>
   </tbody>
 </table>
+
