@@ -12,21 +12,37 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_category;
     private String name;
-    //private List<Item> items;
+    @JsonIgnore
+    @OneToMany(mappedBy = "category")
+    private List<Item> items;
 
-    public Category() {
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
+   public Category() {
     }
 
-    public Category(int id, String name) {
+    public Category(int id_category, String name, User user) {
         this.id_category = id_category;
         this.name = name;
+        this.user = user;
     }
+
+    public Category(String name,User user) {
+        this.name = name;
+        this.user = user;
+    }
+
 
     public Category(String name) {
         this.name = name;
     }
 
-    public int getId() {
+    public User getUser() {
+        return user;
+    }
+
+    public int getId_category() {
         return id_category;
     }
 
@@ -42,4 +58,11 @@ public class Category {
         this.name = name;
     }
 
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
