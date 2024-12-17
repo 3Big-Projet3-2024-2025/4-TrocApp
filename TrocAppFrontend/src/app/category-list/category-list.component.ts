@@ -3,6 +3,7 @@ import { CategoryService } from '../services/category.service';
 import { Category } from '../models/category.model';
 import { NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { User } from '../models/user.model';
 
 
 @Component({
@@ -14,7 +15,17 @@ import { FormsModule } from '@angular/forms';
 })
 export class CategoryListComponent implements OnInit {
   categories: Category[] = [];
-  newCategory: Category = new Category(0, '');
+  user: User = new User(
+    3,                        // ID of the administrator
+    'Olivier',                // first name
+    'Dupont',                 // last name
+    'olivier.dupont@example.com', // Email
+    'password123',            // password
+    1,                        // ID of the address
+    4.5                    // rating
+  );
+
+  newCategory: Category = new Category(0, '', [],this.user);
   editingCategory: Category | null = null;
   message: string = '';
 
@@ -34,7 +45,7 @@ export class CategoryListComponent implements OnInit {
   onSubmit(): void {
     this.categoryService.createCategory(this.newCategory).subscribe(
       () => {
-        this.newCategory = new Category(0, ''); // Reset the form
+        this.newCategory = new Category(0, '',[],this.user); // Reset the form
         this.loadCategories();
         this.message = 'Category added successfully.';
       },
