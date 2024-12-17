@@ -48,6 +48,14 @@ public class ItemService {
         }
     }
 
+    public List<Item> getAllAvailableItemsByUserId(int userId) {
+        try {
+            return itemRepository.findAll().stream().filter(item -> item.getOwner().getId() == userId && item.isAvailable()).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Retrieving all my items failed " + e.getMessage());
+        }
+    }
+
     public void deleteItem(int id) {
         try {
             itemRepository.deleteById(id);
