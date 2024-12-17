@@ -1,6 +1,5 @@
 package helha.trocappbackend.controllers;
 
-import helha.trocappbackend.models.Category;
 import helha.trocappbackend.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
