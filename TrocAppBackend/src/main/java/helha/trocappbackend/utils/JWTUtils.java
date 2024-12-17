@@ -22,21 +22,22 @@ public class JWTUtils {
     private long expirationRefreshToken;
 
 
-    public String generateAccessToken(User user){
-        return generateToken(user,expirationToken);
+    public String generateAccessToken(User user, helha.trocappbackend.models.User userInternal) {
+        return generateToken(user,userInternal,expirationToken);
     }
 
-    public String generateRefreshToken(User user){
-        return generateToken(user,expirationRefreshToken);
+    public String generateRefreshToken(User user, helha.trocappbackend.models.User userInternal){
+        return generateToken(user,userInternal,expirationRefreshToken);
     }
 
-    private String generateToken(User user,long expiration) {
+    private String generateToken(User user, helha.trocappbackend.models.User userInternal,long expiration) {
         return Jwts.builder()
                 .claims(Jwts.claims()
                         .subject(user.getUsername())
                         .issuedAt(new Date())
                         .expiration(new Date(new Date().getTime()+expiration))
                         .add("roles",user.getAuthorities())
+                        .add("id",userInternal.getId())
                         .build())
                 .signWith(SignatureAlgorithm.HS512,secret).compact();
     }
