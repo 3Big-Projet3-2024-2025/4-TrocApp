@@ -59,6 +59,17 @@ public class ItemController {
         }
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Item>> getAllItemsByUserID(@PathVariable int id) {
+        try {
+            List<Item> itemsOfUserID = itemService.getAllAvailableItemsByUserId(id);
+            return ResponseEntity.ok(itemsOfUserID);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(null);
+        }
+    }
+
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> deleteItem(@PathVariable int id) {
         try {
