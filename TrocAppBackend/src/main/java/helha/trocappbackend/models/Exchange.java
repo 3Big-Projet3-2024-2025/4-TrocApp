@@ -2,8 +2,6 @@ package helha.trocappbackend.models;
 import jakarta.persistence.*;
 
 import java.sql.Date;
-import java.util.List;
-
 
 @Entity
 public class Exchange {
@@ -27,6 +25,22 @@ public class Exchange {
     @ManyToOne
     @JoinColumn(name = "receiver_id")
     private User receiver;
+
+    public Exchange(int offeredObjectId, int requestedObjectId, Date proposalDate, Date acceptanceDate, String status, float firstEvaluation, float secondEvaluation, User initiator, User receiver) {
+        this.offeredObjectId = offeredObjectId;
+        this.requestedObjectId = requestedObjectId;
+        this.proposalDate = proposalDate;
+        this.acceptanceDate = acceptanceDate;
+        this.status = status;
+        this.firstEvaluation = firstEvaluation;
+        this.secondEvaluation = secondEvaluation;
+        this.initiator = initiator;
+        this.receiver = receiver;
+    }
+
+    public Exchange() {
+
+    }
 
     // Getters and Setters
     public int getId_exchange() {
