@@ -1,6 +1,7 @@
 package helha.trocappbackend.services;
 
 
+import helha.trocappbackend.models.Address;
 import helha.trocappbackend.models.Role;
 import helha.trocappbackend.models.User;
 import helha.trocappbackend.repositories.RoleRepository;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Primary
@@ -53,6 +56,36 @@ public class UserService implements IUserService{
         throw new RuntimeException("Utilisateur avec ID " + user.getId() + " introuvable.");
     }
 
+    /*public User updateUserDetails(int userId, String firstName, String lastName, int addressId, Set<Integer> roleIds) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Utilisateur avec ID " + userId + " introuvable."));
+
+        // Mise à jour du nom et prénom
+        if (firstName != null && !firstName.isEmpty()) {
+            user.setFirstName(firstName);
+        }
+        if (lastName != null && !lastName.isEmpty()) {
+            user.setLastName(lastName);
+        }
+
+        // Mise à jour de l'adresse si une nouvelle est fournie
+        if (addressId > 0) {
+            Address newAddress = new Address();
+            newAddress.setId(addressId);
+            user.setAddress(newAddress);
+        }
+
+        // Mise à jour des rôles
+        if (roleIds != null && !roleIds.isEmpty()) {
+            Set<Role> updatedRoles = roleRepository.findAllById(roleIds)
+                    .stream()
+                    .collect(Collectors.toSet());
+            user.setRoles(updatedRoles);
+        }
+
+        return userRepository.save(user);
+    } */
+
     @Override
     public void deleteUser(int id) {
         // Supprime un utilisateur par ID s'il existe
@@ -79,6 +112,11 @@ public class UserService implements IUserService{
 
         user.addRole(role);
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<Role> getRoles(int id) {
+        return roleRepository.findAll();
     }
 
     /*

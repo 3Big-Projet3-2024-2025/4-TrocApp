@@ -24,6 +24,10 @@ public class Address {
     @JsonIgnoreProperties("address")
     private List<User> users;
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getStreet() {
         return street;
     }

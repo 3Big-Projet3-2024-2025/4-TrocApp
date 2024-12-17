@@ -1,7 +1,9 @@
 package helha.trocappbackend.controllers;
 
 
+import helha.trocappbackend.models.Role;
 import helha.trocappbackend.models.User;
+import helha.trocappbackend.repositories.RoleRepository;
 import helha.trocappbackend.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,12 +14,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path="/users")
 public class UserController {
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @GetMapping
     public Page<User> getUsers(Pageable p) {
@@ -50,6 +57,7 @@ public class UserController {
     }
 
     @PutMapping
+    @RequestMapping(path = "/update-user")
     public User updateUser(@RequestBody User user) {
         return userService.updateUser(user);
     }
@@ -62,5 +70,10 @@ public class UserController {
     @PostMapping("/{userId}/roles/{roleId}")
     public User addRoleToUser(@PathVariable int userId, @PathVariable int roleId) {
         return userService.addRoleToUser(userId, roleId);
+    }
+
+    @GetMapping("/roles")
+    public List<Role> getRoles() {
+        return roleRepository.findAll();  // Récupère tous les rôles depuis la base de données
     }
 }
