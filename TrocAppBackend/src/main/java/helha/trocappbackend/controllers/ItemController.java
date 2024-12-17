@@ -1,7 +1,7 @@
 package helha.trocappbackend.controllers;
 
+import helha.trocappbackend.models.Category;
 import helha.trocappbackend.models.Item;
-import helha.trocappbackend.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
