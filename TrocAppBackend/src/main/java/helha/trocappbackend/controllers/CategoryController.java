@@ -2,9 +2,7 @@ package helha.trocappbackend.controllers;
 
 import helha.trocappbackend.models.Category;
 import helha.trocappbackend.models.User;
-import helha.trocappbackend.repositories.CategoryRepository;
 import helha.trocappbackend.repositories.UserRepository;
-import helha.trocappbackend.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

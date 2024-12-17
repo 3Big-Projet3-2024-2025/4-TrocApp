@@ -3,7 +3,6 @@ package helha.trocappbackend.controllerTest;
 import helha.trocappbackend.controllers.CategoryController;
 import helha.trocappbackend.models.Category;
 import helha.trocappbackend.models.User;
-import helha.trocappbackend.services.CategoryService;
 import helha.trocappbackend.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
