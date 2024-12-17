@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Item } from '../item';
+import { Item } from '../models/item';
+
 
 @Injectable({
   providedIn: 'root'
@@ -24,16 +25,16 @@ export class ItemService {
     }
   }
 
+  getItemByUserId(id: number): Observable<Item[]> {
+    return this.http.get<Item[]>(this.backendURL+"/user/"+id);
+  }
+
   saveItem(item: Item): Observable<Item> {
     if(item.id>0) {
       return this.http.put<Item>(this.backendURL+"/"+item.id, item);
     } else {
       return this.http.post<Item>(this.backendURL, item);
     }
-  }
-
-  updateItem(item: Item) : Observable<Item> {
-    return this.http.put<Item>(this.backendURL+"/"+item.id, item);
   }
 
   deleteItem(id: number): Observable<any> {
