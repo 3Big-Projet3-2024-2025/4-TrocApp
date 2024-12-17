@@ -43,7 +43,11 @@ public class User {
 
     @OneToMany(mappedBy = "receiver")
     private List<Exchange> exchangesAsReceiver;
-
+    @OneToMany(mappedBy = "user")
+    private List <GdprRequest> gdprRequests ;
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Category> categories;
     @JsonManagedReference
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
@@ -51,7 +55,19 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"), // Colonne pour la clé étrangère vers User
             inverseJoinColumns = @JoinColumn(name = "role_id") // Colonne pour la clé étrangère vers Role
     )
+
     private Set<Role> roles; // Un utilisateur peut avoir plusieurs rôles
+    //Doha
+    // Default constructor
+    public User() {}
+
+    // Constructor with parameters
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
 
     // Autres attributs, getters, et setters
 
@@ -138,8 +154,6 @@ public class User {
     public void setRating(float rating) {
         this.rating = rating;
     }
-
-
 
     /*public List<Exchange> getExchangesAsInitiator() {
         return exchangesAsInitiator;
