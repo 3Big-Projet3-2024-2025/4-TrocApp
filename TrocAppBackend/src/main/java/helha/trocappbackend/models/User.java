@@ -1,13 +1,16 @@
 package helha.trocappbackend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import java.util.List;
 import java.util.Set;
 
+
 @Entity
-@Table(name = "app_user") // Changez le nom ici
+@Table(name = "app_user")
+
 public class User {
 
     @Id
@@ -33,14 +36,30 @@ public class User {
 
     @OneToMany(mappedBy = "receiver")
     private List<Exchange> exchangesAsReceiver;
-
+    @OneToMany(mappedBy = "user")
+    private List <GdprRequest> gdprRequests ;
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Category> categories;
     @ManyToMany
     @JoinTable(
             name = "user_role", // Nom de la table de jointure
             joinColumns = @JoinColumn(name = "user_id"), // Colonne pour la clé étrangère vers User
             inverseJoinColumns = @JoinColumn(name = "role_id") // Colonne pour la clé étrangère vers Role
     )
+
     private Set<Role> roles; // Un utilisateur peut avoir plusieurs rôles
+    //Doha
+    // Default constructor
+    public User() {}
+
+    // Constructor with parameters
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
 
     // Autres attributs, getters, et setters
     public int getId() {
@@ -99,6 +118,29 @@ public class User {
         this.rating = rating;
     }
 
+    public List<GdprRequest> getGdprRequests() {
+        return gdprRequests;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public void setGdprRequests(List<GdprRequest> gdprRequests) {
+        this.gdprRequests = gdprRequests;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
     /*public List<Exchange> getExchangesAsInitiator() {
         return exchangesAsInitiator;
     }
