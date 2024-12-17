@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ExchangeService {
@@ -42,6 +43,14 @@ public class ExchangeService {
             return exchange.orElse(null);
         } catch (Exception e) {
             throw new RuntimeException("Get of an Exchange failed " + e.getMessage());
+        }
+    }
+
+    public List<Exchange> getAllExchangesByUserID(int userID) {
+        try {
+            return exchangeRepository.findAll().stream().filter(exchange -> exchange.getInitiator().getId()==userID | exchange.getReceiver().getId()==userID).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Get of all My Exchanges failed " + e.getMessage());
         }
     }
 
