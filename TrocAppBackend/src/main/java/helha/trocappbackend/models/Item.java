@@ -1,7 +1,5 @@
 package helha.trocappbackend.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -15,11 +13,12 @@ public class Item {
 
     private String name;
     private String description;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
     private String photo;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-//    private int ownerId;
 
     private boolean available;
 
@@ -36,6 +35,7 @@ public class Item {
         this.available = available;
         this.owner = owner;
     }
+
 
     public Item() {}
 
