@@ -17,6 +17,7 @@ public class Item {
     @Basic(fetch = FetchType.LAZY)
     private String photo;
     @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 

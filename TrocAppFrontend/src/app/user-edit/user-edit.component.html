@@ -1,0 +1,24 @@
+<!-- user-edit.component.html -->
+<h1>Modifier l'utilisateur</h1>
+
+  <div>
+    <label for="firstName">Prénom:</label>
+    <input id="firstName" [(ngModel)]="editingUser.firstName" name="firstName" required />
+  </div>
+  
+  <div>
+    <label for="lastName">Nom:</label>
+    <input id="lastName" [(ngModel)]="editingUser.lastName" name="lastName" required />
+  </div>
+  
+  <div>
+    <label for="rolesInput">Rôles (séparés par des virgules):</label>
+    <input id="rolesInput" [(ngModel)]="editingUser.rolesInput" name="rolesInput" required />
+  </div>
+  
+  <div>
+    <button (click) ="submitEditForm()">Sauvegarder</button>
+    <button (click)="goBack()">Retour</button>  
+  </div>
+
+<p *ngIf="message" [ngClass]="{ 'success': success, 'error': !success }">{{ message }}</p> 

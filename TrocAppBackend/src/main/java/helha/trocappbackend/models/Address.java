@@ -18,6 +18,15 @@ public class Address {
     private double latitude;
     private double longitude;
 
+    //@JsonBackReference
+    @OneToMany(mappedBy = "address")
+    @JsonIgnoreProperties("address")
+    private List<User> users;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getStreet() {
         return street;
     }
