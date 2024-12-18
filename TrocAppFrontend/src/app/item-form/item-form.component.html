@@ -1,0 +1,76 @@
+<h1 class="mt-4" style="text-align: center;">Registration of an item</h1>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="form-group mb-3">
+        <label for="name-item">Name of the item</label>
+        <input type="text" class="form-control" id="name-item" [(ngModel)]="itemToSave.name">
+    </div>
+    <div class="form-group mb-3">
+        <label for="description-item">Description of the item</label>
+        <input type="text" class="form-control" id="description-item" [(ngModel)]="itemToSave.description">
+    </div>
+    <div class="form-group mb-3">
+        <!-- <label for="photo-item">Photo URL of the item</label>
+        <input type="text" class="form-control" id="photo-item" [(ngModel)]="itemToSave.photo">
+     -->
+        <label class="form-label" for="photo-item">Upload image of the item</label>
+        <input type="file" class="form-control" id="photo-item" (change)="onFileSelected($event)"/>
+    @if(imagePreview) {
+        <img [src]="imagePreview" alt="Image preview" style="max-width: 200px; margin-top: 10px;">
+    }
+    </div>
+     
+    <div class="form-group mb-3">
+        <label for="name-item">Category of the item</label>
+        <select class="form-select" [(ngModel)]="itemToSave.category.id_category" aria-label="Select a category" id="category-item" name="category-item">
+            <option value=null disabled selected hidden>Select a category</option>
+            @for(category of categoryList | async; track $index) {
+              <option value="{{category.id_category}}">{{category.name}}</option>
+            }
+        </select>
+    </div>
+
+
+
+    <!-- 
+    <div class="col-6">
+        <legend>Partenaires</legend>
+        <div>
+          <select class="form-select" [(ngModel)]="formation.idPartenaire" aria-label="Sélectionner un partenaire">
+            <option value=null selected disabled hidden>Sélectionner un partenaire</option>
+            @for (partenaire of partenaireList | async; track $index)
+            {
+          <option value="{{partenaire.ID_Partenaire}}">{{partenaire.nom_Partenaire}} 
+          </option>
+            }
+          </select>
+          <div>
+            <label for="descr_aide">Description aide</label>
+            <input type="text" class="form-control" class="form-control" id="descr_aide" name="descr_aide" [(ngModel)]="formation.descr_aide_p"/> 
+          </div>
+         
+           @for (partenaire of partenaireList | async; track $index)
+            {
+              @if(formation.idPartenaire==partenaire.ID_Partenaire) {
+                <img src="{{partenaire.logo_Partenaire}}" alt="logo_partenaire" style="width: 150px;margin: 50px;">
+            }
+          }
+        </div>
+         -->
+    <!-- <div class="form-group">
+        <label for="name-item">Category of the item</label>
+        <input type="text" class="form-control" id="name-item" [(ngModel)]="itemToSave.category.name">
+    </div> -->
+
+    <div class="form-group mb-3">
+        <button type="submit"  class="btn btn-primary" (click)="saveItem()">Save item</button>
+    </div>
+  </div>
+</div>
+
+<p style="color: red;">{{errorMessage}}</p>
+
+
+
