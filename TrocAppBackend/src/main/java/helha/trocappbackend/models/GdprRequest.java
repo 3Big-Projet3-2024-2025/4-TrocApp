@@ -1,9 +1,12 @@
 package helha.trocappbackend.models;
+import helha.trocappbackend.models.User;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
+
 
 @Entity
 public class GdprRequest {
