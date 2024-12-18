@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ItemService } from '../services/item.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Item } from '../models/item';
 import { Category } from '../models/category.model';
@@ -17,10 +17,20 @@ import { CategoryService } from '../services/category.service';
 })
 export class ItemFormComponent implements OnInit {
   
-  constructor(private itemService: ItemService, private router: Router, private categoryService: CategoryService) {}
+  constructor(private itemService: ItemService, private route: ActivatedRoute, private router: Router, private categoryService: CategoryService) {}
   
   ngOnInit(): void {
     this.categoryList = this.categoryService.getCategories() as Observable<Category[]>;
+    this.route.params.subscribe(params=> {
+      if(params["id"]) {
+        const subscr = this.itemService.getItem(params["id"]).subscribe(item => {
+          this.itemToSave = item as Item;
+          this.imagePreview = this.itemToSave.photo;
+          console.log(this.itemToSave);
+          subscr.unsubscribe();
+        })
+      }
+    })
   }
 
   availableItems!: Observable<Item[]>;
@@ -82,7 +92,6 @@ export class ItemFormComponent implements OnInit {
       next: (item) => {
         console.log(this.itemToSave);
         console.log(item);
-        // this.showAvailableItems();
         this.router.navigate(["/itemtest"]);
         sub.unsubscribe();
       },
