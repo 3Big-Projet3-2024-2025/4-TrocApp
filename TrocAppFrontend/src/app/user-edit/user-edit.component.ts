@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { User } from '../user';
-import { UsersService } from '../users.service';
+import { User } from '../models/user';
+import { UsersService } from '../services/users.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgIf, NgClass} from '@angular/common';
 
