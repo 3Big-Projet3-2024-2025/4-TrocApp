@@ -1,9 +1,10 @@
 package helha.trocappbackend.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Address {
@@ -17,6 +18,15 @@ public class Address {
 
     private double latitude;
     private double longitude;
+
+    //@JsonBackReference
+    @OneToMany(mappedBy = "address")
+    @JsonIgnoreProperties("address")
+    private List<User> users;
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getStreet() {
         return street;

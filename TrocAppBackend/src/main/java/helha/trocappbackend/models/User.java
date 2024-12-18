@@ -1,6 +1,9 @@
 package helha.trocappbackend.models;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -21,10 +24,23 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    @ManyToOne
+
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id")
+    //@JsonManagedReference
+    @JsonIgnoreProperties("users")
     private Address address;
+
     private float rating;
+
+    // Liste des évaluations postées par l'utilisateur
+    @OneToMany(mappedBy = "poster", cascade = CascadeType.ALL)
+    private List<Rating> postedRatings;
+
+    // Liste des évaluations reçues par l'utilisateur
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    private List<Rating> receivedRatings;
 
 
     // Liste des objets détenus par l'utilisateur pour l'échange
@@ -41,7 +57,9 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Category> categories;
-    @ManyToMany
+    //@JsonManagedReference
+    @JsonIgnoreProperties("roles")
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "user_role", // Nom de la table de jointure
             joinColumns = @JoinColumn(name = "user_id"), // Colonne pour la clé étrangère vers User
@@ -62,6 +80,29 @@ public class User {
     }
 
     // Autres attributs, getters, et setters
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    /*public void addRole(Role role) {
+        this.roles.add(role);
+    }*/
+
+    public void addRole(Role role) {
+        this.roles.add(role);
+        role.getUsers().add(this);
+    }
+
+    public void removeRole(Role role) {
+        this.roles.remove(role);
+        role.getUsers().remove(this);
+    }
+
     public int getId() {
         return id;
     }
@@ -117,6 +158,14 @@ public class User {
     public void setRating(float rating) {
         this.rating = rating;
     }
+
+
+
+    public List<Rating> getPostedRatings() { return postedRatings; }
+    public void setPostedRatings(List<Rating> postedRatings) { this.postedRatings = postedRatings; }
+
+    public List<Rating> getReceivedRatings() { return receivedRatings; }
+    public void setReceivedRatings(List<Rating> receivedRatings) { this.receivedRatings = receivedRatings; }
 
     public List<GdprRequest> getGdprRequests() {
         return gdprRequests;
