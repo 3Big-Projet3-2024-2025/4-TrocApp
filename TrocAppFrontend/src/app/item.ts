@@ -1,5 +1,4 @@
-//import { Category } from "./category"
-import { Category } from "./category.model"
+import { Category } from "./category"
 import { User } from "./user"
 
 export interface Item {

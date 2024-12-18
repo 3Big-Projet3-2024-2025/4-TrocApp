@@ -26,13 +26,11 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true);  // Allows you to send authentication information (cookies, tokens,...)
     }
 
-
     // Adds MappingJackson2HttpMessageConverter to convert JSON to/from Java objects.
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(new MappingJackson2HttpMessageConverter());
     }
-
     
     // Configures an ObjectMapper to ignore unknown properties during deserialization.
     @Bean
