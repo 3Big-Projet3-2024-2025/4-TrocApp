@@ -12,7 +12,8 @@ export const routes: Routes = [
     { path: "viewing-items-map", component: ViewingItemsMapComponent }, // Path to the map page
     //Path for viewing a detailed item
     { path: "detailed-view-item", component: DetailedViewItemComponent }, // Path to the detailed item page
-    { path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' } // Wildcard route
+    // Path for editing a user
     { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
-    
+
+    { path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' }, // Wildcard route
 ];
