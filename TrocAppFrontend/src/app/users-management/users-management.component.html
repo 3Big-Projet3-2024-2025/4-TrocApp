@@ -1,0 +1,41 @@
+
+  <!-- user-list.component.html -->
+<h1>Liste des utilisateurs</h1>
+
+<!-- Bouton Ajouter Utilisateur avec espacement -->
+<div class="d-flex justify-content-end mb-3 pr-3">
+  <button class="btn btn-primary">
+    Ajouter un utilisateur
+  </button>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Email</th>
+      <th>Adresse</th>
+      <th>Note</th>
+      <th>Rôles</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.firstName }} {{ user.lastName }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ formatAddress(user.address) }}</td>
+      <td>{{ user.rating }}</td>
+      <td>
+        <ul>
+          <li *ngFor="let role of user.roles">{{ role.name }}</li>
+        </ul>
+      </td>
+      <td>
+        <button class="btn btn-warning" (click)="editUser(user.id)">Modify</button>
+        <button  class="btn btn-danger"  (click)="confirmDelete(user.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
