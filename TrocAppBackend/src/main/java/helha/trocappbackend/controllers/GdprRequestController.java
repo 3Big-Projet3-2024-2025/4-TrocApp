@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api/gdpr")
 public class GdprRequestController {
 
-    @Autowired
+    /*@Autowired
     private GdprRequestService gdprRequestService;
     @Autowired
     private UserRepository userRepository;
