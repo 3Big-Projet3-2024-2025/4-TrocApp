@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from './user';
-import { Role } from './role';
+import { User } from '../user';
+import { Role } from '../role';
 
 interface PaginatedResponse {
   content: User[];  // Tableau d'utilisateurs

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {  OnInit } from '@angular/core';
 import { User } from '../user';
-import { UsersService } from '../users.service';
+import { UsersService } from '../services/users.service';
 import { NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
