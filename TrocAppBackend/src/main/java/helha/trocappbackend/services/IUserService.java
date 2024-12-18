@@ -33,5 +33,14 @@ public interface IUserService {
 
     public List<Role> getRoles(int id);
 
-    //User updateUserDetails(int id, String firstName, String lastName, int addressId, Set<Integer> roleIds);
+    public User assignRolesToUser(int userId, List<Integer> roleIds);
+
+    List<Role> getAllRoles();
+
+
+    List<Integer> getAllZipCodes();
+
+    List<String> getAllStreets();
+    List<String> getAllNumbers();
+    List<String> getAllCities();
 }

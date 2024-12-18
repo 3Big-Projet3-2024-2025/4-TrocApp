@@ -4,11 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 @Entity
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import java.util.List;
+@Entity
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_category;
     private String name;
+    @JsonIgnore
+    @OneToMany(mappedBy = "category")
+    private List<Item> items;
     @JsonIgnore
     @OneToMany(mappedBy = "category")
     private List<Item> items;
@@ -16,9 +23,10 @@ public class Category {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
-   public Category() {
+    public Category() {
     }
 
+    public Category(int id_category, String name, User user) {
     public Category(int id_category, String name, User user) {
         this.id_category = id_category;
         this.name = name;
@@ -28,13 +36,25 @@ public class Category {
     public Category(String name,User user) {
         this.name = name;
         this.user = user;
+        this.user = user;
     }
+
+    public Category(String name,User user) {
+        this.name = name;
+        this.user = user;
+    }
+
 
 
     public Category(String name) {
         this.name = name;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public int getId_category() {
     public User getUser() {
         return user;
     }
@@ -47,6 +67,11 @@ public class Category {
         return name;
     }
 
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setId_category(int id_category) {
     public List<Item> getItems() {
         return items;
     }
@@ -66,4 +91,6 @@ public class Category {
     public void setUser(User user) {
         this.user = user;
     }
+
 }
+
