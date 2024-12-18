@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemService {
@@ -18,16 +19,24 @@ public class ItemService {
             return itemRepository.save(item);
         } catch (Exception e) {
             //e.printStackTrace();
-            throw new RuntimeException("Ajout de item a echoué " + e.getMessage());
+            throw new RuntimeException("Adding item failed " + e.getMessage());
         }
     }
 
-    public Item getItem(int id) {
+    public Item getItemById(int id) {
         try {
             Optional<Item> item = itemRepository.findById(id);
             return item.orElse(null);
         } catch (Exception e) {
-            throw new RuntimeException("Get de item a echoué " + e.getMessage());
+            throw new RuntimeException("Retrieving item failed " + e.getMessage());
+        }
+    }
+
+    public List<Item> getAllAvailableItems() {
+        try {
+            return itemRepository.findAll().stream().filter(Item::isAvailable).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Retrieving available items failed " + e.getMessage());
         }
     }
 
@@ -35,7 +44,15 @@ public class ItemService {
         try {
             return itemRepository.findAll();
         } catch (Exception e) {
-            throw new RuntimeException("Get des items a echoué " + e.getMessage());
+            throw new RuntimeException("Retrieving all items failed " + e.getMessage());
+        }
+    }
+
+    public List<Item> getAllAvailableItemsByUserId(int userId) {
+        try {
+            return itemRepository.findAll().stream().filter(item -> item.getOwner().getId() == userId && item.isAvailable()).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Retrieving all my items failed " + e.getMessage());
         }
     }
 
@@ -43,15 +60,18 @@ public class ItemService {
         try {
             itemRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Suppression de item a echoué " + e.getMessage());
+            throw new RuntimeException("Deletion of item failed " + e.getMessage());
         }
     }
 
     public Item updateItem(Item item) {
         try {
+            if (!itemRepository.existsById(item.getId())) {
+                throw new RuntimeException("Item not found with ID: " + item.getId());
+            }
             return itemRepository.save(item);
         } catch (Exception e) {
-            throw new RuntimeException("La mise a jour de item a echoué " + e.getMessage());
+            throw new RuntimeException("Update of item failed" + e.getMessage());
         }
     }
 }
