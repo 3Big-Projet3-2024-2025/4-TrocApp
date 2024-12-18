@@ -26,7 +26,7 @@ public class ItemController {
         item1.setOwner(item.getOwner());
         //item1.setOwnerId(item.getOwnerId());
         item1.setPhoto(item.getPhoto());
-        Integer idCategory = item.getCategory().getId();
+        Integer idCategory = item.getCategory().getId_category();
         if (idCategory != null) {
             Category category = categoryRepository.findById(idCategory)
                     .orElseThrow(() -> new RuntimeException("Category not found"));

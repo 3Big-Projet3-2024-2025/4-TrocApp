@@ -10,3 +10,6 @@ spring:
       ddl-auto: update
     properties:
       hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect  #Dialecte PostgreSQL pour Hibernate
+nominatim:
+  api:
+    url: https://nominatim.openstreetmap.org

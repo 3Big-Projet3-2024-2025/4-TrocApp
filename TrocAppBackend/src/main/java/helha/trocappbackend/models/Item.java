@@ -18,8 +18,8 @@ public class Item {
     @JoinColumn(name = "category_id")
     private Category category;
 //    private int ownerId;
-
-    private boolean available;
+    @Column(name = "available")
+    private boolean available = true;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
