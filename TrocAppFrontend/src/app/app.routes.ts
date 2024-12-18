@@ -15,7 +15,7 @@ export const routes: Routes = [
     //Path for viewing items on a map
     { path: "viewing-items-map", component: ViewingItemsMapComponent },
     //Path for viewing a detailed item
-    { path: "/detailed-view-item", component: DetailedViewItemComponent },
+    { path: "detailed-view-item", component: DetailedViewItemComponent },
     { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
     
     { path: "detailed-view-item/:id", component: DetailedViewItemComponent },
@@ -26,10 +26,10 @@ export const routes: Routes = [
     //path by default 
     { path: "", redirectTo: "/viewing-items-map", pathMatch: "full" },
 
-    { path: "itemDetTest/:id", component: ItemDetTestComponent },
+    // { path: "itemDetTest/:id", component: ItemDetTestComponent },
     
-    {path: "exchanges", component: ExchangeListComponent },
+    // {path: "exchanges", component: ExchangeListComponent },
 
-    { path: "itemtest", component: ItemtestComponent }
+    // { path: "itemtest", component: ItemtestComponent }
     // { path: '', component: ViewingItemsMapComponent }, // Page d'accueil
 ];
