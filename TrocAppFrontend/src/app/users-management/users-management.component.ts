@@ -25,17 +25,7 @@ export class UsersManagementComponent implements OnInit{
 
   constructor(private usersService: UsersService, private router: Router) {}
 
-  ngOnInit(): void {
-    this.usersService.getUsers().subscribe(
-      (data) => {
-        console.log('API Response:', data);  // Vérifiez ce qui est retourné par l'API
-        this.users = data.content;  // Assurez-vous que vous affectez le tableau `content` à `users`
-      },
-      (error) => {
-        console.error('Error fetching users:', error);
-      }
-    );
-  }*/
+ 
 
     ngOnInit(): void {
       this.fetchUsers();
