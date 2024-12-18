@@ -1,13 +1,10 @@
 package helha.trocappbackend.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import java.util.List;
 @Entity
 public class Category {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_category;
@@ -19,7 +16,7 @@ public class Category {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
-   public Category() {
+    public Category() {
     }
 
     public Category(int id_category, String name, User user) {
@@ -50,7 +47,11 @@ public class Category {
         return name;
     }
 
-    public void setId(int id) {
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setId_category(int id_category) {
         this.id_category = id_category;
     }
 

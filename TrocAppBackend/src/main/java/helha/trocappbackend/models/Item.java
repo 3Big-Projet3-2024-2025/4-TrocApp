@@ -23,6 +23,8 @@ public class Item {
     @JoinColumn(name = "user_id")
     private User owner;
 
+    private boolean available;
+
     public Item(String name, String description, String photo, Category category, boolean available, User owner) {
         //this.id = id;
         this.name = name;
@@ -32,6 +34,7 @@ public class Item {
         this.available = available;
         this.owner = owner;
     }
+
 
 
     public Item() {}
@@ -78,13 +81,7 @@ public class Item {
         this.category = category;
     }
 
-    public int getOwnerId() {
-        return ownerId;
-    }
 
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
-    }
 
     public User getOwner() {
         return owner;
@@ -93,4 +90,13 @@ public class Item {
     public void setOwner(User owner) {
         this.owner = owner;
     }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
 }

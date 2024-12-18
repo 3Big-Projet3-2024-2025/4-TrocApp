@@ -31,7 +31,7 @@ public class UserController {
         long start = System.currentTimeMillis();
         Page<User> users = userService.getUsers(p);
         long end = System.currentTimeMillis();
-        System.out.println("Get Page - Time elapsed: " + (end - start)+"ms");
+        System.out.println("Get Page - Time elapsed: " + (end - start) + "ms");
         return users;
     }
 
@@ -40,7 +40,7 @@ public class UserController {
         long start = System.currentTimeMillis();
         List<User> users = userService.getUsers();
         long end = System.currentTimeMillis();
-        System.out.println("Get All - Time elapsed: " + (end - start)+"ms");
+        System.out.println("Get All - Time elapsed: " + (end - start) + "ms");
         return users;
     }
 
@@ -65,7 +65,7 @@ public class UserController {
     @DeleteMapping(path = "/{id}")
     public void deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
-        
+
     }
 
     @PostMapping("/{userId}/roles/{roleId}")
@@ -77,4 +77,39 @@ public class UserController {
     public List<Role> getRoles() {
         return roleRepository.findAll();  // Récupère tous les rôles depuis la base de données
     }
+
+    @GetMapping
+    @RequestMapping(path = "/getAllRoles")
+    public List<Role> getAllRoles() {
+        return userService.getAllRoles();
+    }
+
+    @PutMapping
+    public User assignRoles(
+            @PathVariable int userId,
+            @RequestBody List<Integer> roleIds
+    ) {
+        return userService.assignRolesToUser(userId, roleIds);
+    }
+
+    @GetMapping("/zipcodes")
+    public List<Integer> getAllZipCodes() {
+        return userService.getAllZipCodes();  // Appelle la méthode du service pour récupérer les codes postaux
+    }
+
+
+    @GetMapping("/cities")
+    public List<String> getAllCities() {
+        return userService.getAllCities();  // Appelle la méthode du service pour récupérer les codes postaux
+    }
+    @GetMapping("/streets")
+    public List<String> getAllStreets() {
+        return userService.getAllStreets();  // Appelle la méthode du service pour récupérer les codes postaux
+    }
+
+    @GetMapping("/numbers")
+    public List<String> getAllNumbers() {
+        return userService.getAllNumbers();  // Appelle la méthode du service pour récupérer les codes postaux
+    }
 }
+

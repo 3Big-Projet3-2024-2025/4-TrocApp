@@ -52,8 +52,8 @@ public class User {
 
     @OneToMany(mappedBy = "receiver")
     private List<Exchange> exchangesAsReceiver;
-    @OneToMany(mappedBy = "user")
-    private List <GdprRequest> gdprRequests ;
+    /*@OneToMany(mappedBy = "user")
+    private List <GdprRequest> gdprRequests ;*/
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Category> categories;
@@ -88,6 +88,8 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+
 
     /*public void addRole(Role role) {
         this.roles.add(role);
@@ -166,18 +168,9 @@ public class User {
     public void setReceivedRatings(List<Rating> receivedRatings) { this.receivedRatings = receivedRatings; }
 
 
-
-    public List<Rating> getPostedRatings() { return postedRatings; }
-    public void setPostedRatings(List<Rating> postedRatings) { this.postedRatings = postedRatings; }
-
-    public List<Rating> getReceivedRatings() { return receivedRatings; }
-    public void setReceivedRatings(List<Rating> receivedRatings) { this.receivedRatings = receivedRatings; }
-
-
-
-    public List<GdprRequest> getGdprRequests() {
+    /*public List<GdprRequest> getGdprRequests() {
         return gdprRequests;
-    }
+    }*/
 
     public List<Category> getCategories() {
         return categories;
@@ -187,18 +180,12 @@ public class User {
         this.categories = categories;
     }
 
-    public void setGdprRequests(List<GdprRequest> gdprRequests) {
+    /*public void setGdprRequests(List<GdprRequest> gdprRequests) {
         this.gdprRequests = gdprRequests;
-    }
+    }*/
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-    /*public List<Exchange> getExchangesAsInitiator() {
+    public List<Exchange> getExchangesAsInitiator() {
         return exchangesAsInitiator;
     }
 
@@ -220,5 +207,5 @@ public class User {
 
     public void setItems(List<Item> items) {
         this.items = items;
-    }*/
+    }
 }

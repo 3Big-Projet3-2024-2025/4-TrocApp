@@ -1,8 +1,8 @@
 package helha.trocappbackend.services;
 
-import helha.trocappbackend.models.GdprRequest;
+//import helha.trocappbackend.models.GdprRequest;
 import helha.trocappbackend.models.User;
-import helha.trocappbackend.repositories.GdprRequestRepository;
+//import helha.trocappbackend.repositories.GdprRequestRepository;
 import helha.trocappbackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,13 +16,13 @@ public class GdprRequestService {
 
 
 
-        @Autowired
-        private GdprRequestRepository gdprRequestRepository;
+        //@Autowired
+        //private GdprRequestRepository gdprRequestRepository;
 
         @Autowired
         private UserRepository userRepository;
 
-        public GdprRequest createGdprRequest(GdprRequest gdprRequest) {
+        /*public GdprRequest createGdprRequest(GdprRequest gdprRequest) {
             // L'utilisateur qui a fait la demande
             User user = gdprRequest.getUser();
 
@@ -77,7 +77,7 @@ public class GdprRequestService {
 
         public List<GdprRequest> getRequestsByAdmin(User adminUser) {
             return gdprRequestRepository.findByAdminUser(adminUser);
-        }
+        }*/
     }
 
 
