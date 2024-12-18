@@ -1,11 +1,13 @@
 package helha.trocappbackend.services;
 
+import helha.trocappbackend.models.Role;
 import helha.trocappbackend.models.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface IUserService {
     // Récupérer une liste paginée d'utilisateurs
@@ -28,4 +30,17 @@ public interface IUserService {
 
     // Ajouter un rôle à un utilisateur
     public User addRoleToUser(int userId, int roleId);
+
+    public List<Role> getRoles(int id);
+
+    public User assignRolesToUser(int userId, List<Integer> roleIds);
+
+    List<Role> getAllRoles();
+
+
+    List<Integer> getAllZipCodes();
+
+    List<String> getAllStreets();
+    List<String> getAllNumbers();
+    List<String> getAllCities();
 }

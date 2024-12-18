@@ -1,12 +1,17 @@
 
-  <!-- user-list.component.html -->
-<h1>Liste des utilisateurs</h1>
 
-<!-- Bouton Ajouter Utilisateur avec espacement -->
+  <!-- user-list.component.html -->
+<h1 class="text-center mb-4">Liste des utilisateurs</h1>
+
+<!-- Bouton Ajouter Utilisateur avec espacement 
 <div class="d-flex justify-content-end mb-3 pr-3">
   <button class="btn btn-primary">
-    Ajouter un utilisateur
+    Add user
   </button>
+</div>-->
+<!-- Notification -->
+<div *ngIf="notificationVisible" class="notification success">
+  Utilisateur supprimé avec succès.
 </div>
 
 <table class="table">
@@ -24,7 +29,7 @@
     <tr *ngFor="let user of users">
       <td>{{ user.firstName }} {{ user.lastName }}</td>
       <td>{{ user.email }}</td>
-      <td>{{ user.address }}</td>
+      <td>{{ formatAddress(user.address) }}</td>
       <td>{{ user.rating }}</td>
       <td>
         <ul>
@@ -32,9 +37,10 @@
         </ul>
       </td>
       <td>
-        <button class="btn btn-warning">Modifier</button>
-        <button  class="btn btn-danger">Supprimer</button>
+        <button class="btn btn-warning" (click)="editUser(user.id)"><i class="bi bi-pencil"></i></button>
+        <button  class="btn btn-danger"  (click)="confirmDelete(user.id)"><i class="bi bi-trash"></i></button>
       </td>
     </tr>
   </tbody>
 </table>
+

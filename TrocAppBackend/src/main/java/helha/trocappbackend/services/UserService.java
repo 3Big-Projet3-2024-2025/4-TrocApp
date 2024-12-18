@@ -1,10 +1,13 @@
 package helha.trocappbackend.services;
 
 
+import helha.trocappbackend.models.Address;
 import helha.trocappbackend.models.Role;
 import helha.trocappbackend.models.User;
 import helha.trocappbackend.repositories.RoleRepository;
 import helha.trocappbackend.repositories.UserRepository;
+import helha.trocappbackend.repositories.AddressRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
@@ -14,6 +17,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Primary
@@ -25,6 +30,9 @@ public class UserService implements IUserService{
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
 
     @Override
     public Page<User> getUsers(Pageable page) {
@@ -48,10 +56,18 @@ public class UserService implements IUserService{
     public User updateUser(User user) {
         // Vérifie si l'utilisateur existe, puis le met à jour
         if (userRepository.existsById(user.getId())) {
+            if (user.getAddress() != null) {
+                // Ici on s'assure que l'adresse est bien persistée, si elle est modifiée
+                Address updatedAddress = addressRepository.save(user.getAddress()); // Sauvegarde de l'adresse
+                user.setAddress(updatedAddress); // Associe la nouvelle adresse à l'utilisateur
+            }
+
             return userRepository.save(user); // Save fait un update si l'entité existe déjà
         }
         throw new RuntimeException("Utilisateur avec ID " + user.getId() + " introuvable.");
     }
+
+
 
     @Override
     public void deleteUser(int id) {
@@ -81,12 +97,63 @@ public class UserService implements IUserService{
         return userRepository.save(user);
     }
 
-    /*
     @Override
-    public User addRoleToUser(int userId, String role) {
-        // Ajoute un rôle à l'utilisateur
-        User user = getUserById(userId); // Récupère l'utilisateur
-        //user.getRoles().add(role);      // Ajoute le rôle (assurez-vous que `roles` est une collection dans `User`)
-        return userRepository.save(user); // Sauvegarde l'utilisateur mis à jour
-    }*/
+    public List<Role> getRoles(int id) {
+        return roleRepository.findAll();
+    }
+
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll();
+    }
+
+    public List<Integer> getAllZipCodes() {
+        // Récupère toutes les adresses et extrait les codes postaux sous forme d'entiers
+        return addressRepository.findAll().stream()
+                .map(Address::getZipCode)   // Récupère le zip code de chaque adresse
+                .distinct()                 // Enlève les doublons
+                .collect(Collectors.toList());  // Récupère la liste finale
+    }
+
+    public List<String> getAllStreets() {
+        // Récupère toutes les adresses et extrait les codes postaux sous forme d'entiers
+        return addressRepository.findAll().stream()
+                .map(Address::getStreet)   // Récupère le zip code de chaque adresse
+                .distinct()                 // Enlève les doublons
+                .collect(Collectors.toList());  // Récupère la liste finale
+    }
+
+    @Override
+    public List<String> getAllNumbers() {
+        return addressRepository.findAll().stream()
+                .map(Address::getNumber)   // Récupère le zip code de chaque adresse
+                .distinct()                 // Enlève les doublons
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllCities() {
+        return addressRepository.findAll().stream()
+                .map(Address::getCity)   // Récupère le zip code de chaque adresse
+                .distinct()                 // Enlève les doublons
+                .collect(Collectors.toList());  // Récupère la liste finale
+    }
+
+
+    @Override
+    public User assignRolesToUser(int userId, List<Integer> roleIds) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Utilisateur non trouvé"));
+
+        // Nettoyer les rôles existants
+        user.getRoles().clear();
+
+        // Ajouter les nouveaux rôles
+        for (int roleId : roleIds) {
+            Role role = roleRepository.findById(roleId)
+                    .orElseThrow(() -> new EntityNotFoundException("Rôle non trouvé"));
+            user.addRole(role);
+        }
+
+        return userRepository.save(user);
+    }
 }
