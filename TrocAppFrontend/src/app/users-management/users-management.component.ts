@@ -1,11 +1,17 @@
 import { Component } from '@angular/core';
 import {  OnInit } from '@angular/core';
-import { User } from '../user';
-import { UsersService } from '../users.service';
+
+//import { User } from '../user';
+//import { UsersService } from '../users.service';
+//import{ Role } from '../role';
+
+import { User } from '../models/user';
+import { UsersService } from '../services/users.service';
 import { NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import{ Role } from '../role';
+import{ Role } from '../models/role';
+
 import { Router } from '@angular/router';
 
 
@@ -24,18 +30,6 @@ export class UsersManagementComponent implements OnInit{
   roles: Role[] = [];  
 
   constructor(private usersService: UsersService, private router: Router) {}
-
-  /*ngOnInit(): void {
-    this.usersService.getUsers().subscribe(
-      (data) => {
-        console.log('API Response:', data);  // Vérifiez ce qui est retourné par l'API
-        this.users = data.content;  // Assurez-vous que vous affectez le tableau `content` à `users`
-      },
-      (error) => {
-        console.error('Error fetching users:', error);
-      }
-    );
-  }*/
 
     ngOnInit(): void {
       this.fetchUsers();

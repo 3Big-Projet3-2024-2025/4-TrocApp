@@ -1,9 +1,10 @@
-package helha.trocappbackend;
+package helha.trocappbackend.serviceTest;
 
 import helha.trocappbackend.models.Address;
 import helha.trocappbackend.services.GeocodingService;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -38,6 +39,7 @@ class GeocodingServiceTest {
         address.setZipCode(1000);
     }
 
+    @Order(1)
     @Test
     void geocodeAddress_shouldReturnCoordinates_whenApiReturnsValidResponse() {
         //A mock response from the Nominatim API
@@ -53,6 +55,7 @@ class GeocodingServiceTest {
         assertEquals(4.3499, result.getLongitude());
     }
 
+    @Order(2)
     @Test
     void geocodeAddress_shouldHandleEmptyApiResponse() {
         //An empty array response from the Nominatim API
@@ -63,11 +66,12 @@ class GeocodingServiceTest {
         //Call the geocodeAddress function
         Address result = geocodingService.geocodeAddress(address);
 
-        //The coordinates should remain unset
-        assertNull(result.getLatitude());
-        assertNull(result.getLongitude());
+        //The coordinates should remain Not A Number
+        assertTrue(Double.isNaN(result.getLatitude()));
+        assertTrue(Double.isNaN(result.getLongitude()));
     }
 
+    @Order(3)
     @Test
     void geocodeAddress_shouldHandleApiError() {
         //A API error
@@ -77,14 +81,14 @@ class GeocodingServiceTest {
         //Call the geocodeAddress function
         Address result = geocodingService.geocodeAddress(address);
 
-        //The coordinates should remain unset
-        assertNull(result.getLatitude());
-        assertNull(result.getLongitude());
+        //The coordinates should remain Not A Number
+        assertTrue(Double.isNaN(result.getLatitude()));
+        assertTrue(Double.isNaN(result.getLongitude()));
     }
 
+    @Order(4)
     @Test
     void formatAddress_shouldReturnCorrectlyFormattedString() {
-
         // Call the formatAddress function
         String formattedAddress = geocodingService.formatAddress(address);
 

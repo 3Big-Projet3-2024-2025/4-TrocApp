@@ -1,9 +1,10 @@
 package helha.trocappbackend.models;
 
+
 import jakarta.persistence.*;
-
 import java.util.Objects;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Item {
@@ -27,6 +28,7 @@ public class Item {
     @JoinColumn(name = "user_id")
     private User owner;
 
+ 
     public Item(String name, String description, String photo, Category category, boolean available, User owner) {
         //this.id = id;
         this.name = name;

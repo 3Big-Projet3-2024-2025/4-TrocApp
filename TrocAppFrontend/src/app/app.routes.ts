@@ -3,15 +3,15 @@ import { UsersManagementComponent } from './users-management/users-management.co
 import { ViewingItemsMapComponent } from './viewing-items-map/viewing-items-map.component';
 import { DetailedViewItemComponent } from './detailed-view-item/detailed-view-item.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
-
 import { ItemFormComponent } from './item-form/item-form.component';
-import { ItemtestComponent } from './itemtest/itemtest.component';
-import { ItemDetTestComponent } from './item-det-test/item-det-test.component';
-import { ExchangeListComponent } from './exchange-list/exchange-list.component';
-export const routes: Routes = [
+//import { ItemtestComponent } from './itemtest/itemtest.component';
+//import { ItemDetTestComponent } from './item-det-test/item-det-test.component';
+//import { ExchangeListComponent } from './exchange-list/exchange-list.component';
 
+export const routes: Routes = [
+    { path: '', component: ViewingItemsMapComponent }, // Default Path (Home Page)
     //Path for user management as admin
-    { path: "admin/users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
+    { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
     //Path for viewing items on a map
     { path: "viewing-items-map", component: ViewingItemsMapComponent },
     //Path for viewing a detailed item
@@ -27,9 +27,11 @@ export const routes: Routes = [
     { path: "", redirectTo: "/viewing-items-map", pathMatch: "full" },
 
     // { path: "itemDetTest/:id", component: ItemDetTestComponent },
-    
     // {path: "exchanges", component: ExchangeListComponent },
-
     // { path: "itemtest", component: ItemtestComponent }
-    // { path: '', component: ViewingItemsMapComponent }, // Page d'accueil
+  
+    // Path for editing a user
+    { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
+
+    { path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' }, // Wildcard route
 ];
