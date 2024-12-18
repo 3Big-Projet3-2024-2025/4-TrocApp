@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import java.util.List;
 import java.util.Set;
 
-
+@JsonIgnoreProperties({"password", "email", "address", "rating", "postedRatings", "receivedRatings", "items", "exchangesAsInitiator", "exchangesAsReceiver", "roles"})
 @Entity
 @Table(name = "app_user")
 
