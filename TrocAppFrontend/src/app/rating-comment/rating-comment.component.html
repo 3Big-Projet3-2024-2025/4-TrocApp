@@ -1,0 +1,45 @@
+<div class="container mt-4">
+    <!-- Liste des commentaires -->
+    <h3>Commentaires reçus</h3>
+    <ul class="list-group mb-4">
+      <li *ngFor="let rating of receivedRatings" class="list-group-item">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ rating.poster.firstName }} {{ rating.poster.lastName }}</strong>
+            <div>
+              <span *ngFor="let star of [].constructor(rating.numberStars)">&#9733;</span>
+              <span *ngFor="let emptyStar of [].constructor(5 - rating.numberStars)">&#9734;</span>
+            </div>
+            <p>{{ rating.comment }}</p>
+          </div>
+          <div>
+            <button class="btn btn-warning btn-sm" (click)="updateRating(rating)"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-danger btn-sm" (click)="deleteRating(rating.id!)"><i class="bi bi-trash"></i></button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  
+    <!-- Formulaire d'ajout de commentaire -->
+    <h3>Ajouter un commentaire</h3>
+    <form (ngSubmit)="addRating()">
+      <div class="form-group mb-3">
+        <label for="numberStars">Étoiles</label>
+        <select id="numberStars" class="form-control" [(ngModel)]="newRating.numberStars" name="numberStars" required>
+          <option *ngFor="let star of [1, 2, 3, 4, 5]" [value]="star">{{ star }} étoiles</option>
+        </select>
+      </div>
+      <div class="form-group mb-3">
+        <label for="comment">Commentaire</label>
+        <textarea
+          id="comment"
+          class="form-control"
+          [(ngModel)]="newRating.comment"
+          name="comment"
+          rows="3"
+          required
+        ></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Ajouter</button>
+    </form>
+  </div>

@@ -1,22 +1,30 @@
 import { Component } from '@angular/core';
 import { latLng, tileLayer, Marker, icon, Map } from 'leaflet';
+import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet'; 
+import { ItemService } from '../services/item.service';
+import { AddressService } from '../services/address.service';
+import { UsersService } from '../services/users.service';
+import { Item } from '../models/item';
+import { User } from '../models/user';
+import { Address } from '../models/address.model';
 
 @Component({
   selector: 'app-viewing-items-map',
   templateUrl: './viewing-items-map.component.html',
   styleUrls: ['./viewing-items-map.component.css'],
   standalone: true, 
-  imports: [LeafletModule],
+  imports: [LeafletModule,HttpClientModule],
 })
 export class ViewingItemsMapComponent {
-  items: any[] = [];
-  map!: Map;
-  options: any;
+  items: Item[] = []; // Property for the items
+  owner!: User; // Property for the owner
+  address!: Address; // Property for the address
+  map!: Map; // Property for the map
+  options: any; // Property for the options
 
-
-  constructor(private router: Router) {
+  constructor(private router: Router, private itemService: ItemService, private addressService: AddressService, private userService: UsersService) {
     this.options = {
       // Construct the layer for the map (with credits)
       layers: [
@@ -25,7 +33,7 @@ export class ViewingItemsMapComponent {
           attribution: '© OpenStreetMap contributors',
         }),
       ],
-      zoom: 13,
+      zoom: 14,
       // Center of the map (HELHa Montignies-sur-Sambre)
       center: latLng(50.4089, 4.4796),
     };
@@ -39,34 +47,52 @@ export class ViewingItemsMapComponent {
 
   // Load the markers
   loadMarkers(): void {
-    // Mock data to display on the map (I don't have the necessary classes yet (Others Use-Cases))
-    this.items = [
-      {
-        id: 1,
-        name: 'Objet 1',
-        address: { latitude: 50.409, longitude: 4.477 },
-      },
-      {
-        id: 2,
-        name: 'Objet 2',
-        address: { latitude: 50.408, longitude: 4.480 },
-      },
-    ];
 
-    // Add a marker for each item that are available
+    // Load the items from the database
+    this.itemService.getAvailableItem().subscribe(
+      (data: any) => {
+      this.items = data;
+
+      // For each item, fetch the owner and the address
       this.items.forEach((item) => {
-      const marker = new Marker([item.address.latitude, item.address.longitude], {
-        icon: icon({
-          iconSize: [35, 35],
-          iconAnchor: [13, 41],
-          iconUrl: 'assets/marker-icon.png',
-        }),
-        // Load the detailed view of an item when selected
-      }).on('click', () => {
-        this.router.navigate(['/detailed-view-item', item.id]);
-      });
+        
+        // Fetch the owner of the item
+        this.userService.getUserById(item.owner.id).subscribe({
+          next: (data: any) => {
+            this.owner = data;
 
-      marker.addTo(this.map);
-    }); 
+            // Fetch the address of the owner
+            this.addressService.getAddressById(this.owner.addressId).subscribe({
+              next: (data: any) => {
+                this.address = data;
+
+                // Create a marker for the item
+                const marker = new Marker([this.address.latitude, this.address.longitude], {
+                  icon: icon({
+                    iconSize: [35, 35],
+                    iconAnchor: [13, 41],
+                    iconUrl: 'assets/marker-icon.png',
+                  }),
+                  
+                  // When the marker is clicked, navigate to the detailed view of the item
+                }).on('click', () => {
+                  this.router.navigate(['/detailed-view-item', item.id]);
+                });
+                marker.addTo(this.map);
+              },
+              error: (error: any) => {
+                console.error('Error fetching address:', error);
+              }
+            });
+          },
+          error: (error: any) => {
+            console.error('Error fetching owner:', error);
+          }
+        });
+      });
+      (error: any) => {
+      console.error('Error fetching items:', error);
+      }
+  });
   }
 }

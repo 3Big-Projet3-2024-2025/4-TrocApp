@@ -1,40 +1,60 @@
 package helha.trocappbackend.models;
 
+
+import jakarta.persistence.*;
+import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
-
 
 @Entity
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int id_item;
 
     private String name;
     private String description;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
     private String photo;
+    @ManyToOne
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-//    private int ownerId;
 
     private boolean available;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;
+    private boolean available;
+
+    public Item(String name, String description, String photo, Category category, boolean available, User owner) {
+        //this.id = id;
+        this.name = name;
+        this.description = description;
+        this.photo = photo;
+        this.category = category;
+        this.available = available;
+        this.owner = owner;
+    }
+
+
+
+    public Item() {}
 
 
 
     // Getters and setters
 
     public int getId() {
-        return id;
+        return id_item;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id_item = id;
     }
 
     public String getName() {
@@ -69,14 +89,6 @@ public class Item {
         this.category = category;
     }
 
-//    public int getOwnerId() {
-//        return ownerId;
-//    }
-//
-//    public void setOwnerId(int ownerId) {
-//        this.ownerId = ownerId;
-//    }
-
     public User getOwner() {
         return owner;
     }
@@ -94,14 +106,32 @@ public class Item {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return available == item.available &&
+                Objects.equals(id_item, item.id_item) &&
+                Objects.equals(name, item.name) &&
+                Objects.equals(description, item.description) &&
+                Objects.equals(photo, item.photo) &&
+                Objects.equals(category, item.category) &&
+                Objects.equals(owner, item.owner);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id_item, name, description, photo, category, available, owner);
+    }
+
+    @Override
     public String toString() {
         return "Item{" +
-                "id=" + id +
+                "id=" + id_item +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", photo='" + photo + '\'' +
                 ", category=" + category +
-               // ", ownerId=" + ownerId +
                 ", owner=" + owner +
                 '}';
     }

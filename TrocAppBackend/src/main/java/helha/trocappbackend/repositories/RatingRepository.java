@@ -8,10 +8,10 @@ import java.util.List;
 public interface RatingRepository extends JpaRepository<Rating, Long> {
 
     // Récupérer les évaluations reçues par un utilisateur
-    List<Rating> findByReceiverId(Long receiverId);
+    List<Rating> findByReceiverId(int receiverId);
 
     // Récupérer les évaluations postées par un utilisateur
-    List<Rating> findByPosterId(Long posterId);
+    List<Rating> findByPosterId(int posterId);
 }
 
 
