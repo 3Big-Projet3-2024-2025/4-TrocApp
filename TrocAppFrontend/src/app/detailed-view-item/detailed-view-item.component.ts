@@ -27,7 +27,7 @@ export class DetailedViewItemComponent {
 
   // Load the data of the selected item
   loadDataItem() {
-    this.itemService.getItemById(this.id_selected_item).subscribe(
+    this.itemService.getItem(this.id_selected_item).subscribe(
       data => {
         this.item = data;
       },
@@ -39,15 +39,6 @@ export class DetailedViewItemComponent {
   }
 
   // Function to call when an user would like to do an exchange
-  proposeExchange(item: any) {
-    this.itemService.proposeExchange(item).subscribe(
-      data => {
-        this.successMessage = 'Exchange proposed succesfully';
-      },
-      error => {
-        this.errorMessage = 'Error while trying to proposing exchange';
-      }
-    );
-  }
+    proposeExchange(item: any) { }
 
 }
