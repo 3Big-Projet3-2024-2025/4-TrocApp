@@ -16,10 +16,10 @@ import { User } from '../models/user.model';
 export class CategoryListComponent implements OnInit {
   categories: Category[] = [];
   user: User = new User(
-    3,                        // ID of the administrator
-    'Olivier',                // first name
-    'Dupont',                 // last name
-    'olivier.dupont@example.com', // Email
+    5,                        // ID of the administrator
+    'John',                // first name
+    'Doe',                 // last name
+    'john.doe@example.com', // Email
     'password123',            // password
     1,                        // ID of the address
     4.5                    // rating

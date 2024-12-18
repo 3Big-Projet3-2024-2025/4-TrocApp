@@ -81,13 +81,7 @@ public class User {
 
     // Autres attributs, getters, et setters
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 
     /*public void addRole(Role role) {
         this.roles.add(role);

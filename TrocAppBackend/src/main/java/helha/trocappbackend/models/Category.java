@@ -14,6 +14,7 @@ public class Category {
     private List<Item> items;
 
     @ManyToOne
+    //@JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
    public Category() {

@@ -7,6 +7,6 @@ spring:
     password: main01  # Mot de passe PostgreSQL
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: update # Création de la base de données
     properties:
       hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect  #Dialecte PostgreSQL pour Hibernate

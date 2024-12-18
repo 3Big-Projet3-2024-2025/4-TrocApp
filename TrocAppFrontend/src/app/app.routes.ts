@@ -3,15 +3,18 @@ import { UsersManagementComponent } from './users-management/users-management.co
 import { ViewingItemsMapComponent } from './viewing-items-map/viewing-items-map.component';
 import { DetailedViewItemComponent } from './detailed-view-item/detailed-view-item.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
+import { CategoryListComponent } from './category-list/category-list.component';
 
 export const routes: Routes = [
 
     //Path for user management as admin
     { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
     //Path for viewing items on a map
-    { path: "/viewing-items-map", component: ViewingItemsMapComponent },
+    //{ path: "/viewing-items-map", component: ViewingItemsMapComponent },
     //Path for viewing a detailed item
-    { path: "/detailed-view-item", component: DetailedViewItemComponent }
-    { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
+    //{ path: "/detailed-view-item", component: DetailedViewItemComponent },
+    //{ path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
+    {path: 'category-list', component: CategoryListComponent},
+    { path: '**', redirectTo: '/category-list', pathMatch: 'full' }
     
 ];

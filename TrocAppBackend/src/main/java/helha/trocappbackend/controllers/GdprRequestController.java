@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api/gdpr")
 public class GdprRequestController {
 
-    @Autowired
+    /*@Autowired
     private GdprRequestService gdprRequestService;
     @Autowired
     private UserRepository userRepository;
@@ -65,5 +65,5 @@ public class GdprRequestController {
         User adminUser = userRepository.findById(adminUserId).orElseThrow(() -> new RuntimeException("Admin user not found"));
         List<GdprRequest> requests = gdprRequestService.getRequestsByAdmin(adminUser);
         return new ResponseEntity<>(requests, HttpStatus.OK);
-    }
+    }*/
 }

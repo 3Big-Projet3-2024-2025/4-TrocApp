@@ -9,8 +9,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+//import javax.mail.MessagingException;
+//import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -18,14 +18,14 @@ import java.util.Optional;
 @Service
 public class GdprRequestService {
 
-    @Autowired
+    /*@Autowired
     private GdprRequestRepository gdprRequestRepository;
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private JavaMailSender mailSender;  // Utilisation de JavaMailSender pour l'envoi de mails
+    //private JavaMailSender mailSender;  // Utilisation de JavaMailSender pour l'envoi de mails
 
     // Créer une demande GDPR
     public GdprRequest createGdprRequest(GdprRequest gdprRequest) {
@@ -104,7 +104,7 @@ public class GdprRequestService {
     }
 
     // Envoyer un email à l'utilisateur pour répondre à sa demande
-    public void sendEmailToUser(int gdprRequestId, String emailContent) {
+    /*public void sendEmailToUser(int gdprRequestId, String emailContent) {
         GdprRequest gdprRequest = gdprRequestRepository.findById(gdprRequestId)
                 .orElseThrow(() -> new RuntimeException("GDPR Request not found"));
 
@@ -121,10 +121,10 @@ public class GdprRequestService {
         } catch (MessagingException e) {
             throw new RuntimeException("Erreur lors de l'envoi de l'email", e);
         }
-    }
+    }*/
 
     // Récupérer les demandes par utilisateur
-    public List<GdprRequest> getRequestsByUser(User user) {
+    /*public List<GdprRequest> getRequestsByUser(User user) {
         return gdprRequestRepository.findByUser(user);
     }
 
@@ -136,6 +136,6 @@ public class GdprRequestService {
     // Service pour obtenir toutes les demandes GDPR
     public List<GdprRequest> getAllGdprRequests() {
         return gdprRequestRepository.findAll();  // Utilisation de findAll() pour obtenir toutes les demandes
-    }
+    }*/
 
 }
