@@ -6,9 +6,12 @@ import org.springframework.stereotype.Service;
 public class GeocodingService {
 
     private final String GEOCODING_URL = "https://nominatim.openstreetmap.org/search?format=json&q=";
+
     /*private final RestTemplate restTemplate;
 
-    public GeocodingService(RestTemplate restTemplate) {
+    //private final RestTemplate restTemplate;
+
+    /*public GeocodingService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
