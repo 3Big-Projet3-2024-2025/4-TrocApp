@@ -18,6 +18,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+
 
 @Configuration
 @EnableWebSecurity
@@ -30,8 +32,8 @@ public class SpringSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
-        return http.csrf(csrf -> csrf.disable())
-                .authorizeRequests(authorizeRequests -> {
+        return http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(authorizeRequests -> {
                     authorizeRequests.requestMatchers("/sports/all").hasRole("ADMIN");
                     authorizeRequests.requestMatchers("/sports").hasRole("USER");
                     authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs","/user","/auth/login").permitAll();
