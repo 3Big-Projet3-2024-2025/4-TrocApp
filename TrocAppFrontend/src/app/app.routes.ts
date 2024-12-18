@@ -5,13 +5,14 @@ import { DetailedViewItemComponent } from './detailed-view-item/detailed-view-it
 import { UserEditComponent } from './user-edit/user-edit.component';
 
 export const routes: Routes = [
-
+    { path: '', component: ViewingItemsMapComponent }, // Default Path (Home Page)
     //Path for user management as admin
     { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
     //Path for viewing items on a map
-    { path: "/viewing-items-map", component: ViewingItemsMapComponent },
+    { path: "viewing-items-map", component: ViewingItemsMapComponent }, // Path to the map page
     //Path for viewing a detailed item
-    { path: "/detailed-view-item", component: DetailedViewItemComponent }
+    { path: "detailed-view-item", component: DetailedViewItemComponent }, // Path to the detailed item page
+    { path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' } // Wildcard route
     { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
     
 ];
