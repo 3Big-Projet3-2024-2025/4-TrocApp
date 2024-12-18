@@ -23,9 +23,16 @@ public class ItemController {
         so the returned item will have a category that already exists
      */
     @PostMapping
-    public ResponseEntity<?> addItem(@RequestBody Item item) {
-        try {
-            Integer idCategory = item.getCategory().getId_category();
+    public Item addItem(@RequestBody Item item) {
+        Item item1 = new Item();
+        item1.setName(item.getName());
+        item1.setDescription(item.getDescription());
+        item1.setAvailable(item.isAvailable());
+        item1.setOwner(item.getOwner());
+        //item1.setOwnerId(item.getOwnerId());
+        item1.setPhoto(item.getPhoto());
+        Integer idCategory = item.getCategory().getId_category();
+        if (idCategory != null) {
             Category category = categoryRepository.findById(idCategory)
                     .orElseThrow(() -> new RuntimeException("Category not found"));
             item.setCategory(category);
@@ -94,17 +101,8 @@ public class ItemController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Item> getItem(@PathVariable("id") int id) {
-        try {
-            Item item = itemService.getItemById(id);
-            if (item == null) {
-                return ResponseEntity.notFound().build();
-            }
-            return ResponseEntity.ok(item);
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(null);
-        }
+    public Item getItem(@PathVariable("id") int id) {
+        return itemService.getItemById(id);
     }
 }
 

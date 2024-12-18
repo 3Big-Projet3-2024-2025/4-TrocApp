@@ -45,6 +45,8 @@ public class Item {
 
     public Item() {}
 
+
+
     // Getters and setters
 
     public int getId() {

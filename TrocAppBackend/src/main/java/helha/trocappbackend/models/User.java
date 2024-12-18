@@ -4,6 +4,10 @@ package helha.trocappbackend.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -27,12 +31,7 @@ public class User {
 
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id")
-    //@JsonManagedReference
-    @JsonIgnoreProperties("users")
     //@JsonManagedReference
     @JsonIgnoreProperties("users")
     private Address address;
@@ -83,27 +82,10 @@ public class User {
         this.email = email;
         this.password = password;
     }
-    //Doha
-    // Default constructor
-    public User() {}
-
-    // Constructor with parameters
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
 
     // Autres attributs, getters, et setters
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 
 
 
