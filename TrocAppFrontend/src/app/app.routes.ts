@@ -20,10 +20,10 @@ export const routes: Routes = [
     //Path for viewing items on a map
     { path: "viewing-items-map", component: ViewingItemsMapComponent },
     //Path for viewing a detailed item
-    //{ path: "detailed-view-item", component: DetailedViewItemComponent },,
+    { path: "detailed-view-item", component: DetailedViewItemComponent },
     //{ path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
     {path: 'category-list', component: CategoryListComponent},
-    { path: '**', redirectTo: '/category-list', pathMatch: 'full' }
+    //{ path: '**', redirectTo: '/category-list', pathMatch: 'full' },
     
     { path: "detailed-view-item/:id", component: DetailedViewItemComponent },
     //path for adding an item

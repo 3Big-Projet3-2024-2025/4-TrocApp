@@ -7,7 +7,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 })
 export class AddressService {
 
-  private baseUrl = 'http://localhost:8080/address';
+  private baseUrl = 'http://localhost:8080/addresses';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
