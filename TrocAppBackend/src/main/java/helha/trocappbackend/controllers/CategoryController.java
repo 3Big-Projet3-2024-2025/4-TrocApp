@@ -28,7 +28,7 @@ public class CategoryController {
         return categoryService.getAllCategories();
     }
 
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<Object> addCategory(@RequestBody Category category) {
         try {
             // Search for the administrator (user) by ID
@@ -63,7 +63,34 @@ public class CategoryController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An error occurred while creating the category: " + e.getMessage());
         }
+    }*/
+    @PostMapping
+    public ResponseEntity<Object> addCategory(@RequestBody Category category) {
+        try {
+            // Vérifiez si une catégorie avec le même nom existe déjà
+            boolean categoryExists = categoryService.getAllCategories().stream()
+                    .anyMatch(existingCategory ->
+                            existingCategory.getName().equalsIgnoreCase(category.getName()));
+
+            if (categoryExists) {
+                return ResponseEntity.status(HttpStatus.CONFLICT)
+                        .body("A category with the same name already exists.");
+            }
+
+            // Sauvegarder la catégorie
+            Category savedCategory = categoryService.createCategory(category);
+
+            // Retourner la catégorie sauvegardée
+            return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while creating the category: " + e.getMessage());
+        }
     }
+
+
+
 
 
     // update a category

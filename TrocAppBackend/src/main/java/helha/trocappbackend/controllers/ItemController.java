@@ -23,16 +23,9 @@ public class ItemController {
         so the returned item will have a category that already exists
      */
     @PostMapping
-    public Item addItem(@RequestBody Item item) {
-        Item item1 = new Item();
-        item1.setName(item.getName());
-        item1.setDescription(item.getDescription());
-        item1.setAvailable(item.isAvailable());
-        item1.setOwner(item.getOwner());
-        //item1.setOwnerId(item.getOwnerId());
-        item1.setPhoto(item.getPhoto());
-        Integer idCategory = item.getCategory().getId_category();
-        if (idCategory != null) {
+    public ResponseEntity<?> addItem(@RequestBody Item item) {
+        try {
+            Integer idCategory = item.getCategory().getId_category();
             Category category = categoryRepository.findById(idCategory)
                     .orElseThrow(() -> new RuntimeException("Category not found"));
             item.setCategory(category);

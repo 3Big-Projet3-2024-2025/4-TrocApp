@@ -8,6 +8,7 @@ import { AddressService } from '../services/address.service';
 import { UsersService } from '../services/users.service';
 import { Item } from '../models/item';
 import { User } from '../models/user';
+import { Address } from '../address';
 import { Address } from '../models/address.model';
 
 @Component({
@@ -18,7 +19,7 @@ import { Address } from '../models/address.model';
   imports: [LeafletModule,HttpClientModule],
 })
 export class ViewingItemsMapComponent {
-  items: Item[] = []; // Property for the items
+ items: Item[] = []; // Property for the items
   owner!: User; // Property for the owner
   address!: Address; // Property for the address
   map!: Map; // Property for the map

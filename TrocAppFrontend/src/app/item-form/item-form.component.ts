@@ -49,24 +49,19 @@ export class ItemFormComponent implements OnInit {
     available: true,
     category: {
       id_category: 1,
-      name: ""
+      name: "",
+      
     },
     owner: {
-      id: 3,
+      id: 1,
       firstName: "",
       lastName: "",
       email: "",
       password: "",
       rating: -1,
-      address: {
-        id: -1,
-        longitude: -1,
-        latitude: -1,
-        street: "",
-        number: "",
-        city: "",
-        zipCode: -1
-      }
+      address: '',
+      addressId: 0,
+      roles: [] 
     }
   }
 

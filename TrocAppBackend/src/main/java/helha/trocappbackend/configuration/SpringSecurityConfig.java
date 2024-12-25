@@ -1,6 +1,6 @@
 package helha.trocappbackend.configuration;
 
-import helha.trocappbackend.security.JWTFilter;
+//import helha.trocappbackend.security.JWTFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,14 +21,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
 
-@Configuration
+/*@Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
     @Autowired
     UserDetailsService userDetailsService;
 
     @Autowired
-    JWTFilter jwtFilter;
+    //JWTFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
@@ -65,5 +65,5 @@ public class SpringSecurityConfig {
         AuthenticationManagerBuilder authenticationManagerBuiler = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuiler.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
         return authenticationManagerBuiler.build();
-    }
-}
+
+}}*/

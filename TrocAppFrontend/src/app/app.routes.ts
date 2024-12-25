@@ -23,7 +23,7 @@ export const routes: Routes = [
     //{ path: "detailed-view-item", component: DetailedViewItemComponent },,
     //{ path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
     {path: 'category-list', component: CategoryListComponent},
-    { path: '**', redirectTo: '/category-list', pathMatch: 'full' }
+    { path: '**', redirectTo: '/category-list', pathMatch: 'full' },
     
     { path: "detailed-view-item/:id", component: DetailedViewItemComponent },
     //path for adding an item

@@ -21,7 +21,7 @@ public class GdprRequestController {
     @Autowired
     private UserRepository userRepository;
 
-    /*// Crate a GDPR request
+    // Crate a GDPR request
     @PostMapping
     public ResponseEntity<GdprRequest> createRequest(@RequestBody GdprRequest gdprRequest) {
         GdprRequest savedRequest = gdprRequestService.createGdprRequest(gdprRequest);

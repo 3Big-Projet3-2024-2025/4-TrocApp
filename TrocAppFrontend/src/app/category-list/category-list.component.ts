@@ -15,7 +15,7 @@ import { User } from '../models/user.model';
 })
 export class CategoryListComponent implements OnInit {
   categories: Category[] = [];
-  user: User = new User(
+ /* user: User = new User(
     5,                        // ID of the administrator
     'John',                // first name
     'Doe',                 // last name
@@ -23,9 +23,9 @@ export class CategoryListComponent implements OnInit {
     'password123',            // password
     1,                        // ID of the address
     4.5                    // rating
-  );
+  );*/
 
-  newCategory: Category = new Category(0, '', [],this.user);
+  newCategory: Category = new Category(0, '');
   editingCategory: Category | null = null;
   message: string = '';
 
@@ -45,7 +45,7 @@ export class CategoryListComponent implements OnInit {
   onSubmit(): void {
     this.categoryService.createCategory(this.newCategory).subscribe(
       () => {
-        this.newCategory = new Category(0, '',[],this.user); // Reset the form
+        this.newCategory = new Category(0, ''); // Reset the form
         this.loadCategories();
         this.message = 'Category added successfully.';
       },

@@ -2,7 +2,7 @@ package helha.trocappbackend.services;
 
 import helha.trocappbackend.models.GdprRequest;
 import helha.trocappbackend.models.User;
-import helha.trocappbackend.repositories.GdprRequestRepository;
+//import helha.trocappbackend.repositories.GdprRequestRepository;
 import helha.trocappbackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
