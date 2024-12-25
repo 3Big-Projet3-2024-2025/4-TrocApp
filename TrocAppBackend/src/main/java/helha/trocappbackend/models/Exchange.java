@@ -1,6 +1,5 @@
 package helha.trocappbackend.models;
 import jakarta.persistence.*;
-
 import java.sql.Date;
 
 @Entity
@@ -20,11 +19,11 @@ public class Exchange {
 
     @ManyToOne
     @JoinColumn(name = "initiator_id")
-    private User initiator;
+    private helha.trocappbackend.models.User initiator;
 
     @ManyToOne
     @JoinColumn(name = "receiver_id")
-    private User receiver;
+    private helha.trocappbackend.models.User receiver;
 
     public Exchange(int offeredObjectId, int requestedObjectId, Date proposalDate, Date acceptanceDate, String status, float firstEvaluation, float secondEvaluation, User initiator, User receiver) {
         this.offeredObjectId = offeredObjectId;

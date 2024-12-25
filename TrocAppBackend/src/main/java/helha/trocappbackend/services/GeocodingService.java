@@ -12,7 +12,7 @@ import helha.trocappbackend.models.Address;
 @Service
 public class GeocodingService {
 
-    @Value("${nominatim.api.url}")
+    /*@Value("${nominatim.api.url}")
     private String nominatimApiUrl; // Nominatim API default URL
 
     private final RestTemplate restTemplate; // Field for HTTP requests
@@ -61,5 +61,5 @@ public class GeocodingService {
                 address.getNumber() + ", " +
                 address.getCity() + ", " +
                 address.getZipCode();
-    }
+    }*/
 }

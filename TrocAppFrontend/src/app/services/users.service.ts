@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '../models/user';
-import { Role } from '../models/role';
+import { User } from '../user';
+import { Role } from '../role';
 
 interface PaginatedResponse {
   content: User[];  // Tableau d'utilisateurs
@@ -40,5 +40,28 @@ export class UsersService {
   getRoles(): Observable<Role[]> {
     return this.http.get<Role[]>(`${this.apiUrl}/roles`);  // Retourne la liste des rôles
   }
+
+  updateUserRoles(userId: number, roleIds: number[]): Observable<void> {
+    return this.http.put<void>(`http://localhost:8080/users/${userId}/roles`, roleIds);
+  }
+
+  getAllRoles(): Observable<Role[]> {
+    return this.http.get<Role[]>(`${this.apiUrl}/getAllRoles`);
+  }
+
+  getZipCodes(): Observable<number[]> {
+    return this.http.get<number[]>(`${this.apiUrl}/zipcodes`);  // Effectue une requête GET pour récupérer les zip codes (ici des nombres)
+  }
+
+  getCities(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/cities`);  // Effectue une requête GET pour récupérer les zip codes (ici des nombres)
+  }
+  getStreets(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/streets`);  // Effectue une requête GET pour récupérer les zip codes (ici des nombres)
+  }
+  getNumbers(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/numbers`);  // Effectue une requête GET pour récupérer les zip codes (ici des nombres)
+  }
+
 
 }

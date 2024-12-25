@@ -1,5 +1,5 @@
 package helha.trocappbackend.repositories;
-
+/*
 import helha.trocappbackend.models.GdprRequest;
 import helha.trocappbackend.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +10,4 @@ public interface GdprRequestRepository extends JpaRepository<GdprRequest, Intege
     List<GdprRequest> findByUser(User user);
 
     List<GdprRequest> findByAdminUser(User adminUser);
-}
+}*/

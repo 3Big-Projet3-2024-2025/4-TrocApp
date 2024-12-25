@@ -1,6 +1,6 @@
 package helha.trocappbackend.controllers;
 
-import helha.trocappbackend.models.GdprRequest;
+//import helha.trocappbackend.models.GdprRequest;
 import helha.trocappbackend.models.User;
 import helha.trocappbackend.repositories.UserRepository;
 import helha.trocappbackend.services.GdprRequestService;
@@ -16,12 +16,13 @@ import java.util.List;
 @RequestMapping("/api/gdpr")
 public class GdprRequestController {
 
-    @Autowired
+    /*@Autowired
     private GdprRequestService gdprRequestService;
     @Autowired
     private UserRepository userRepository;
 
-    // Crate a GDPR request
+    Crate a GDPR request
+
     @PostMapping
     public ResponseEntity<GdprRequest> createRequest(@RequestBody GdprRequest gdprRequest) {
         GdprRequest savedRequest = gdprRequestService.createGdprRequest(gdprRequest);
@@ -65,5 +66,5 @@ public class GdprRequestController {
         User adminUser = userRepository.findById(adminUserId).orElseThrow(() -> new RuntimeException("Admin user not found"));
         List<GdprRequest> requests = gdprRequestService.getRequestsByAdmin(adminUser);
         return new ResponseEntity<>(requests, HttpStatus.OK);
-    }
+    }*/
 }
