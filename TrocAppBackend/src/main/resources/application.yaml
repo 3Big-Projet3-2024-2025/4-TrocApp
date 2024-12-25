@@ -17,3 +17,9 @@ spring:
 nominatim:
   api:
     url: https://nominatim.openstreetmap.org/ # URL for the Nominatim API
+
+
+jwt:
+  secret: fjkdfngdbjzebnhubvshubsgdvgbjhn435345fsdnbvxhcbghxcbvxcvxfjkdfngdbjzebnhubvshubsgdvgbjhn435345fsdnbvxhcbghxcbvxcvx
+  expirationTokenMs: 3600000
+  expirationRefreshTokenMs: 604800000

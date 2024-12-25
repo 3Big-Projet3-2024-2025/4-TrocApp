@@ -15,4 +15,5 @@ public interface UserRepository extends JpaRepository<User, Integer>, PagingAndS
     //public List<User> findById(int id);
     Optional<User> findById(int id);
     public List<User> getUserById(int id);
+    User findByUsername(String username);
 }
