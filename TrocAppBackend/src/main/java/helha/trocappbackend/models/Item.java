@@ -16,10 +16,8 @@ public class Item {
     private String description;
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
     private String photo;
-    @ManyToOne
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -29,7 +27,6 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;
-    private boolean available;
 
     public Item(String name, String description, String photo, Category category, boolean available, User owner) {
         //this.id = id;
@@ -44,6 +41,8 @@ public class Item {
 
 
     public Item() {}
+
+
 
     // Getters and setters
 

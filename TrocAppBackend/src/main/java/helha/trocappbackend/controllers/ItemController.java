@@ -94,17 +94,8 @@ public class ItemController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Item> getItem(@PathVariable("id") int id) {
-        try {
-            Item item = itemService.getItemById(id);
-            if (item == null) {
-                return ResponseEntity.notFound().build();
-            }
-            return ResponseEntity.ok(item);
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(null);
-        }
+    public Item getItem(@PathVariable("id") int id) {
+        return itemService.getItemById(id);
     }
 }
 

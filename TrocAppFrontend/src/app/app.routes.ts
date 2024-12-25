@@ -11,6 +11,7 @@ import { ItemFormComponent } from './item-form/item-form.component';
 //import { ItemtestComponent } from './itemtest/itemtest.component';
 //import { ItemDetTestComponent } from './item-det-test/item-det-test.component';
 //import { ExchangeListComponent } from './exchange-list/exchange-list.component';
+import { CategoryListComponent } from './category-list/category-list.component';
 
 export const routes: Routes = [
     { path: '', component: ViewingItemsMapComponent }, // Default Path (Home Page)
@@ -20,7 +21,9 @@ export const routes: Routes = [
     { path: "viewing-items-map", component: ViewingItemsMapComponent },
     //Path for viewing a detailed item
     { path: "detailed-view-item", component: DetailedViewItemComponent },
-    { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
+    //{ path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
+    {path: 'category-list', component: CategoryListComponent},
+    //{ path: '**', redirectTo: '/category-list', pathMatch: 'full' },
     
     { path: "detailed-view-item/:id", component: DetailedViewItemComponent },
     //path for adding an item

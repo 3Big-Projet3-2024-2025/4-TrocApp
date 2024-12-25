@@ -16,12 +16,13 @@ import java.util.List;
 @RequestMapping("/api/gdpr")
 public class GdprRequestController {
 
-    @Autowired
+    /*@Autowired
     private GdprRequestService gdprRequestService;
     @Autowired
     private UserRepository userRepository;
 
-    /*// Crate a GDPR request
+    Crate a GDPR request
+
     @PostMapping
     public ResponseEntity<GdprRequest> createRequest(@RequestBody GdprRequest gdprRequest) {
         GdprRequest savedRequest = gdprRequestService.createGdprRequest(gdprRequest);

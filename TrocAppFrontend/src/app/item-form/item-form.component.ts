@@ -49,7 +49,9 @@ export class ItemFormComponent implements OnInit {
     available: true,
     category: {
       id_category: 1,
-      name: ""
+      name: "",
+      items: undefined,
+      user: undefined
     },
     owner: {
       id: 3,
@@ -58,15 +60,8 @@ export class ItemFormComponent implements OnInit {
       email: "",
       password: "",
       rating: -1,
-      address: {
-        id: -1,
-        longitude: -1,
-        latitude: -1,
-        street: "",
-        number: "",
-        city: "",
-        zipCode: -1
-      }
+      address: null,
+      roles: [] 
     }
   }
 
@@ -92,7 +87,7 @@ export class ItemFormComponent implements OnInit {
       next: (item) => {
         console.log(this.itemToSave);
         console.log(item);
-        this.router.navigate(["/itemtest"]);
+        this.router.navigate(["/"]);
         sub.unsubscribe();
       },
       error: (error) => {

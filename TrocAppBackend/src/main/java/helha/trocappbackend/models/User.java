@@ -4,16 +4,19 @@ package helha.trocappbackend.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import java.util.List;
 import java.util.Set;
 
-@JsonIgnoreProperties({"password", "email", "address", "rating", "postedRatings", "receivedRatings", "items", "exchangesAsInitiator", "exchangesAsReceiver", "roles"})
+@JsonIgnoreProperties({"password", "postedRatings", "receivedRatings", "items", "exchangesAsInitiator", "exchangesAsReceiver"})
 @Entity
 @Table(name = "app_user")
-
 public class User {
 
     @Id
@@ -22,17 +25,13 @@ public class User {
 
     private String firstName;
     private String lastName;
+    private String username;
     private String email;
     private String password;
 
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id")
-    //@JsonManagedReference
-    @JsonIgnoreProperties("users")
     //@JsonManagedReference
     @JsonIgnoreProperties("users")
     private Address address;
@@ -83,17 +82,6 @@ public class User {
         this.email = email;
         this.password = password;
     }
-    //Doha
-    // Default constructor
-    public User() {}
-
-    // Constructor with parameters
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
 
     // Autres attributs, getters, et setters
 
@@ -101,9 +89,7 @@ public class User {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
+
 
 
 
@@ -144,6 +130,10 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String getUsername() { return username;}
+
+    public void setUsername(String username) { this.username = username;}
 
     public String getEmail() {
         return email;
