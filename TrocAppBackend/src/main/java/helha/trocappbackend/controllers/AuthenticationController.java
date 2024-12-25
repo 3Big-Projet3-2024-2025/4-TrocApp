@@ -1,5 +1,5 @@
 package helha.trocappbackend.controllers;
-
+/*
 import helha.trocappbackend.models.JWT;
 import helha.trocappbackend.repositories.UserRepository;
 import helha.trocappbackend.services.UserService;
@@ -46,3 +46,4 @@ public class AuthenticationController {
         }
     }
 }
+*/
