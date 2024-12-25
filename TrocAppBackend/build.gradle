@@ -31,7 +31,8 @@ dependencies {
 		implementation 'org.springframework.boot:spring-boot-starter-mail'
 		implementation 'org.springframework.boot:spring-boot-starter-validation'
 		implementation 'com.h2database:h2'
-		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		implementation 'com.fasterxml.jackson.core:jackson-databind'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 		runtimeOnly 'org.postgresql:postgresql'
 		implementation 'org.hibernate:hibernate-core:6.5.3.Final'
 		// JSON management for conversion into coordinates
@@ -40,7 +41,9 @@ dependencies {
 
 		annotationProcessor 'org.projectlombok:lombok'
 		implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.2'
-	}
+		implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+	implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
+}
 
 	tasks.named('test') {
 		useJUnitPlatform()

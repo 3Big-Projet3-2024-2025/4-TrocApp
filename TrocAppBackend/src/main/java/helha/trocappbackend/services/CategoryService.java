@@ -6,6 +6,7 @@ import helha.trocappbackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 
 @Service
@@ -21,11 +22,11 @@ public class CategoryService {
     }
 
     public Category createCategory(Category category) {
-        if (category.getUser() == null ||
+        /*if (category.getUser() == null ||
                 category.getUser().getId() == 0 ||
                 !userRepository.existsById(category.getUser().getId())) {
             throw new IllegalArgumentException("Invalid user ID");
-        }
+        }*/
         return categoryRepository.save(category);
     }
 

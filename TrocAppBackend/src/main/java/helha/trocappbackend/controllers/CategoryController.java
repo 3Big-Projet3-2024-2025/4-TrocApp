@@ -31,35 +31,23 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<Object> addCategory(@RequestBody Category category) {
         try {
-            // Search for the administrator (user) by ID
-            User user = userRepository.findById(category.getUser().getId())
-                    .orElse(null); // Retourne null si l'administrateur n'est pas trouvé
-
-            if (user == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body("Administrator not found with ID: " + category.getUser().getId());
-            }
-            //verify if the category already exists
+            // Vérifiez si une catégorie avec le même nom existe déjà
             boolean categoryExists = categoryService.getAllCategories().stream()
                     .anyMatch(existingCategory ->
-                            existingCategory.getName().equalsIgnoreCase(category.getName()) &&
-                                    existingCategory.getUser().getId() == user.getId());
+                            existingCategory.getName().equalsIgnoreCase(category.getName()));
 
             if (categoryExists) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
-                        .body("A category with the same name already exists for this administrator.");
+                        .body("A category with the same name already exists.");
             }
-            // Assign the user (admin) to the category
-            category.setUser(user);
 
-            // Save the category
+            // Sauvegarder la catégorie
             Category savedCategory = CategoryRepository.save(category);
 
-            // Return the saved category
+            // Retourner la catégorie sauvegardée
             return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
 
         } catch (Exception e) {
-            // Retourner un message d'erreur détaillé
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An error occurred while creating the category: " + e.getMessage());
         }
