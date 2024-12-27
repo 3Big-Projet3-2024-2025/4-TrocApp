@@ -15,9 +15,16 @@ public class Item {
     private String name;
     private String description;
 
+
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private String photo;
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private String photo;
+
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -27,7 +34,6 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;
-
 
     public Item(String name, String description, String photo, Category category, boolean available, User owner) {
         //this.id = id;

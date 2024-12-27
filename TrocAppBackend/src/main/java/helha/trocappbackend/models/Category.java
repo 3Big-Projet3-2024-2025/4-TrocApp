@@ -26,7 +26,7 @@ public class Category {
         this.id_category = id_category;
         this.name = name;
 
-    }
+
 
     public Category(String name) {
         this.name = name;
@@ -65,5 +65,4 @@ public class Category {
         this.user = user;
     }
 }
-
 

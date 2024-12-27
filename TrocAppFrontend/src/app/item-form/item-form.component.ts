@@ -16,9 +16,9 @@ import { CategoryService } from '../services/category.service';
   styleUrl: './item-form.component.css'
 })
 export class ItemFormComponent implements OnInit {
-  
+
   constructor(private itemService: ItemService, private route: ActivatedRoute, private router: Router, private categoryService: CategoryService) {}
-  
+
   ngOnInit(): void {
     this.categoryList = this.categoryService.getCategories() as Observable<Category[]>;
     this.route.params.subscribe(params=> {
@@ -50,7 +50,10 @@ export class ItemFormComponent implements OnInit {
     category: {
       id_category: 1,
       name: "",
-      
+
+      items: undefined,
+      user: undefined
+
     },
     owner: {
       id: 1,
@@ -59,13 +62,17 @@ export class ItemFormComponent implements OnInit {
       email: "",
       password: "",
       rating: -1,
+
       address: '',
       addressId: 0,
-      roles: [] 
+
+      address: null,
+
+      roles: []
     }
   }
 
-  /*   
+  /*
   captures the file from the input and uses FileReader to convert it to a Base64 string
   The Base64 string is saved in itemToSave.photo for upload and shown in the imagePreview.
  */
@@ -87,7 +94,7 @@ export class ItemFormComponent implements OnInit {
       next: (item) => {
         console.log(this.itemToSave);
         console.log(item);
-        this.router.navigate(["/itemtest"]);
+        this.router.navigate(["/"]);
         sub.unsubscribe();
       },
       error: (error) => {

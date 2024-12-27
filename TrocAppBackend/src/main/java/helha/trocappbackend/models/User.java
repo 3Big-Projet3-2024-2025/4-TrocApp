@@ -14,9 +14,11 @@ import jakarta.persistence.Id;
 import java.util.List;
 import java.util.Set;
 
+
+@JsonIgnoreProperties({"password", "postedRatings", "receivedRatings", "items", "exchangesAsInitiator", "exchangesAsReceiver"})
+
 @Entity
 @Table(name = "app_user")
-
 public class User {
 
     @Id
@@ -25,6 +27,7 @@ public class User {
 
     private String firstName;
     private String lastName;
+    private String username;
     private String email;
     private String password;
 
@@ -84,6 +87,10 @@ public class User {
 
     // Autres attributs, getters, et setters
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
 
 
 
@@ -125,6 +132,10 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String getUsername() { return username;}
+
+    public void setUsername(String username) { this.username = username;}
 
     public String getEmail() {
         return email;
