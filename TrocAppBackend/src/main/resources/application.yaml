@@ -7,7 +7,7 @@ spring:
     password: main01  # Password PostgreSQL
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: update # Création de la base de données
     properties:
       hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect  #Dialect PostgreSQL for Hibernate
 #  security:
@@ -17,3 +17,9 @@ spring:
 nominatim:
   api:
     url: https://nominatim.openstreetmap.org/ # URL for the Nominatim API
+
+
+jwt:
+  secret: fjkdfngdbjzebnhubvshubsgdvgbjhn435345fsdnbvxhcbghxcbvxcvxfjkdfngdbjzebnhubvshubsgdvgbjhn435345fsdnbvxhcbghxcbvxcvx
+  expirationTokenMs: 3600000
+  expirationRefreshTokenMs: 604800000

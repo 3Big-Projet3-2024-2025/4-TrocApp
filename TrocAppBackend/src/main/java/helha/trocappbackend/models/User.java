@@ -4,13 +4,17 @@ package helha.trocappbackend.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import java.util.List;
 import java.util.Set;
 
-
+@JsonIgnoreProperties({"password", "postedRatings", "receivedRatings", "items", "exchangesAsInitiator", "exchangesAsReceiver"})
 @Entity
 @Table(name = "app_user")
 public class User {
@@ -21,6 +25,7 @@ public class User {
 
     private String firstName;
     private String lastName;
+    private String username;
     private String email;
     private String password;
 
@@ -77,9 +82,6 @@ public class User {
         this.email = email;
         this.password = password;
     }
-    //Doha
-    // Default constructor
-
 
     // Autres attributs, getters, et setters
 
@@ -87,9 +89,7 @@ public class User {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
+
 
 
 
@@ -130,6 +130,10 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String getUsername() { return username;}
+
+    public void setUsername(String username) { this.username = username;}
 
     public String getEmail() {
         return email;

@@ -27,7 +27,6 @@ public class Item {
     @JoinColumn(name = "user_id")
     private User owner;
 
-
     public Item(String name, String description, String photo, Category category, boolean available, User owner) {
         //this.id = id;
         this.name = name;
@@ -41,6 +40,8 @@ public class Item {
 
 
     public Item() {}
+
+
 
     // Getters and setters
 
