@@ -10,10 +10,9 @@ import jakarta.persistence.Id;
 import java.util.List;
 import java.util.Set;
 
-@JsonIgnoreProperties({"password", "email", "address", "rating", "postedRatings", "receivedRatings", "items", "exchangesAsInitiator", "exchangesAsReceiver", "roles"})
+
 @Entity
 @Table(name = "app_user")
-
 public class User {
 
     @Id
@@ -27,12 +26,7 @@ public class User {
 
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id")
-    //@JsonManagedReference
-    @JsonIgnoreProperties("users")
     //@JsonManagedReference
     @JsonIgnoreProperties("users")
     private Address address;
@@ -85,15 +79,7 @@ public class User {
     }
     //Doha
     // Default constructor
-    public User() {}
 
-    // Constructor with parameters
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
 
     // Autres attributs, getters, et setters
 
