@@ -19,53 +19,55 @@ import { Router } from '@angular/router';
   styleUrl: './users-management.component.css'
 })
 export class UsersManagementComponent implements OnInit{
-  users: User[] = []; // Tableau d'utilisateurs
-  notificationVisible = false;
-  editingUser: User | null = null;
-  roles: Role[] = [];  
- 
-
-  constructor(private usersService: UsersService, private router: Router) {}
-
-  /*ngOnInit(): void {
-    this.usersService.getUsers().subscribe(
-      (data) => {
-        console.log('API Response:', data);  // Vérifiez ce qui est retourné par l'API
-        this.users = data.content;  // Assurez-vous que vous affectez le tableau `content` à `users`
-      },
-      (error) => {
-        console.error('Error fetching users:', error);
-      }
-    );
-  }*/
-
+    // Variables pour stocker les données
+    users: User[] = [];
+    filteredUsers: User[] = [];
+    notificationVisible = false;
+    currentFilter = 'all';
+  
+    constructor(
+      private usersService: UsersService,
+      private router: Router
+    ) {}
+  
     ngOnInit(): void {
       this.fetchUsers();
-      this.fetchRoles();
     }
   
-      // Fonction pour formater l'adresse
+    // Récupération des utilisateurs depuis le service
+    fetchUsers(): void {
+      this.usersService.getUsers().subscribe({
+        next: (data) => {
+          this.users = data.content;
+          this.applyFilter();
+        },
+        error: (error) => console.error('Error fetching users:', error)
+      });
+    }
+  
+    // Formatage de l'adresse pour l'affichage
     formatAddress(address: any): string {
-    if (!address) return 'Adresse non disponible';
-    return `${address.number} ${address.street}, ${address.city} ${address.zipCode}`;
-  }
-
-  fetchRoles() {
-    this.usersService.getRoles().subscribe(
-      (data) => this.roles = data,  // Affecte les rôles récupérés
-      (error) => console.error('Error fetching roles:', error)
-    );
-  }
-
-    // Récupérer la liste des utilisateurs
-    fetchUsers() {
-      this.usersService.getUsers().subscribe(
-        (data) => this.users = data.content,
-        (error) => console.error('Error fetching users:', error)
-      );
+      if (!address) return 'Adresse non disponible';
+      return `${address.number} ${address.street}, ${address.city} ${address.zipCode}`;
     }
   
-    // Confirmation double pour suppression
+    // Gestion des filtres
+    setFilter(filter: string): void {
+      this.currentFilter = filter;
+      this.applyFilter();
+    }
+  
+    // Application du filtre sur la liste des utilisateurs
+    applyFilter(): void {
+      this.filteredUsers = this.users.filter(user => {
+        if (this.currentFilter === 'all') return true;
+        return user.roles.some(role => 
+          role.name.toLowerCase() === this.currentFilter.toLowerCase()
+        );
+      });
+    }
+  
+    // Confirmation de suppression avec double vérification
     confirmDelete(userId: number): void {
       if (confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) {
         if (confirm("Vraiment sûr ? Cette action est irréversible.")) {
@@ -74,24 +76,32 @@ export class UsersManagementComponent implements OnInit{
       }
     }
   
-    // Suppression de l'utilisateur
+    // Suppression d'un utilisateur
     deleteUser(userId: number): void {
-      this.usersService.deleteUser(userId).subscribe(
-        () => {
-          this.notificationVisible = true; // Affiche la notification
-          setTimeout(() => this.notificationVisible = false, 3000); // Cache après 3 secondes
-          this.fetchUsers(); // Rafraîchit la liste
+      this.usersService.deleteUser(userId).subscribe({
+        next: () => {
+          this.notificationVisible = true;
+          setTimeout(() => this.notificationVisible = false, 3000);
+          this.fetchUsers(); // Rafraîchit la liste après suppression
         },
-        (error) => console.error('Error deleting user:', error)
-      );
+        error: (error) => console.error('Error deleting user:', error)
+      });
     }
-
-    
-  // Exemple dans users-management.component.ts
-editUser(userId: number): void {
-  this.router.navigate(['/edit/' + userId]);  // Vérifiez que cette syntaxe est correcte
-}
-
+  
+    // Navigation vers la page d'édition
+    editUser(userId: number): void {
+      this.router.navigate(['/edit', userId]);
+    }
+  
+    // Calcul du pourcentage pour la barre de progression
+    calculateRatingPercentage(rating: number): number {
+      return (rating / 5) * 100;
+    }
+  
+    // Vérification si un utilisateur est admin
+    isAdmin(role: Role): boolean {
+      return role.name.toLowerCase() === 'admin';
+    }
 
 }
 
