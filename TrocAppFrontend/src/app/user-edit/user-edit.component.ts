@@ -128,7 +128,7 @@ export class UserEditComponent {
         next: (user) => {
           this.message = 'Utilisateur mis à jour avec succès.';
           this.success = true;
-          setTimeout(() => this.router.navigate(['/']), 2000);  // Retourne à la liste après 2 secondes
+          setTimeout(() => this.router.navigate(['/users-management']), 2000);  // Retourne à la liste après 2 secondes
         },
         error: (error) => {
           this.message = 'Erreur lors de la mise à jour de l\'utilisateur.';

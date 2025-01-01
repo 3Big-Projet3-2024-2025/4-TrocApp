@@ -2,10 +2,12 @@ package helha.trocappbackend.services;
 
 
 import helha.trocappbackend.models.Address;
+import helha.trocappbackend.models.Item;
 import helha.trocappbackend.models.Role;
 import helha.trocappbackend.models.User;
 import helha.trocappbackend.repositories.RoleRepository;
 import helha.trocappbackend.repositories.UserRepository;
+import helha.trocappbackend.repositories.ItemRepository;
 import helha.trocappbackend.repositories.AddressRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,9 @@ public class UserService implements IUserService{
 
     @Autowired
     private AddressRepository addressRepository;
+
+    @Autowired
+    private ItemRepository itemRepository;
 
     @Override
     public Page<User> getUsers(Pageable page) {
@@ -155,5 +160,24 @@ public class UserService implements IUserService{
         }
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<User> searchUsers(String query) {
+        String lowercaseQuery = query.toLowerCase();
+        return userRepository.findAll().stream()
+                .filter(user ->
+                        user.getFirstName().toLowerCase().contains(lowercaseQuery) ||
+                                user.getLastName().toLowerCase().contains(lowercaseQuery))
+                .limit(10)  // Limite les résultats à 10 utilisateurs
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Item> getUserItems(int userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+
+        return itemRepository.findByUser(user);
     }
 }

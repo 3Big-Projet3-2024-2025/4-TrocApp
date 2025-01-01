@@ -1,5 +1,6 @@
 package helha.trocappbackend.services;
 
+import helha.trocappbackend.models.Item;
 import helha.trocappbackend.models.Role;
 import helha.trocappbackend.models.User;
 import org.springframework.data.domain.Page;
@@ -43,4 +44,7 @@ public interface IUserService {
     List<String> getAllStreets();
     List<String> getAllNumbers();
     List<String> getAllCities();
+
+    public List<User> searchUsers(String query);
+    public List<Item> getUserItems(int userId);
 }

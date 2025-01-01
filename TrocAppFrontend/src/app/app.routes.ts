@@ -3,8 +3,6 @@ import { UsersManagementComponent } from './users-management/users-management.co
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { EditProfilComponent } from './edit-profil/edit-profil.component';
 import { RatingCommentComponent } from './rating-comment/rating-comment.component';
-
-
 import { ViewingItemsMapComponent } from './viewing-items-map/viewing-items-map.component';
 import { DetailedViewItemComponent } from './detailed-view-item/detailed-view-item.component';
 import { ItemFormComponent } from './item-form/item-form.component';
@@ -12,6 +10,7 @@ import { ItemFormComponent } from './item-form/item-form.component';
 //import { ItemDetTestComponent } from './item-det-test/item-det-test.component';
 //import { ExchangeListComponent } from './exchange-list/exchange-list.component';
 import { CategoryListComponent } from './category-list/category-list.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 export const routes: Routes = [
     { path: '', component: ViewingItemsMapComponent }, // Default Path (Home Page)
@@ -39,6 +38,7 @@ export const routes: Routes = [
   
     // Path for editing a user
     { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
+    { path: 'user-profile/:id', component: UserProfileComponent },
 
     
     { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
