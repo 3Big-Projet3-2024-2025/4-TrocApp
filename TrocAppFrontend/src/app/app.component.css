@@ -1,0 +1,10 @@
+.custom-btn {
+    background-color:  #783c11; /* Change la couleur de fond */
+    border: 2px solid  #341803; /* Change la couleur du contour */
+    color: white; /* Change la couleur du texte */
+}
+
+.custom-btn:hover {
+    background-color:  #783c11; /* Couleur de fond au survol */
+    border-color:  #783c11; /* Couleur du contour au survol */
+}

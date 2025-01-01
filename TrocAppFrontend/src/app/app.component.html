@@ -22,7 +22,7 @@
           transition: transform 0.3s;
       }
       .navbar-custom {
-          background-color: #28a745;
+          background-color: #783c11;
       }
       .navbar-custom .navbar-brand, .navbar-custom .nav-link {
           color: white;
@@ -48,7 +48,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                  <a class="nav-link" routerLink="/viewing-items-map" routerLinkActive>Page d'accueil</a>
+                  <a class="nav-link" routerLink="/viewing-items-map" routerLinkActive>Home Page</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" routerLink="/users-management" routerLinkActive>User Management</a>
@@ -60,18 +60,53 @@
                 <a class="nav-link" routerLink="/category-list" routerLinkActive>Category</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
-              </li>
-              <li class="nav-item">
                   <a class="nav-link" routerLink="/rating-comment" routerLinkActive>Rating</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" routerLink="/edit-profil" routerLinkActive>Profil</a>
               </li>
           </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+          <!-- Search Form -->
+          <form class="d-flex position-relative" role="search">
+            <!-- Search Input -->
+            <input 
+              class="form-control me-2" 
+              type="search" 
+              [(ngModel)]="searchTerm"
+              name="search"
+              placeholder="Search user..." 
+              aria-label="Search"
+              (input)="onSearch($event)"
+            >
+            
+            <!-- Search Button -->
+            <button class="btn custom-btn" type="button">Search</button>
+            
+            <!-- Results Dropdown -->
+            <div 
+              class="position-absolute top-100 start-0 w-100 mt-1" 
+              *ngIf="(searchResults$ | async)?.length"
+            >
+              <div class="list-group shadow">
+                <a 
+                  *ngFor="let user of searchResults$ | async"
+                  class="list-group-item list-group-item-action"
+                  (click)="onUserSelect(user)"
+                >
+                  <div class="d-flex align-items-center">
+                    <!-- Optional: Add user avatar -->
+                    <div class="me-3">
+                      <i class="bi bi-person-circle"></i>
+                    </div>
+                    <!-- User Info -->
+                    <div>
+                      <div class="fw-bold">{{user.firstName}} {{user.lastName}}</div>
+                      <small class="text-muted">{{user.email}}</small>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
           </form>
       </div>
   </div>
@@ -79,7 +114,7 @@
 
   <router-outlet></router-outlet>
 
-  <footer class="text-center " style="background-color: #28a745; color: white;">
+  <footer class="text-center " style="background-color:#783c11; color: white;">
     
     <!-- Grid container -->
     <div class="container p-4 pb-0">

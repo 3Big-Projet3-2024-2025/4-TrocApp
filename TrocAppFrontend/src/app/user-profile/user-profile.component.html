@@ -1,0 +1,150 @@
+<div class="container my-5" *ngIf="user">
+    <div class="card shadow">
+      <!-- Header Section -->
+      <div class="card-header bg-primary text-white">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2 class="mb-0">Profile Details</h2>
+          <div>
+            <button *ngIf="isAdmin" class="btn btn-light me-2" (click)="editUser()">
+              <i class="bi bi-pencil"></i> Edit
+            </button>
+            <button *ngIf="isAdmin" class="btn btn-danger" (click)="deleteUser()">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Main Content -->
+      <div class="card-body">
+        <div class="row">
+          <!-- Left Column - Profile Picture & Rating -->
+          <div class="col-md-3 text-center">
+            <div class="profile-picture">
+              <i class="bi bi-person-circle"></i>
+            </div>
+            <div class="mt-3">
+              <span class="rating-badge">
+                <i class="bi bi-star-fill"></i>
+                {{user.rating}}/5
+              </span>
+            </div>
+          </div>
+  
+          <!-- Right Column - User Information -->
+          <div class="col-md-9">
+            <!-- Personal Information -->
+            <div class="info-section">
+              <h4 class="section-title">Personal Information</h4>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="info-item">
+                    <label>First Name:</label>
+                    <span>{{user.firstName}}</span>
+                  </div>
+                  <div class="info-item">
+                    <label>Last Name:</label>
+                    <span>{{user.lastName}}</span>
+                  </div>
+                  <div class="info-item">
+                    <label>Email:</label>
+                    <span>{{user.email}}</span>
+                  </div>
+                </div>
+  
+                <!-- Address Information -->
+                <div class="col-md-6">
+                  <div class="info-item">
+                    <label>Street:</label>
+                    <span>{{user.address?.street}} {{user.address?.number}}</span>
+                  </div>
+                  <div class="info-item">
+                    <label>City:</label>
+                    <span>{{user.address?.city}}</span>
+                  </div>
+                  <div class="info-item">
+                    <label>Zip Code:</label>
+                    <span>{{user.address?.zipCode}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Roles Section -->
+            <div class="info-section">
+              <h4 class="section-title">Roles</h4>
+              <div class="roles-container">
+                <span *ngFor="let role of user.roles" class="role-badge">
+                  {{role.name}}
+                </span>
+              </div>
+            </div>
+  
+            <!-- Listed Items Section -->
+            <div class="comment-section">
+              <h4 class="section-title">Listed Items</h4>
+              <div class="row" *ngIf="userItems && userItems.length > 0">
+                <div class="col-md-4" *ngFor="let item of userItems">
+                  <div class="item-card">
+                    <div class="item-content">
+                      <h5>{{item.name}}</h5>
+                      <p>{{item.description}}</p>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p *ngIf="!userItems || userItems.length === 0" class="no-items">
+                No items listed yet.
+              </p>
+            </div>
+
+            <div class="info-section">
+                <h3 class="h4 mb-3 text-center">Commentaires</h3>
+                        
+                <!-- Liste des commentaires -->
+                <div class="mb-4" >
+                    <div class="card mb-3" >
+                        <div class="card-body">
+                            <p class="card-text"></p>
+                            <p class="card-text"></p>
+                            <div class="text-warning">
+                                <i class="fas fa-star" ></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Message si pas de commentaires -->
+                <div class="alert alert-info text-center" >
+                    Aucun commentaire pour cette recette.
+                </div>
+
+                <!-- Formulaire de commentaire -->
+                 <div class="mt-4">
+                    <h4 class="h5 mb-3">Ajouter un commentaire</h4>
+                    <!-- Sélection des étoiles -->
+                    <div class="d-flex justify-content-center mb-3">
+                        <i class="fas fa-star fa-2x text-secondary star" 
+                          ></i>
+                    </div>
+                    <!-- Champ de texte pour le commentaire -->
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" placeholder="Écrivez votre commentaire ici" style="height: 100px"></textarea>
+                        <label>Votre commentaire</label>
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-primary" >Publier le commentaire</button>
+                    </div>
+                </div>
+              </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    
+  </div>

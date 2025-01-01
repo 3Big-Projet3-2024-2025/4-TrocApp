@@ -1,10 +1,12 @@
 package helha.trocappbackend.controllers;
 
 
+import helha.trocappbackend.models.Item;
 import helha.trocappbackend.models.Role;
 import helha.trocappbackend.models.User;
 import helha.trocappbackend.repositories.RoleRepository;
 import helha.trocappbackend.services.IUserService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -84,11 +86,8 @@ public class UserController {
         return userService.getAllRoles();
     }
 
-    @PutMapping
-    public User assignRoles(
-            @PathVariable int userId,
-            @RequestBody List<Integer> roleIds
-    ) {
+    @PutMapping("/{userId}/roles")
+    public User assignRoles(@PathVariable int userId, @RequestBody List<Integer> roleIds) {
         return userService.assignRolesToUser(userId, roleIds);
     }
 
@@ -110,6 +109,21 @@ public class UserController {
     @GetMapping("/numbers")
     public List<String> getAllNumbers() {
         return userService.getAllNumbers();  // Appelle la méthode du service pour récupérer les codes postaux
+    }
+
+    @GetMapping("/search")
+    public List<User> searchUsers(@RequestParam String query) {
+        return userService.searchUsers(query);
+    }
+
+    @GetMapping("/{userId}/items")
+    public ResponseEntity<List<Item>> getUserItems(@PathVariable int userId) {
+        try {
+            List<Item> items = userService.getUserItems(userId);
+            return ResponseEntity.ok(items);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
 
