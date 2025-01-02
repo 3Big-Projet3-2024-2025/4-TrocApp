@@ -19,10 +19,6 @@ public class ExchangeService {
 
     public Exchange addExchange(Exchange exchange) {
         try {
-            int requestedObjectId = exchange.getRequestedObjectId();
-            int offeredObjectId = exchange.getOfferedObjectId();
-            itemService.getItemById(requestedObjectId).setAvailable(false);
-            itemService.getItemById(offeredObjectId).setAvailable(false);
             return exchangeRepository.save(exchange);
         } catch (Exception e) {
             throw new RuntimeException("Adding an Exchange failed " + e.getMessage());
@@ -62,10 +58,16 @@ public class ExchangeService {
         }
     }
 
-    public Exchange updateExchange(Exchange exchange) {
+    public Exchange updateExchange(Exchange exchange, boolean accepted) {
         try {
             if (!exchangeRepository.existsById(exchange.getId_exchange())) {
                 throw new RuntimeException("Exchange not found with ID: " + exchange.getId_exchange());
+            }
+            if(accepted) {
+                int requestedObjectId = exchange.getRequestedObjectId();
+                int offeredObjectId = exchange.getOfferedObjectId();
+                itemService.getItemById(requestedObjectId).setAvailable(false);
+                itemService.getItemById(offeredObjectId).setAvailable(false);
             }
             return exchangeRepository.save(exchange);
         } catch (Exception e) {
