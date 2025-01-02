@@ -1,3 +1,4 @@
+import { Item } from "./item"
 import { User } from "./user"
 
 export interface Exchange {
@@ -10,5 +11,7 @@ export interface Exchange {
     firstEvaluation: number
     secondEvaluation: number
     initiator: User
-    receiver: User
+    receiver: User,
+    requestedObject: Item | null;
+    offeredObject: Item | null;
 }
