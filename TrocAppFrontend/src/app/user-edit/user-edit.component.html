@@ -1,35 +1,15 @@
 <!-- user-edit.component.html -->
-<div class="container mt-5">
-  <h1 class="text-center mb-4">Modifier l'utilisateur</h1>
+<div class="container my-5">
+
   <form>
-      <div class="form-group">
-          <label for="firstName">Prénom:</label>
-          <input id="firstName" [(ngModel)]="editingUser.firstName" name="firstName" required class="form-control" />
+      <!-- Titre amélioré -->
+      <div class="d-flex align-items-center mb-4 pb-3 border-bottom">
+        <h2 class="m-0 display-6 text-primary">
+          <i class="bi bi-people-fill me-2"></i>
+          Edit user
+        </h2>
       </div>
-      <div class="form-group">
-          <label for="lastName">Nom:</label>
-          <input id="lastName" [(ngModel)]="editingUser.lastName" name="lastName" required class="form-control" />
-      </div>
-      <div class="form-group">
-        <label for="city">City:</label>
-        <select id="city" [(ngModel)]="editingUser.address.city" name="city" class="form-control" required>
-          <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="street">Street:</label>
-        <select id="street" [(ngModel)]="editingUser.address.street" name="street" class="form-control" required>
-          <option *ngFor="let street of streets" [value]="street">{{ street }}</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="number">Number:</label>
-        <select id="number" [(ngModel)]="editingUser.address.number" name="number" class="form-control" required>
-          <option *ngFor="let number of numbers" [value]="number">{{ number }}</option>
-        </select>
-      </div>
+     
 
       <div class="form-group">
           <label>Rôles:</label><br>
