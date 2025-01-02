@@ -3,12 +3,14 @@ package helha.trocappbackend.controllers;
 import helha.trocappbackend.models.Category;
 import helha.trocappbackend.models.Item;
 import helha.trocappbackend.repositories.CategoryRepository;
+import helha.trocappbackend.services.EmailService;
 import helha.trocappbackend.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/items")
@@ -17,6 +19,8 @@ public class ItemController {
     private ItemService itemService;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private EmailService emailService;
 
     /*
         we find the given category and we store it in the item,
@@ -30,6 +34,13 @@ public class ItemController {
                     .orElseThrow(() -> new RuntimeException("Category not found"));
             item.setCategory(category);
             Item newItem = itemService.addItem(item);
+
+            String emailOwner = newItem.getOwner().getEmail();
+            String nameOwner = newItem.getOwner().getFirstName() + " " + newItem.getOwner().getLastName();
+            String subjectMail = "Creation of an Item";
+            String bodyMail = "Hello, "+ nameOwner +" we confirm your item was succesfully created";
+
+            emailService.sendEmail(emailOwner, subjectMail, bodyMail);
             return ResponseEntity.ok(newItem);
         } catch (RuntimeException e) {
             e.printStackTrace();
