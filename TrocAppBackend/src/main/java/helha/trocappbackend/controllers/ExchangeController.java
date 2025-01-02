@@ -2,23 +2,33 @@ package helha.trocappbackend.controllers;
 
 
 import helha.trocappbackend.models.Exchange;
+import helha.trocappbackend.services.EmailService;
 import helha.trocappbackend.services.ExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/exchanges")
 public class ExchangeController {
     @Autowired
     private ExchangeService exchangeService;
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping
     public ResponseEntity<Exchange> addExchange(@RequestBody Exchange exchange) {
         try {
             Exchange exchange1 = exchangeService.addExchange(exchange);
+            String nameReveiver = exchange1.getReceiver().getFirstName() + " " + exchange1.getReceiver().getLastName();
+            String emailReceiver = exchange1.getReceiver().getEmail();
+            String subjectMail = "Exchange Proposition";
+            String bodyMail = "Hello, "+ nameReveiver +" you have a proposition of exchange for one of your item. Go to http://localhost:4200/exchanges to see its details";
+
+            emailService.sendEmail(emailReceiver, subjectMail, bodyMail);
             return ResponseEntity.ok(exchange1);
         } catch (RuntimeException e) {
             e.printStackTrace();
@@ -76,8 +86,13 @@ public class ExchangeController {
     @PutMapping("/{id}")
     public ResponseEntity<Exchange> updateExchange(@PathVariable int id,@RequestBody Exchange exchange) {
         try {
+            Exchange exchange1;
             exchange.setId_exchange(id);
-            Exchange exchange1 = exchangeService.updateExchange(exchange);
+            if(Objects.equals(exchange.getStatus(), "Declined")) {
+                exchange1 = exchangeService.updateExchange(exchange,false);
+            } else {
+                exchange1 = exchangeService.updateExchange(exchange, true);
+            }
             return ResponseEntity.ok(exchange1);
         } catch (RuntimeException e) {
             e.printStackTrace();
