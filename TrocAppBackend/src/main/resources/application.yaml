@@ -14,6 +14,18 @@ spring:
 #    user:
 #      name: admin
 #      password: admin
+  mail:
+    host: smtp.office365.com
+    port: 587
+    username: la226220@student.helha.be
+    password: mdp
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+
 nominatim:
   api:
     url: https://nominatim.openstreetmap.org/ # URL for the Nominatim API
