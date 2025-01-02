@@ -10,6 +10,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class Rating {
     @Id
@@ -31,6 +33,15 @@ public class Rating {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "receiver_id", nullable = false)
     private User receiver;
+
+
+    @JoinColumn(name = "created_at", nullable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    // Constructors
+    public Rating() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     // Getters et Setters
     public int getId() { return id; }

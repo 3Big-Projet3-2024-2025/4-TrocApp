@@ -47,7 +47,7 @@ export class UsersManagementComponent implements OnInit{
   
     // Formatage de l'adresse pour l'affichage
     formatAddress(address: any): string {
-      if (!address) return 'Adresse non disponible';
+      if (!address) return 'Address not available';
       return `${address.number} ${address.street}, ${address.city} ${address.zipCode}`;
     }
   
@@ -69,8 +69,8 @@ export class UsersManagementComponent implements OnInit{
   
     // Confirmation de suppression avec double vérification
     confirmDelete(userId: number): void {
-      if (confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) {
-        if (confirm("Vraiment sûr ? Cette action est irréversible.")) {
+      if (confirm("Are you sure you want to delete this user?")) {
+        if (confirm("Are you absolutely sure? This action is irreversible.")) {
           this.deleteUser(userId);
         }
       }
