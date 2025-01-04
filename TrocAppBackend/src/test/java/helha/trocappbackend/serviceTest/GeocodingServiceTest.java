@@ -4,6 +4,7 @@ import helha.trocappbackend.models.Address;
 import helha.trocappbackend.services.GeocodingService;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -32,7 +33,7 @@ class GeocodingServiceTest {
 
     /**
      * Sets up the test environment before each test.
-     * Initializes mocks and creates a sample address for testing.
+     * Initialize mocks and creates a sample address for testing.
      */
     @BeforeEach
     void setUp() {
@@ -47,11 +48,11 @@ class GeocodingServiceTest {
     }
 
     /**
-     * Tests successful geocoding when the API returns valid coordinates.
-     * Verifies that the address object is updated with correct latitude and longitude.
+     * Tests successful geocoding when the API returns valid coordinates
      */
     @Order(1)
     @Test
+    @DisplayName("Verify that the address object is updated with correct latitude and longitude")
     void testGeocodeAddress_ValidCoordinates() {
         // A mock response from the Nominatim API
         String mockApiResponse = "[{\"lat\": \"50.8467\", \"lon\": \"4.3499\"}]";
@@ -67,11 +68,11 @@ class GeocodingServiceTest {
     }
 
     /**
-     * Tests handling of empty API responses.
-     * Verifies that coordinates remain as NaN when no results are returned.
+     * Tests handling of empty API responses
      */
     @Order(2)
     @Test
+    @DisplayName("Verify that coordinates remain as NaN when no results are returned")
     void testGeocodeAddress_EmptyApiResponse() {
         // An empty array response from the Nominatim API
         String mockApiResponse = "[]";
@@ -87,11 +88,11 @@ class GeocodingServiceTest {
     }
 
     /**
-     * Tests handling of API errors.
-     * Verifies that coordinates remain as NaN when API call fails.
+     * Tests handling of API errors
      */
     @Order(3)
     @Test
+    @DisplayName("Verify that coordinates remain as NaN when API call fails")
     void testGeocodeAddress_ApiError() {
         // A API error
         when(restTemplate.getForEntity(anyString(), eq(String.class)))
@@ -106,11 +107,11 @@ class GeocodingServiceTest {
     }
 
     /**
-     * Tests geocoding with invalid JSON response.
-     * Verifies error handling for invalid JSON format.
+     * Tests geocoding with invalid JSON response
      */
     @Order(4)
     @Test
+    @DisplayName("Verify error handling for invalid JSON format")
     void testGeocodeAddress_InvalidJson() {
         // Prepare invalid JSON response
         String mockResponse = "invalid json";
@@ -126,11 +127,11 @@ class GeocodingServiceTest {
     }
 
     /**
-     * Tests address formatting functionality.
-     * Verifies that the address is correctly formatted as a string for the API request.
+     * Tests address formatting functionality
      */
     @Order(5)
     @Test
+    @DisplayName("Verify that the address is correctly formatted as a string for the API request")
     void testFormatAddress_FormattedStringCorrectly() {
         // Call the formatAddress function
         String formattedAddress = geocodingService.formatAddress(address);
