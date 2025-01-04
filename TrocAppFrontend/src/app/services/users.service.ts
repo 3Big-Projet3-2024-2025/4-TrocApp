@@ -6,7 +6,7 @@ import { User } from '../user';
 import { Role } from '../role';
 
 interface PaginatedResponse {
-  content: User[];  // Tableau d'utilisateurs
+  content: User[];  
   totalElements: number;
   totalPages: number;
   size: number;
@@ -41,7 +41,7 @@ export class UsersService {
   }
 
   getRoles(): Observable<Role[]> {
-    return this.http.get<Role[]>(`${this.apiUrl}/roles`);  // Retourne la liste des rôles
+    return this.http.get<Role[]>(`${this.apiUrl}/roles`); 
   }
 
  /* updateUserRoles(userId: number, roleIds: number[]): Observable<void> {
@@ -58,17 +58,17 @@ export class UsersService {
   }
 
   getZipCodes(): Observable<number[]> {
-    return this.http.get<number[]>(`${this.apiUrl}/zipcodes`);  // Effectue une requête GET pour récupérer les zip codes (ici des nombres)
+    return this.http.get<number[]>(`${this.apiUrl}/zipcodes`);  
   }
 
   getCities(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/cities`);  // Effectue une requête GET pour récupérer les zip codes (ici des nombres)
+    return this.http.get<string[]>(`${this.apiUrl}/cities`);   
   }
   getStreets(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/streets`);  // Effectue une requête GET pour récupérer les zip codes (ici des nombres)
+    return this.http.get<string[]>(`${this.apiUrl}/streets`);  
   }
   getNumbers(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/numbers`);  // Effectue une requête GET pour récupérer les zip codes (ici des nombres)
+    return this.http.get<string[]>(`${this.apiUrl}/numbers`);  
   }
 
 
@@ -97,12 +97,13 @@ export class UsersService {
   }
 
 
+    getUserItems(userId: number): Observable<any[]> {
+      return this.http.get<any[]>(`${this.apiUrl}/${userId}/items`);
+    }
 
-
-  // Dans users.service.ts
-getUserItems(userId: number): Observable<any[]> {
-  return this.http.get<any[]>(`${this.apiUrl}/${userId}/items`);
-}
+    toggleBlockUser(userId: number): Observable<User> {
+      return this.http.put<User>(`${this.apiUrl}/users/${userId}/block`, {});
+    }
 
 
 }

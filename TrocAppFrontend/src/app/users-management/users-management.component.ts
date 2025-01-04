@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-users-management',
   standalone: true,
-  imports: [NgFor, CommonModule, FormsModule],
+  imports: [ CommonModule, FormsModule],
   templateUrl: './users-management.component.html',
   styleUrl: './users-management.component.css'
 })

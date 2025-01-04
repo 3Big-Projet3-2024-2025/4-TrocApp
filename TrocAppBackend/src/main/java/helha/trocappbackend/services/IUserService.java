@@ -47,6 +47,7 @@ public interface IUserService {
 
     public List<User> searchUsers(String query);
     public List<Item> getUserItems(int userId);
+    public User toggleBlockUser(int userId);
 
     //void updateUserCredentials(String username, String newPassword, String newUsername);
 }

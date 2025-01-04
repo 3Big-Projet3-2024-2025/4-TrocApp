@@ -181,6 +181,15 @@ public class UserService implements IUserService{
         return itemRepository.findByOwner(user);
     }
 
+    @Override
+    public User toggleBlockUser(int userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+
+        user.setBlocked(!user.isBlocked());
+        return userRepository.save(user);
+    }
+
     /*@Override
     public void updateUserCredentials(String username, String newPassword, String newUsername)
     {
