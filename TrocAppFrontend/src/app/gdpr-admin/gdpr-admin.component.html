@@ -1,0 +1,39 @@
+<div class="container mt-4">
+  <h2 class="text-center">GDPR Request Management</h2>
+  
+  <!-- Pending Requests Section -->
+  <div class="mt-5">
+    <h3>Pending Requests</h3>
+    <ul class="list-group">
+      <li *ngFor="let request of pendingRequests" class="list-group-item">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <p><strong>Request from {{ request.user.firstName }} {{ request.user.lastName }}</strong></p>
+            <p>Email: {{ request.user.email }}</p>
+            <p>Request Type: {{ request.requesttype }}</p>
+            <p>Request Date: {{ request.requestdate | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+          </div>
+<!-- Change button click handler to pass full request -->
+<button (click)="deactivateUser(request)" class="btn btn-primary">Process</button>        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Treated Requests Section -->
+  <div class="mt-5">
+    <h3>Treated Requests (Accepted / Rejected)</h3>
+    <ul class="list-group">
+      <li *ngFor="let request of treatedRequests" class="list-group-item">
+        <div>
+          <p><strong>Request from {{ request.user.firstName }} {{ request.user.lastName }}</strong></p>
+          <p>Email: {{ request.user.email }}</p>
+          <p>Request Type: {{ request.requesttype }}</p>
+          <p>Status: {{ request.status }}</p>
+          <p>Request Date: {{ request.requestdate | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+          <p>Administrator's Response: {{ request.response }}</p>
+          <p>Response Date: {{ request.responsedate | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
