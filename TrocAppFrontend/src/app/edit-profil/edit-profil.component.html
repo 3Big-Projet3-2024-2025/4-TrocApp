@@ -2,101 +2,152 @@
 <br>
 <div class="container rounded bg-white mb-5">
     <div class="row">
-        <div class="col-md-3 border-right d-flex align-items-start">
-            <div class="d-flex flex-column text-center p-3 py-5">
-                <img class="rounded-circle mt-5" width="250px" src="https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2220431045.jpg">
-                <span class="font-weight-bold">
-                   
-                </span>
-                <span class="font-weight-bold"></span>
-                <span class="text-black-50"></span>
-                <button class="btn btn-primary mt-3" style="margin-right: 20px;" data-bs-toggle="modal" data-bs-target="#popupModifMdp">Modify password</button>
-                <button class="btn btn-danger mt-2" style="margin-right: 20px;" >Log out</button>
+      <!-- Profile Image and Actions Section -->
+      <div class="col-md-3 border-right">
+        <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+          <img class="rounded-circle mt-5" width="150px" 
+               src="https://via.placeholder.com/150" alt="Profile">
+          <span class="font-weight-bold mt-3">{{ user?.firstName }} {{ user?.lastName }}</span>
+          <span class="text-black-50">{{ user?.email }}</span>
+          <button class="btn btn-primary mt-3" (click)="toggleEdit()">
+            {{ isEditing ? 'Cancel' : 'Edit Profile' }}
+          </button>
+        </div>
+      </div>
   
-                <!-- Pop-up -->
-                <div class="modal fade" id="popupModifMdp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modify password</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          Fonctionnality not available yet
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                        </div>
-                    </div>
+      <!-- Profile Form Section -->
+      <div class="col-md-9">
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="p-3 py-5">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="text-right">Profile Settings</h4>
+          </div>
+  
+          <!-- Personal Information -->
+          <div class="row mt-2">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="labels">First Name</label>
+                <input type="text" class="form-control" formControlName="firstName"
+                       [readonly]="!isEditing">
+                <div class="text-danger" *ngIf="profileForm.get('firstName')?.touched && 
+                     profileForm.get('firstName')?.hasError('required')">
+                  First name is required
                 </div>
-                </div>
-
+              </div>
             </div>
-            <div class="vr ml-3"></div>
-        </div>
-        
-        
-        
-        <div class="col-md-5 border-right d-flex">
-            <div class="d-flex flex-column p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Profil</h4>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="labels">Last Name</label>
+                <input type="text" class="form-control" formControlName="lastName"
+                       [readonly]="!isEditing">
+                <div class="text-danger" *ngIf="profileForm.get('lastName')?.touched && 
+                     profileForm.get('lastName')?.hasError('required')">
+                  Last name is required
                 </div>
-                <div class="row mt-2">
-                    <div class="col-md-6">
-                        <label class="labels">Name</label>
-                        <input type="text" class="form-control"readonly>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="labels">Lastname</label>
-                        <input type="text" class="form-control"  readonly>
-                    </div>
-                </div>
-                <div class="row mt-3 flex-row">
-                    <div class="col-md-6">
-                        <label class="labels">Email</label>
-                        <input type="text" class="form-control" readonly>
-                    </div>
-                    
-                    <div class="col-md-6 ml-3">
-                        <label class="labels">Zip code</label>
-                        <input type="text" class="form-control" readonly>
-                    </div>
-                </div>
-                <div class="row mt-3 flex-row">
-                    <div class="col-md-6">
-                        <label class="labels">City</label>
-                        <input type="text" class="form-control" readonly>
-                    </div>
-        
-                    <div class="col-md-6">
-                        <label class="labels">Street</label>
-                        <input type="text" class="form-control"  readonly>
-                    </div>
-                </div>
-                <div class="row mt-3 flex-row">
-                    <div class="col-md-6">
-                        <label class="labels">Number</label>
-                        <input type="text" class="form-control"  readonly>
-                    </div>
-        
-                    <div class="col-md-6">
-                      
-                <div class="row mt-3 flex-row">
-                    <div class="col-md-12">
-                        <label class="labels">Role</label>
-                        <br>
-                            <textarea cols="46" name="biographie">/</textarea>
-                       
-                    </div>
-                </div>
-                <!--<hr class="hr mt-4"/>-->
-                
-
-                        
-                
+              </div>
             </div>
-        </div>
+          </div>
+  
+          <!-- Email -->
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="labels">Email</label>
+                <input type="email" class="form-control" formControlName="email"
+                       [readonly]="!isEditing">
+                <div class="text-danger" *ngIf="profileForm.get('email')?.touched && 
+                     profileForm.get('email')?.hasError('email')">
+                  Please enter a valid email
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Address Section -->
+          <div formGroupName="address" class="row mt-3">
+            <div class="col-md-6">
+                <div class="form-group position-relative">
+                    <label class="labels">Street</label>
+                    <input type="text" 
+                           class="form-control" 
+                           formControlName="street"
+                           [readonly]="!isEditing"
+                           (focus)="isEditing">
+                    <!-- Liste des suggestions -->
+                    @if (addressSuggestions.length > 0 && isEditing) {
+                      <div class="list-group position-absolute w-100 shadow-sm" style="z-index: 1000;">
+                        @for (suggestion of addressSuggestions; track suggestion) {
+                          <button type="button"
+                                  class="list-group-item list-group-item-action"
+                                  (click)="selectAddress(suggestion)">
+                            {{ suggestion.formatted }}
+                          </button>
+                        }
+                      </div>
+                    }
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="labels">Number</label>
+                <input type="text" class="form-control" formControlName="number"
+                       [readonly]="!isEditing">
+              </div>
+            </div>
+            <div class="col-md-6 mt-3">
+              <div class="form-group">
+                <label class="labels">City</label>
+                <input type="text" class="form-control" formControlName="city"
+                       [readonly]="!isEditing">
+              </div>
+            </div>
+            <div class="col-md-6 mt-3">
+              <div class="form-group">
+                <label class="labels">Postal Code</label>
+                <input type="text" class="form-control" formControlName="zipCode"
+                       [readonly]="!isEditing">
+                <div class="text-danger" *ngIf="profileForm.get('address.zipCode')?.touched && 
+                     profileForm.get('address.zipCode')?.hasError('pattern')">
+                  Please enter a valid Belgian postal code
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Roles Display -->
+          <div class="row mt-4">
+            <div class="col-md-12">
+              <h5>Roles</h5>
+              <div class="d-flex flex-wrap gap-2">
+                @for (role of roles; track role) {
+                  <span class="badge bg-secondary">{{ role.name }}</span>
+                }
+              </div>
+            </div>
+          </div>
+  
+          <!-- Submit Button -->
+          @if (isEditing) {
+            <div class="mt-5 text-center">
+              <button class="btn btn-primary" type="submit" 
+                      [disabled]="!profileForm.valid || !isEditing">
+                Save Profile
+              </button>
+            </div>
+          }
+        </form>
+    
+      </div>
+
+            <div *ngIf="message" 
+            class="alert mt-3" 
+            [class.alert-success]="success" 
+            [class.alert-danger]="!success" 
+            role="alert">
+        {{ message }}
+      </div>
     </div>
-</div>
 
+
+    
+  </div>

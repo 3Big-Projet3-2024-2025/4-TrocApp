@@ -3,6 +3,18 @@
     height: 10px;
     border-radius: 5px;
   }
+
+  .fas.fa-star {
+    font-size: 0.9rem;
+  }
+  
+  .text-warning {
+    color: #ffc107;
+  }
+  
+  .text-secondary {
+    color: #dee2e6;
+  }
   
   .badge {
     font-size: 0.8em;
