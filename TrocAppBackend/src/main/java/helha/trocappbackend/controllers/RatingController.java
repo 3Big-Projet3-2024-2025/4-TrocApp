@@ -4,6 +4,7 @@ import helha.trocappbackend.models.Rating;
 import helha.trocappbackend.services.RatingService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,5 +33,11 @@ public class RatingController {
     @GetMapping("/posted/{userId}")
     public List<Rating> getPostedRatings(@PathVariable int userId) {
         return ratingService.getPostedRatings(userId);
+    }
+
+    @DeleteMapping("/{ratingId}")
+    public ResponseEntity<Void> deleteRating(@PathVariable int ratingId) {
+        ratingService.deleteRating(ratingId);
+        return ResponseEntity.ok().build();
     }
 }

@@ -126,5 +126,15 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/{userId}/block")
+    public ResponseEntity<User> toggleBlockUser(@PathVariable int userId) {
+        try {
+            User updatedUser = userService.toggleBlockUser(userId);
+            return ResponseEntity.ok(updatedUser);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
 

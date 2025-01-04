@@ -38,6 +38,9 @@ public class User {
 
     private float rating;
 
+    @Column(nullable = false,columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean blocked = false;
+
     // Liste des évaluations postées par l'utilisateur
     @OneToMany(mappedBy = "poster", cascade = CascadeType.ALL)
     private List<Rating> postedRatings;
@@ -91,11 +94,14 @@ public class User {
 
 
 
+    public boolean isBlocked() {
+        return blocked;
+    }
 
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
 
-    /*public void addRole(Role role) {
-        this.roles.add(role);
-    }*/
 
     public void addRole(Role role) {
         this.roles.add(role);

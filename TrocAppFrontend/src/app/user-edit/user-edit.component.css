@@ -1,4 +1,4 @@
-  /* Animation pour la notification */
+ 
   .alert {
     animation: slideIn 0.3s ease-out;
   }
@@ -12,7 +12,7 @@
     border-color: #e9ecef !important;
   }
   
-  /* Animation subtile pour l'icône */
+
   .bi-people-fill {
     transition: transform 0.2s ease-in-out;
   }

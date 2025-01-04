@@ -12,6 +12,10 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
 
     // Récupérer les évaluations postées par un utilisateur
     List<Rating> findByPosterId(int posterId);
+
+    void deleteById(int ratingId);
+
+    boolean existsById(int ratingId);
 }
 
 

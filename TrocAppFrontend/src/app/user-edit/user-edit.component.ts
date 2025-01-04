@@ -12,7 +12,7 @@ import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-user-edit',
   standalone: true,
-  imports: [FormsModule,NgFor,NgIf,AsyncPipe],
+  imports: [FormsModule,NgIf,AsyncPipe],
   templateUrl: './user-edit.component.html',
   styleUrl: './user-edit.component.css'
 })
@@ -23,12 +23,12 @@ export class UserEditComponent {
   user!: User;
   message: string | null = null;
   success: boolean = false;
-  editingUser: User = {  // Initialisation avec des valeurs par défaut
+  editingUser: User = { 
     id: 0,
     firstName: '',
     lastName: '',
     email: '',
-    address: {          // L'initialisation de address doit être un objet Address
+    address: {         
       zipCode: '',
       city: '',
       street: '',
@@ -37,7 +37,8 @@ export class UserEditComponent {
     rating: 0,
     addressId: 0,
     roles: [],
-    rolesInput: ''
+    rolesInput: '',
+    blocked: false
   };
 
   zipCodes: number[] = [];  
@@ -58,27 +59,13 @@ export class UserEditComponent {
   ) {}
 
   ngOnInit(): void {
-       // Charger tous les rôles disponibles
+       // Fetch all available roles
     this.usersService.getAllRoles().subscribe(roles => {
-      // Stocker les rôles dans le dictionnaire
+      // Stock the roles in the dictionary
       this.roles[this.editingUser.id] = roles;
     });
 
-    this.usersService.getZipCodes().subscribe(zipCodes => {
-      this.zipCodes = zipCodes;  // Récupère la liste des codes postaux depuis l'API
-    });
-
-    this.usersService.getNumbers().subscribe(numbers => {
-      this.numbers = numbers;  // Récupère la liste des codes postaux depuis l'API
-    });
-
-    this.usersService.getStreets().subscribe(streets => {
-      this.streets = streets;  // Récupère la liste des codes postaux depuis l'API
-    });
-
-    this.usersService.getCities().subscribe(cities => {
-      this.cities = cities;  // Récupère la liste des codes postaux depuis l'API
-    });
+    
 
     this.route.params.subscribe(params => {
       if (params["id"])
@@ -98,7 +85,7 @@ export class UserEditComponent {
 
  
   isRoleSelected(role: Role): boolean {
-    // Vérifier si le rôle est déjà attribué à l'utilisateur
+    //  Verify if the role is already assigned to the user
     return this.editingUser.roles.some(r => r.id === role.id);
   }
 
@@ -106,14 +93,14 @@ export class UserEditComponent {
     const index = this.editingUser.roles.findIndex(r => r.id === role.id);
 
     if (index !== -1) {
-        // Rôle présent, le retirer
+        // Present role, remove it
         this.editingUser.roles.splice(index, 1);
     } else {
-        // Rôle absent, l'ajouter
+        // Absent role, add it
         this.editingUser.roles.push(role);
     }
 
-    // Mettre à jour la liste des rôles dans la base de données
+    // To update the list of roles in the database
     const updatedRoleIds = this.editingUser.roles.map(r => r.id);
 
     this.usersService.updateUserRoles(this.editingUser.id, updatedRoleIds).subscribe({
@@ -126,18 +113,18 @@ export class UserEditComponent {
 
       this.usersService.updateUser(this.editingUser).subscribe({
         next: (user) => {
-          this.message = 'Utilisateur mis à jour avec succès.';
+          this.message = 'User successfully updated.';
           this.success = true;
           setTimeout(() => this.router.navigate(['/users-management']), 2000);  // Retourne à la liste après 2 secondes
         },
         error: (error) => {
-          this.message = 'Erreur lors de la mise à jour de l\'utilisateur.';
+          this.message = 'Error during user update.';
           this.success = false;
         }
       });
   }
 
   goBack(): void {
-    this.router.navigate(['/users-management']);  // Retourne à la page de liste des utilisateurs
+    this.router.navigate(['/users-management']);  // Return to the user list page
   }
 }

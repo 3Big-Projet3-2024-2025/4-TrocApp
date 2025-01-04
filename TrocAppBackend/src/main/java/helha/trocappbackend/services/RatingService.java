@@ -4,6 +4,7 @@ import helha.trocappbackend.models.Rating;
 import helha.trocappbackend.models.User;
 import helha.trocappbackend.repositories.RatingRepository;
 import helha.trocappbackend.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -42,5 +43,13 @@ public class RatingService {
 
     public List<Rating> getPostedRatings(int userId) {
         return ratingRepository.findByPosterId(userId);
+    }
+
+    @Transactional
+    public void deleteRating(int ratingId) {
+        if (!ratingRepository.existsById(ratingId)) {
+            throw new RuntimeException("Rating not found");
+        }
+        ratingRepository.deleteById(ratingId);
     }
 }
