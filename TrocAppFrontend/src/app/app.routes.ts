@@ -9,6 +9,7 @@ import { ItemFormComponent } from './item-form/item-form.component';
 //import { ItemDetTestComponent } from './item-det-test/item-det-test.component';
 //import { ExchangeListComponent } from './exchange-list/exchange-list.component';
 import { CategoryListComponent } from './category-list/category-list.component';
+import { AuthComponent } from './auth/auth.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
 export const routes: Routes = [
@@ -43,6 +44,8 @@ export const routes: Routes = [
     { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
     { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
     { path: 'edit-profil', component: EditProfilComponent, /*canActivate: [authGuard]*/ },
+    { path: 'rating-comment', component: RatingCommentComponent, /*canActivate: [authGuard]*/ },
+    { path: 'auth/login', component: AuthComponent},
     { path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' }, // Wildcard route
     
 ];
