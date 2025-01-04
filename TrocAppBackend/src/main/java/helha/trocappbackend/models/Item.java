@@ -20,11 +20,6 @@ public class Item {
     @Basic(fetch = FetchType.LAZY)
     private String photo;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    private String photo;
-
-
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;

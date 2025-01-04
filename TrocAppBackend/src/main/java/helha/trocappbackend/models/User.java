@@ -30,6 +30,7 @@ public class User {
     private String username;
     private String email;
     private String password;
+    private Boolean actif;
 
 
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -60,9 +61,7 @@ public class User {
     private List<Exchange> exchangesAsReceiver;
     /*@OneToMany(mappedBy = "user")
     private List <GdprRequest> gdprRequests ;*/
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Category> categories;
+
     //@JsonManagedReference
     @JsonIgnoreProperties("roles")
     @ManyToMany(cascade = CascadeType.MERGE)
@@ -84,17 +83,18 @@ public class User {
         this.email = email;
         this.password = password;
     }
-
-    // Autres attributs, getters, et setters
-
-    public Set<Role> getRoles() {
-        return roles;
+    public User(String firstName, String lastName, String email, String password, boolean actif) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.actif = actif;
     }
 
 
+    // Autres attributs, getters, et setters
 
-
-
+    
     /*public void addRole(Role role) {
         this.roles.add(role);
     }*/
@@ -175,18 +175,9 @@ public class User {
     public List<Rating> getReceivedRatings() { return receivedRatings; }
     public void setReceivedRatings(List<Rating> receivedRatings) { this.receivedRatings = receivedRatings; }
 
-
     /*public List<GdprRequest> getGdprRequests() {
         return gdprRequests;
     }*/
-
-    public List<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
-    }
 
     /*public void setGdprRequests(List<GdprRequest> gdprRequests) {
         this.gdprRequests = gdprRequests;
@@ -219,5 +210,13 @@ public class User {
 
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    public Boolean getActif() {
+        return actif;
+    }
+
+    public void setActif(Boolean actif) {
+        this.actif = actif;
     }
 }

@@ -1,6 +1,6 @@
 package helha.trocappbackend.utils;
 
-import io.jsonwebtoken.Claims;
+/*import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -54,4 +54,4 @@ public class JWTUtils {
     public Claims parseToken(String token) throws JwtException {
         return Jwts.parser().setSigningKey(secret).build().parseClaimsJws(token).getPayload();
     }
-}
+}*/

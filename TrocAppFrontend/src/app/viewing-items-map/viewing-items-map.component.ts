@@ -2,28 +2,23 @@ import { Component } from '@angular/core';
 import { latLng, tileLayer, Marker, icon, Map } from 'leaflet';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet'; 
 import { ItemService } from '../services/item.service';
 import { AddressService } from '../services/address.service';
 import { UsersService } from '../services/users.service';
 import { Item } from '../models/item';
 import { User } from '../models/user';
-
-import { Address } from '../address';
-import { Address } from '../models/address.model';
-
 import { Address } from '../models/adress.model';
-
 
 @Component({
   selector: 'app-viewing-items-map',
   templateUrl: './viewing-items-map.component.html',
   styleUrls: ['./viewing-items-map.component.css'],
-  standalone: true,
+  standalone: true, 
   imports: [LeafletModule,HttpClientModule],
 })
 export class ViewingItemsMapComponent {
- items: Item[] = []; // Property for the items
+  items: Item[] = []; // Property for the items
   owner!: User; // Property for the owner
   address!: Address; // Property for the address
   map!: Map; // Property for the map
@@ -55,7 +50,7 @@ export class ViewingItemsMapComponent {
     this.itemService.getAvailableItem().subscribe(
       (data: any) => {
         this.items = data;
-
+  
         // For each item, fetch the owner and the address
         this.items.forEach((item) => {
           // Fetch the owner of the item
@@ -63,7 +58,7 @@ export class ViewingItemsMapComponent {
             next: (data: any) => {
               this.owner = data;
               console.log(this.owner);
-
+  
               // Check if the owner has an address with a valid id
               const addressId = this.owner?.address?.id;
               if (addressId !== undefined) {
@@ -102,5 +97,5 @@ export class ViewingItemsMapComponent {
       }
     );
   }
-
+  
 }

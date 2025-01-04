@@ -5,7 +5,8 @@ export class User {
     email: string;           
     password: string;        
     addressId: number;       
-    rating: number;          
+    rating: number;  
+    actif: boolean = true; // Par défaut, un utilisateur est actif        
   
    
     constructor(
@@ -15,7 +16,8 @@ export class User {
       email: string, 
       password: string, 
       addressId: number, 
-      rating: number
+      rating: number,
+      actif: boolean
     ) {
       this.id = id;
       this.firstName = firstName;
@@ -24,6 +26,7 @@ export class User {
       this.password = password;
       this.addressId = addressId;
       this.rating = rating;
+      this.actif = actif;
     }
   }
   

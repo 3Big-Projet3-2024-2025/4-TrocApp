@@ -28,11 +28,13 @@ export class UserEditComponent {
     firstName: '',
     lastName: '',
     email: '',
-    address: {          // L'initialisation de address doit être un objet Address
+    address: {
       zipCode: '',
       city: '',
       street: '',
-      number: ''
+      number: '',
+      longitude: 0,
+      latitude: 0
     },
     rating: 0,
     addressId: 0,
