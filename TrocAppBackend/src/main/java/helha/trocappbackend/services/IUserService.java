@@ -43,4 +43,6 @@ public interface IUserService {
     List<String> getAllStreets();
     List<String> getAllNumbers();
     List<String> getAllCities();
+
+    //void updateUserCredentials(String username, String newPassword, String newUsername);
 }
