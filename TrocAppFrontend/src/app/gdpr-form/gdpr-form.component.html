@@ -1,0 +1,55 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Submit a GDPR Request</h2>
+  <form (ngSubmit)="submitRequest()" #gdprForm="ngForm" class="needs-validation" novalidate>
+    
+    <div class="mb-3">
+      <label for="requesttype" class="form-label">Request Type:</label>
+      <input 
+        type="text" 
+        id="requesttype" 
+        class="form-control" 
+        [(ngModel)]="newRequest.requesttype" 
+        name="requesttype" 
+        required
+      >
+      <div *ngIf="!gdprForm.form.controls['requesttype']?.valid && gdprForm.form.controls['requesttype']?.touched" class="invalid-feedback">
+        This field is required.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="justification" class="form-label">Justification:</label>
+      <textarea 
+        id="justification" 
+        class="form-control" 
+        [(ngModel)]="newRequest.justification" 
+        name="justification" 
+        required
+      ></textarea>
+      <div *ngIf="!gdprForm.form.controls['justification']?.valid && gdprForm.form.controls['justification']?.touched" class="invalid-feedback">
+        Justification is required.
+      </div>
+    </div>
+
+    <div class="form-check mb-3">
+      <input 
+        type="checkbox" 
+        class="form-check-input" 
+        [(ngModel)]="newRequest.consent" 
+        name="consent" 
+        required
+      >
+      <label class="form-check-label" for="consent">
+        I give my consent
+      </label>
+      <div *ngIf="!gdprForm.form.controls['consent']?.valid && gdprForm.form.controls['consent']?.touched" class="invalid-feedback">
+        Consent is required.
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <button type="submit" class="btn btn-primary" [disabled]="!gdprForm.valid || !newRequest.consent || !newRequest.justification">Submit</button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>
