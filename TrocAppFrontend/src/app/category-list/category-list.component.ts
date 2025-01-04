@@ -15,16 +15,6 @@ import { User } from '../models/user.model';
 })
 export class CategoryListComponent implements OnInit {
   categories: Category[] = [];
- /* user: User = new User(
-    5,                        // ID of the administrator
-    'John',                // first name
-    'Doe',                 // last name
-    'john.doe@example.com', // Email
-    'password123',            // password
-    1,                        // ID of the address
-    4.5                    // rating
-  );*/
-
   newCategory: Category = new Category(0, '');
   editingCategory: Category | null = null;
   message: string = '';
@@ -50,7 +40,7 @@ export class CategoryListComponent implements OnInit {
         this.message = 'Category added successfully.';
       },
       error => {
-        this.message = 'Failed to add category.';
+        this.message = 'This category already exists. Please choose a different name';
         console.error('Error creating category', error);
       }
     );
@@ -69,7 +59,7 @@ export class CategoryListComponent implements OnInit {
           this.message = 'Category updated successfully.';
         },
         error => {
-          this.message = 'Failed to update category.';
+          this.message = error;
           console.error('Error modifying category', error);
         }
       );
@@ -92,10 +82,12 @@ export class CategoryListComponent implements OnInit {
         this.message = 'Category deleted successfully.';
       },
       error => {
-        this.message = 'Failed to delete category.';
+        this.message = 'Failed to delete category it contains items.';
         console.error('Error deleting category', error);
       }
     );
   }
+
+  
 
 }
