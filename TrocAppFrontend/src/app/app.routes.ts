@@ -12,7 +12,8 @@ import { CategoryListComponent } from './category-list/category-list.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AuthComponent } from './auth/auth.component';
 import { authGuard } from './auth.guard';
-
+import { GdprFormComponent } from './gdpr-form/gdpr-form.component';
+import { GdprAdminComponent } from './gdpr-admin/gdpr-admin.component';
 export const routes: Routes = [
     { path: '', component: ViewingItemsMapComponent }, // Default Path (Home Page)
     //Path for user management as admin
@@ -46,6 +47,11 @@ export const routes: Routes = [
     { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
     { path: 'edit-profil', component: EditProfilComponent, /*canActivate: [authGuard]*/ },
     { path: 'auth/login', component: AuthComponent},
-    { path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' }, // Wildcard route
+    //{ path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' }, // Wildcard route
+    
+    // Path for the GDPR form
+    {path : 'gdpr-form', component: GdprFormComponent},
+    // Path for the GDPR admin page
+    {path : 'gdpr-admin', component: GdprAdminComponent}
     
 ];
