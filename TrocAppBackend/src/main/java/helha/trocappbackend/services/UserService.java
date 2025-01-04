@@ -157,6 +157,23 @@ public class UserService implements IUserService{
         return userRepository.save(user);
     }
 
+    /*@Override
+    public void updateUserCredentials(String username, String newPassword, String newUsername)
+    {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Utilisateur introuvable"));
 
+        // Mettre à jour le mot de passe
+        if (newPassword != null && !newPassword.isEmpty()) {
+            user.setPassword(passwordEncoder.encode(newPassword));
+        }
 
+        // Mettre à jour le nom d'utilisateur
+        if (newUsername != null && !newUsername.isEmpty()) {
+            user.setUsername(newUsername);
+        }
+
+        // Sauvegarder les modifications
+        userRepository.save(user);
+    }*/
 }
