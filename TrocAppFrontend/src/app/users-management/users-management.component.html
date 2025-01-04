@@ -114,15 +114,17 @@
                 <td>{{ formatAddress(user.address) }}</td>
                 <td>
                   <div class="d-flex align-items-center">
-                    <span class="me-2">{{ user.rating }}</span>
-                    <div class="progress" style="width: 60px">
+                    <div class="me-2">
+                    </div>
+                    <span class="ms-2">{{getUserAverageRating(user.id).toFixed(1)}}</span>
+                    <div class="progress ms-2" style="width: 60px">
                       <div 
-                        class="progress-bar bg-success" 
-                        [style.width.%]="(user.rating / 5) * 100"
-                        [attr.aria-valuenow]="user.rating"
+                        class="progress-bar bg-warning" 
+                        [style.width.%]="(getUserAverageRating(user.id) / 5) * 100"
+                        [attr.aria-valuenow]="getUserAverageRating(user.id)"
                         aria-valuemin="0"
                         aria-valuemax="5"
-                        [attr.title]="user.rating + ' sur 5'"
+                        [attr.title]="getUserAverageRating(user.id) + ' sur 5'"
                       ></div>
                     </div>
                   </div>
