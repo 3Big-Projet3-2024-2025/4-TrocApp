@@ -1,0 +1,68 @@
+
+<div class="container d-flex justify-content-center align-items-center flex-wrap my-5">
+    <table>
+        <tr>
+            <th>id of item</th> <th>name of item</th> <th>description of item</th> <th>photo of item</th>
+             <th>category of the item</th> <th>is it available</th> <th>owner</th>
+        </tr>
+        @for(item of myItems | async; track $index) {
+        <tr>
+            <td>{{item.id}}</td> <td>{{item.name}}</td> <td>{{item.description}}</td> <td><img src="{{item.photo}}" alt="image of item"  style="max-height: 200px; object-fit: cover;"></td> 
+            <td>{{item.category.name}}</td> <td>{{item.available}}</td> <td>{{item.owner.firstName}} {{item.owner.lastName}}</td> 
+            <td><button class="btn btn-primary" (click)="updateItem(item)">Modify Item</button></td> 
+            <td><button class="btn btn-danger" (click)="deleteItem(item)">Delete Item</button></td>
+        </tr>
+    }
+    </table>
+</div>
+
+
+
+<h1 style="text-align: center;">My items</h1>
+
+<div class="container d-flex justify-content-center my-5">
+    <ul class="list-group w-100" style="max-width: 1000px;">
+        @for(item of myItems | async; track $index) {
+        <li class="list-group-item d-flex align-items-center text-center">
+            <!-- {{item.id}} --  -->  
+             
+              <div class="d-flex align-items-center">
+                <img src="{{item.photo}}" alt="image of item"  style="max-height: 200px; object-fit: cover;border-radius: 5px;">
+              </div>
+
+              <div class="flex-grow-1 text-center d-flex flex-column justify-content-center">
+                <h5 class="mb-1"> {{item.name}} </h5>
+                <p class="mb-1"> {{item.description}} </p>
+                <p class="mb-2">Category : {{item.category.name}} </p>
+              </div>
+
+               <!-- <div class="text-end">
+               </div>  -->
+                <!-- {{item.available}} --
+                {{item.owner.firstName}} {{item.owner.lastName}}  --   -->
+                <div class="d-flex flex-column align-items-end justify-content-center ms-auto">
+                    <button class="btn btn-primary mb-2" (click)="updateItem(item)">Modify Item</button>
+                    <button class="btn btn-danger mb-2" (click)="deleteItem(item)">Delete Item</button>
+                </div>
+                
+        </li>
+        }
+      </ul>
+</div>
+
+
+
+<p style="color: red;">{{errorMessage}}</p>
+                                <!-- @for(item of myItems | async; track $index) {
+                                    <p>id of item : {{item.id}} </p>
+                                    <p>name of item : {{item.name}} </p>
+                                     <p>description of item : {{item.description}} </p>
+                                     <p>photo of item : {{item.photo}} </p>
+                                     <img src="{{item.photo}}" style="width: 5%;" alt="image of item">
+                                     <p>category of the item : {{item.category.name}} </p>
+                                     <p>is it available : {{item.available}} </p>
+                                     <p>who has the item : {{item.owner.firstName}} {{item.owner.lastName}} </p>
+                                     <button class="btn btn-primary" data-bs-dismiss="modal" (click)="proposeExchange(item)">Offer this Item</button>
+                                     <br><br>
+                                     <br><br>
+                                } -->
