@@ -33,6 +33,12 @@ export class CategoryService {
       .pipe(catchError(this.handleError));
   }
 
+  getCategoryById(categoryId: number): Observable<Category> {
+    const url = `${this.apiUrl}/${categoryId}`;
+    return this.http.get<Category>(url)
+      .pipe(catchError(this.handleError));
+  }
+
   createCategory(category: Category): Observable<Category> {
     //const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const headers = this.getAuthHeaders();
