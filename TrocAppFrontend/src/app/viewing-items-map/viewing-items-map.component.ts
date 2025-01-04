@@ -45,6 +45,7 @@ export class ViewingItemsMapComponent {
     this.loadMarkers();
   }
 
+  // Load the markers for the items
   loadMarkers(): void {
     // Load the items from the database
     this.itemService.getAvailableItem().subscribe(
@@ -73,6 +74,7 @@ export class ViewingItemsMapComponent {
                         iconAnchor: [13, 41],
                         iconUrl: 'assets/marker-icon.png',
                       }),
+                      // Popup with the name of the item
                     }).on('click', () => {
                       this.router.navigate(['/detailed-view-item', item.id]);
                     });
