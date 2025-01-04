@@ -2,6 +2,7 @@ package helha.trocappbackend.controllers;
 
 import helha.trocappbackend.models.Address;
 import helha.trocappbackend.services.AddressService;
+import helha.trocappbackend.services.GeocodingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,14 @@ public class AddressController {
     @Autowired
     private AddressService addressService;
 
+    @Autowired
+    private GeocodingService geocodingService;
+
     // Endpoint to add a new address
     @PostMapping
     public ResponseEntity<Object> addAddress(@RequestBody Address address) {
         try {
+            geocodingService.geocodeAddress(address);
             Address savedAddress = addressService.addAddress(address);
             return new ResponseEntity<>(savedAddress, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -73,6 +78,7 @@ public class AddressController {
     @PutMapping
     public ResponseEntity<Object> updateAddress(@RequestBody Address address) {
         try {
+            geocodingService.geocodeAddress(address);
             Address updatedAddress = addressService.updateAddress(address);
             return new ResponseEntity<>(updatedAddress, HttpStatus.OK);
         } catch (Exception e) {
