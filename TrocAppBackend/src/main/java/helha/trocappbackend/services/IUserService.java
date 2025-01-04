@@ -121,6 +121,8 @@ public interface IUserService {
      */
     List<String> getAllCities();
 
+    //void updateUserCredentials(String username, String newPassword, String newUsername);
+
     /**
      * Searches for users by a query.
      *
