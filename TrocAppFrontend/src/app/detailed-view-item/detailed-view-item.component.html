@@ -1,27 +1,24 @@
-<h1> Welcome to the detailed view of the selected item</h1>
-
-<h3>Selected Item</h3>
-<table class="table table-striped">
-<tbody>
-  <tr>
-    <td>{{ item.photo }}</td>
-  </tr>
-  <tr>    
-    <td>{{ item.name }}</td>
-  </tr>
-  <tr>
-    <td>{{ item.description }}</td>
-  </tr>
-  <tr>
-    <td>{{ item.category }}</td>
-  </tr>
-  <tr>
-    <td>{{ item.ownerid.getPseudo }}</td>
-  </tr>
-  <tr>
-    <td>
-      <button class="btn btn-primary" (click)="proposeExchange(item.itemId)">Propose an exchange</button>
-    </td>
-  </tr>
-</tbody>
-</table>
+  <div class="container">
+    <div class="item-detail-card">
+      <h1>Welcome to the detailed view of the selected item</h1>
+      <h3>Selected Item</h3>
+      
+      <div class="item-photo">
+        <img [src]="item.photo" alt="Item photo">
+      </div>
+      
+      <div class="item-details">
+        <p><strong>Name :</strong> {{ item.name }}</p>
+        <p><strong>Description :</strong> {{ item.description }}</p>
+        <p><strong>Category :</strong> {{ item.category }}</p>
+      </div>
+      
+      <div class="owner-details">
+        <p><strong>Owner :</strong> {{ owner.firstName }} {{ owner.lastName }}</p>
+      </div>
+      
+      <div class="btn-container">
+        <button class="btn btn-primary" (click)="proposeExchange(item.id)">Propose an exchange</button>
+      </div>
+    </div>
+  </div>
