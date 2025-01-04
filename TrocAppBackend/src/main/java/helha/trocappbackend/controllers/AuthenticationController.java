@@ -1,10 +1,13 @@
 package helha.trocappbackend.controllers;
-/*
+
+import helha.trocappbackend.models.Category;
 import helha.trocappbackend.models.JWT;
 import helha.trocappbackend.repositories.UserRepository;
+import helha.trocappbackend.services.IUserService;
 import helha.trocappbackend.services.UserService;
 import helha.trocappbackend.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +16,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -31,6 +33,12 @@ public class AuthenticationController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    private IUserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostMapping("login")
     public ResponseEntity<?> authenticate(@RequestParam String username, @RequestParam String password) {
@@ -45,5 +53,29 @@ public class AuthenticationController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid username or password");
         }
     }
+
+    @PostMapping("create_account")
+    public ResponseEntity<Object> createAccount(@RequestBody helha.trocappbackend.models.User user) {
+        try {
+            // Vérifiez si une catégorie avec le même nom existe déjà
+            helha.trocappbackend.models.User userExists = userRepository.findByUsername(user.getUsername());
+
+            if (userExists != null) {
+                return ResponseEntity.status(HttpStatus.CONFLICT)
+                        .body("The username is already taken. Please choose another one.");
+            }
+
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+            // Sauvegarder la catégorie
+            helha.trocappbackend.models.User savedUser = userService.addUser(user);
+
+            // Retourner la catégorie sauvegardée
+            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while creating the user: " + e.getMessage());
+        }
+    }
 }
-*/
