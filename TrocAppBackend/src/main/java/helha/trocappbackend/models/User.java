@@ -14,7 +14,7 @@ import jakarta.persistence.Id;
 import java.util.List;
 import java.util.Set;
 
-@JsonIgnoreProperties({"password", "postedRatings", "receivedRatings", "items", "exchangesAsInitiator", "exchangesAsReceiver"})
+@JsonIgnoreProperties({"postedRatings", "receivedRatings", "items", "exchangesAsInitiator", "exchangesAsReceiver"})
 @Entity
 @Table(name = "app_user")
 public class User {
