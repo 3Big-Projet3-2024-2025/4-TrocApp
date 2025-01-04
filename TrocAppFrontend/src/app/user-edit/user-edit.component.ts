@@ -39,7 +39,9 @@ export class UserEditComponent {
       zipCode: '',
       city: '',
       street: '',
-      number: ''
+      number: '',
+      longitude: 0,
+      latitude: 0
     },
     rating: 0,
     addressId: 0,

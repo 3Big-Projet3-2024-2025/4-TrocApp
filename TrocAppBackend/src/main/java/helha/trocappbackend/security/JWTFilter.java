@@ -1,6 +1,6 @@
 package helha.trocappbackend.security;
 
-import io.jsonwebtoken.Claims;
+/*import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,4 +47,4 @@ public class JWTFilter extends OncePerRequestFilter {
         }
         return null;
     }
-}
+}*/
