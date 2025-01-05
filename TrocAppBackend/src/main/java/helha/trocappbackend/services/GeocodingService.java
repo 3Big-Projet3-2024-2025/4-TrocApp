@@ -8,21 +8,35 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.http.ResponseEntity;
 import helha.trocappbackend.models.Address;
 
-
+/**
+ * Service class responsible for geocoding addresses using the Nominatim API.
+ * This service converts physical addresses into geographical coordinates (latitude and longitude).
+ */
 @Service
 public class GeocodingService {
 
-    /*@Value("${nominatim.api.url}")
+    @Value("${nominatim.api.url}")
     private String nominatimApiUrl; // Nominatim API default URL
 
     private final RestTemplate restTemplate; // Field for HTTP requests
 
-    // Constructor
+    /**
+     * Constructs a new GeocodingService with the specified RestTemplate
+     *
+     * @param restTemplate The RestTemplate instance used for making HTTP requests to the Nominatim API
+     */
     public GeocodingService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    // Function transforming the address object into coordinates (longitude and latitude)
+    /**
+     * Converts a physical address into geographical coordinates using the Nominatim API.
+     * The method updates the provided Address object with the retrieved latitude and longitude.
+     *
+     * @param address The Address object containing the physical address details to be geocoded
+     * @return The same Address object updated with latitude and longitude coordinates if successful,
+     *         or with NaN values for coordinates if geocoding fails
+     */
     public Address geocodeAddress(Address address) {
         address.setLatitude(Double.NaN); // Initialize the coordinates as Not A Number
         address.setLongitude(Double.NaN);
@@ -45,6 +59,10 @@ public class GeocodingService {
                     JsonNode firstResult = jsonNode.get(0);
                     double latitude = firstResult.path("lat").asDouble();
                     double longitude = firstResult.path("lon").asDouble();
+
+                    // Set the coordinates on the Address object
+                    address.setLatitude(latitude);
+                    address.setLongitude(longitude);
                 }
             }
         } catch (Exception e) {
@@ -55,11 +73,18 @@ public class GeocodingService {
         return address;
     }
 
-    // Transform Address attributes into a string for JSON format
+    /**
+     * Formats an Address object into a string suitable for the Nominatim API query.
+     * Combines street, number, city, and zip code into a comma-separated string.
+     *
+     * @param address The Address object to format
+     * @return A formatted string containing the address components separated by commas
+     */
     public String formatAddress(Address address) {
         return address.getStreet() + ", " +
-                address.getNumber() + ", " +
+                address.getNumber() + ", "
+                +
                 address.getCity() + ", " +
                 address.getZipCode();
-    }*/
+    }
 }

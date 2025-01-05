@@ -22,7 +22,7 @@ export const routes: Routes = [
     //Path for viewing a detailed item
     { path: "detailed-view-item", component: DetailedViewItemComponent },
     //{ path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
-    {path: 'category-list', component: CategoryListComponent},
+    {path: 'category-list', component: CategoryListComponent, canActivate: [authGuard]},
     //{ path: '**', redirectTo: '/category-list', pathMatch: 'full' },
     
     { path: "detailed-view-item/:id", component: DetailedViewItemComponent },
@@ -39,7 +39,7 @@ export const routes: Routes = [
   
     // Path for editing a user
     { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
-    { path: 'user-profile/:id', component: UserProfileComponent },
+    { path: 'user-profile/:id', component: UserProfileComponent, canActivate: [authGuard] },
 
     
     { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
