@@ -20,18 +20,50 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the {@link helha.trocappbackend.services.ItemService} class.
+ *
+ * <p>This test class uses JUnit 5 and Mockito to perform unit tests on various
+ * methods of the {@link ItemService}. It verifies the behavior of the service
+ * methods by mocking the {@link helha.trocappbackend.repositories.ItemRepository}.</p>
+ *
+ * <p>Each test ensures proper functionality of a specific service method,
+ * including successful cases, edge cases, and exception handling scenarios.</p>
+ *
+ * <p>Annotations:</p>
+ * <ul>
+ *     <li>{@link SpringBootTest}: Used to indicate that the test is a Spring Boot test.</li>
+ *     <li>{@link Mock}: Used to create a mock object for the `ItemRepository`.</li>
+ *     <li>{@link InjectMocks}: Injects the mock dependencies into the `ItemService` instance.</li>
+ *     <li>{@link BeforeEach}: Sets up test data and initializes mocks before each test case.</li>
+ * </ul>
+ * @author Hayriye Dogan
+ * @see helha.trocappbackend.serviceTest
+ */
 @SpringBootTest
 public class TestItemService {
+    /**
+     * Mocked instance of the {@link helha.trocappbackend.repositories.ItemRepository}.
+     */
     @Mock
     private ItemRepository itemRepository;
 
+    /**
+     * Service under test.
+     */
     @InjectMocks
     private ItemService itemService;
 
+    /**
+     * Sample data for testing.
+     */
     private Item item1;
     private Item item2;
     private User owner;
 
+    /**
+     * Sets up sample data and initializes mocks before each test case.
+     */
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -50,6 +82,9 @@ public class TestItemService {
         item2.setOwner(owner);
     }
 
+    /**
+     * Tests the successful addition of an item.
+     */
     @Test
     @DisplayName("Add an item successfully")
     void addItem_Success() {
@@ -62,6 +97,9 @@ public class TestItemService {
         verify(itemRepository, times(1)).save(any(Item.class));
     }
 
+    /**
+     * Tests the addition of an item when the repository throws an exception.
+     */
     @Test
     @DisplayName("Add an item throws an exception")
     void addItem_ThrowsException() {
@@ -70,6 +108,9 @@ public class TestItemService {
         assertThrows(RuntimeException.class, () -> itemService.addItem(item1));
     }
 
+    /**
+     * Tests retrieving an item by its ID successfully.
+     */
     @Test
     @DisplayName("Get an item by ID successfully")
     void getItemById_Success() {
@@ -81,6 +122,9 @@ public class TestItemService {
         assertEquals(1, result.getId());
     }
 
+    /**
+     * Tests retrieving an item by an ID that does not exist.
+     */
     @Test
     @DisplayName("Get an item by ID that does not exist")
     void getItemById_NotFound() {
@@ -91,6 +135,9 @@ public class TestItemService {
         assertNull(result);
     }
 
+    /**
+     * Tests retrieving all available items successfully.
+     */
     @Test
     @DisplayName("Get all available items successfully")
     void getAllAvailableItems_Success() {
@@ -102,6 +149,9 @@ public class TestItemService {
         assertTrue(result.get(0).isAvailable());
     }
 
+    /**
+     * Tests retrieving all items successfully.
+     */
     @Test
     @DisplayName("Get all items successfully")
     void getAllItems_Success() {
@@ -112,6 +162,9 @@ public class TestItemService {
         assertEquals(2, result.size());
     }
 
+    /**
+     * Tests retrieving all available items by user ID successfully.
+     */
     @Test
     @DisplayName("Get all available items by user ID successfully")
     void getAllAvailableItemsByUserId_Success() {
@@ -124,6 +177,9 @@ public class TestItemService {
         assertEquals(1, result.get(0).getOwner().getId());
     }
 
+    /**
+     * Tests deleting an item successfully.
+     */
     @Test
     @DisplayName("Delete an item successfully")
     void deleteItem_Success() {
@@ -133,6 +189,9 @@ public class TestItemService {
         verify(itemRepository, times(1)).deleteById(1);
     }
 
+    /**
+     * Tests deleting an item when the repository throws an exception.
+     */
     @Test
     @DisplayName("Delete an item throws an exception")
     void deleteItem_ThrowsException() {
@@ -141,6 +200,9 @@ public class TestItemService {
         assertThrows(RuntimeException.class, () -> itemService.deleteItem(999));
     }
 
+    /**
+     * Tests updating an item successfully.
+     */
     @Test
     @DisplayName("Update an item successfully")
     void updateItem_Success() {
@@ -154,6 +216,9 @@ public class TestItemService {
         verify(itemRepository, times(1)).save(any(Item.class));
     }
 
+    /**
+     * Tests updating an item that does not exist.
+     */
     @Test
     @DisplayName("Update an item that does not exist")
     void updateItem_NotFound() {
