@@ -22,7 +22,7 @@ export class AuthService {
 
     if (tokenDecoded && tokenDecoded.roles)
     {
-      this.roles = tokenDecoded.roles;
+      this.roles = tokenDecoded.roles.map((role: { authority: string }) => role.authority);
     }
   }
 
@@ -110,7 +110,7 @@ export class AuthService {
         return false;
       }
   
-      return (this.roles.indexOf('user') > -1);
+      return this.roles.includes('ROLE_admin');
   }
 
   isAdmin(): boolean
@@ -120,6 +120,6 @@ export class AuthService {
       return false;
     }
 
-    return (this.roles.indexOf('admin') > -1);
+    return this.roles.includes('ROLE_admin');
   }
 }
