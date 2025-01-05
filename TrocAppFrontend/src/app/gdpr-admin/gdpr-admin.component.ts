@@ -4,6 +4,7 @@ import { GdprRequestService } from '../services/gdpr-request.service';
 import { NgFor, NgIf } from '@angular/common';
 import { DatePipe } from '@angular/common'; 
 import { AuthService } from '../auth.service';
+import { catchError, EMPTY, finalize, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-gdpr-admin',
@@ -60,28 +61,26 @@ export class GdprAdminComponent {
     });
   }
 
-  async processRequest(request: GdprRequest, approved: boolean): Promise<void> {
-    try {
-      this.loading = true;
-      const response = approved 
-        ? ` Request approved: ${request.requesttype}` // Request approved
-        : `Request rejected: ${request.requesttype}`; // Request rejected
+  processRequest(request: GdprRequest, approved: boolean): void {
+    this.loading = true;
+    const response = approved
+      ? `Request approved: ${request.requesttype}`
+      : `Request rejected: ${request.requesttype}`;
 
-      // Deactivate the user if the request is approved
-      if (approved) {
-        await this.gdprService.deactivateUser(request.user.id).toPromise();
-      }
+    (approved 
+      ? this.gdprService.deactivateUser(request.user.id).pipe(
+          switchMap(() => this.gdprService.processRequest(request.id_gdprRequest, response))
+        )
+      : this.gdprService.processRequest(request.id_gdprRequest, response)
+    ).pipe(
+      tap(() => this.loadRequests()), // Reload requests after processing
+      catchError((error) => {
+        this.error = `Error processing request: ${error.message}`;
+        return EMPTY;  // Utilisation of EMPTY 
+      }),
+      finalize(() => this.loading = false)
+    ).subscribe();
+}
 
-      // Update the request status
-      await this.gdprService.processRequest(request.id_gdprRequest, response).toPromise();
-
-      // load the requests
-      this.loadRequests();
-    } catch (error) {
-      this.error = 'Error processing request'; // Error processing request
-    } finally {
-      this.loading = false;
-    }
-  }
 
 }

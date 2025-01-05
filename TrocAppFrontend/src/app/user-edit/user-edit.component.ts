@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 
+
 @Component({
   selector: 'app-user-edit',
   standalone: true,
@@ -23,7 +24,8 @@ export class UserEditComponent {
   user!: User;
   message: string | null = null;
   success: boolean = false;
-  editingUser: User = {  // Initialisation avec des valeurs par défaut
+   // Default empty user object for editing
+   editingUser: User = { 
     id: 0,
     firstName: '',
     lastName: '',
@@ -32,15 +34,15 @@ export class UserEditComponent {
       zipCode: '',
       city: '',
       street: '',
-      number: '',
-      longitude: 0,
-      latitude: 0
+      number: ''
     },
     rating: 0,
     addressId: 0,
     roles: [],
-    rolesInput: ''
-  };
+    rolesInput: '',
+    blocked: false,
+    actif: true
+};
 
   zipCodes: number[] = [];  
   streets: string[] = [];

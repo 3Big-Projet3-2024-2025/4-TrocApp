@@ -64,8 +64,8 @@ class GdprRequestServiceTest {
     @Test
     @DisplayName("Test creating a GDPR request successfully")
     public void testCreateGdprRequest() {
-        // Setup test data
-        User user = new User("John", "Doe", "john.doe@example.com", "password123");
+        // Setup test data with the new user details
+        User user = new User("Doha", "Assadi", "doha@gmail.com", "1234");
         user.setId(1); // Set ID manually for test
 
         // Mock repository behavior
@@ -97,10 +97,6 @@ class GdprRequestServiceTest {
         verify(userRepository).existsById(user.getId());
         verify(gdprRequestRepository).save(any(GdprRequest.class));
     }
-
-
-
-
 
     /**
      * Test the creation of a GDPR request with invalid data (user does not exist).

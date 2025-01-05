@@ -58,8 +58,8 @@ public class User {
 
     @OneToMany(mappedBy = "receiver")
     private List<Exchange> exchangesAsReceiver;
-    /*@OneToMany(mappedBy = "user")
-    private List <GdprRequest> gdprRequests ;*/
+    @OneToMany(mappedBy = "user")
+    private List <GdprRequest> gdprRequests ;
 
     //@JsonManagedReference
     @JsonIgnoreProperties("roles")
@@ -174,13 +174,13 @@ public class User {
     public List<Rating> getReceivedRatings() { return receivedRatings; }
     public void setReceivedRatings(List<Rating> receivedRatings) { this.receivedRatings = receivedRatings; }
 
-    /*public List<GdprRequest> getGdprRequests() {
+    public List<GdprRequest> getGdprRequests() {
         return gdprRequests;
-    }*/
+    }
 
-    /*public void setGdprRequests(List<GdprRequest> gdprRequests) {
+    public void setGdprRequests(List<GdprRequest> gdprRequests) {
         this.gdprRequests = gdprRequests;
-    }*/
+    }
 
 
     public List<Exchange> getExchangesAsInitiator() {
