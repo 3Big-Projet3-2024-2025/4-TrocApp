@@ -9,6 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AddressService } from '../services/address.service';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { AddressSuggestion } from '../services/address.service';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-profil',
@@ -30,7 +32,10 @@ export class EditProfilComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private usersService: UsersService,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private authService: AuthService, // Injection of the AuthService
+    private router: Router
+    
   ) {
     // Initialize form with necessary fields and validation rules
     this.profileForm = this.fb.group({
@@ -47,11 +52,19 @@ export class EditProfilComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadUserProfile();  // Load user profile on component initialization
+    const userId = this.authService.getIDUserConnected();
+    
+    if (!userId) {
+      // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.loadUserProfile(userId);  // Load user profile on component initialization
     this.setupAddressAutocomplete();  // Setup address autocomplete functionality
   }
 
-  private loadUserProfile() {
+  /*private loadUserProfile() {
     // Fetch user data from service (using temporary ID)
     this.usersService.getUserById(this.TEMP_USER_ID).subscribe({
       next: (user) => {
@@ -74,7 +87,32 @@ export class EditProfilComponent implements OnInit {
         console.error('Error loading user profile:', error);  // Handle errors
       }
     });
-  }
+  }*/
+
+    private loadUserProfile(userId: number) {
+      this.usersService.getUserById(userId).subscribe({
+        next: (user) => {
+          this.user = user;
+          this.profileForm.patchValue({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            address: {
+              street: user.address?.street || '',
+              number: user.address?.number || '',
+              city: user.address?.city || '',
+              zipCode: user.address?.zipCode || ''
+            }
+          });
+          this.loadRoles();
+        },
+        error: (error) => {
+          console.error('Error loading user profile:', error);
+          this.message = 'Error loading profile.';
+          this.success = false;
+        }
+      });
+    }
 
   loadRoles() {
     // Load available roles from the service
@@ -141,7 +179,7 @@ export class EditProfilComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+ /* onSubmit() {
     // Submit the form if it's valid and the user is loaded
     if (this.profileForm.valid && this.user) {
       const updatedUser = {
@@ -172,5 +210,42 @@ export class EditProfilComponent implements OnInit {
         }
       });
     }
-  }
+  }*/
+    onSubmit() {
+      const userId = this.authService.getIDUserConnected();
+      
+      if (!userId) {
+        this.message = 'User not authenticated';
+        this.success = false;
+        return;
+      }
+  
+      if (this.profileForm.valid && this.user) {
+        const updatedUser = {
+          ...this.user,
+          ...this.profileForm.value,
+          id: userId
+        };
+    
+        this.usersService.updateUser(updatedUser).subscribe({
+          next: (response) => {
+            this.user = response;
+            this.isEditing = false;
+            this.message = 'Profile successfully updated.';
+            this.success = true;
+            setTimeout(() => {
+              this.message = null;
+            }, 3000);
+          },
+          error: (error) => {
+            console.error('Error updating profile:', error);
+            this.message = 'Error in updating profile.';
+            this.success = false;
+            setTimeout(() => {
+              this.message = null;
+            }, 3000);
+          }
+        });
+      }
+    }
 }
