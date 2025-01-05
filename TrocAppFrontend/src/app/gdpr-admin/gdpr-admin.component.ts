@@ -1,85 +1,87 @@
 import { Component } from '@angular/core';
 import { GdprRequest } from '../models/gdpr-request.modele';
 import { GdprRequestService } from '../services/gdpr-request.service';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { DatePipe } from '@angular/common'; 
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-gdpr-admin',
   standalone: true,
-  imports: [NgFor , DatePipe],
+  imports: [NgFor , DatePipe, NgIf],
   templateUrl: './gdpr-admin.component.html',
   styleUrl: './gdpr-admin.component.css'
 })
 export class GdprAdminComponent {
-  pendingRequests: GdprRequest[] = [];  // Stores pending requests
-  treatedRequests: GdprRequest[] = [];  // Stores processed requests
+ pendingRequests: GdprRequest[] = [];
+  processedRequests: GdprRequest[] = [];
+  loading = false;
+  error = '';
+  isAdmin = false;
 
-  constructor(private gdprRequestService: GdprRequestService) {}
+  constructor(private gdprService: GdprRequestService , private authService: AuthService ) {}
 
   ngOnInit(): void {
-    this.loadRequests();
+    // Verify if the user is an admin
+    this.isAdmin = this.authService.isAdmin();
+
+    // If the user is an admin, load the requests
+    if (this.isAdmin) {
+      this.loadRequests();
+    } else {
+      this.error = 'You are not authorized to view GDPR requests'; // Message si l'utilisateur n'est pas admin
+    }
   }
 
-  // Load pending and processed requests
-  loadRequests() {
-    this.gdprRequestService.getPendingRequests().subscribe({
+  loadRequests(): void {
+    this.loading = true;
+    this.error = '';
+    
+    // load the pending requests
+    this.gdprService.getPendingRequests().subscribe({
       next: (requests) => {
         this.pendingRequests = requests;
+        this.loading = false;
       },
-      error: (err) => {
-        console.error('Error loading pending requests', err);
+      error: (error) => {
+        this.error = 'Error loading pending requests'; // Error loading pending requests
+        this.loading = false;
       }
     });
 
-    this.gdprRequestService.getTreatedRequests().subscribe({
+    // load the processed requests
+    this.gdprService.getProcessedRequests().subscribe({
       next: (requests) => {
-        this.treatedRequests = requests;
+        this.processedRequests = requests;
       },
-      error: (err) => {
-        console.error('Error loading processed requests', err);
+      error: (error) => {
+        this.error = 'Error loading processed requests'; // Error loading processed requests
       }
     });
   }
 
-  // Deactivate a user
-  /*deactivateUser(userId: number) {
-    this.gdprRequestService.deactivateUser(userId).subscribe({
-      next: (response) => {
-        alert('User has been successfully deactivated'); // Confirm deactivation
-        this.loadRequests(); // Refresh the request lists
-      },
-      error: (err) => {
-        console.error('Error deactivating the user', err);
-        alert('Error deactivating the user'); // Show error message if deactivation fails
+  async processRequest(request: GdprRequest, approved: boolean): Promise<void> {
+    try {
+      this.loading = true;
+      const response = approved 
+        ? ` Request approved: ${request.requesttype}` // Request approved
+        : `Request rejected: ${request.requesttype}`; // Request rejected
+
+      // Deactivate the user if the request is approved
+      if (approved) {
+        await this.gdprService.deactivateUser(request.user.id).toPromise();
       }
-    });
-  }*/
- // Modify deactivateUser method to handle both user deactivation and request update
-deactivateUser(request: GdprRequest) { 
-  this.gdprRequestService.deactivateUser(request.user.id).subscribe({
-    next: () => {
-      // After successful deactivation, update the request status
-      this.gdprRequestService.updateRequestStatus(
-        request.id_gdprRequest,
-        'Completed',
-        'User account has been deactivated as requested'
-      ).subscribe({
-        next: () => {
-          alert('Request processed and user deactivated successfully');
-          this.loadRequests();  // Reload both lists
-        },
-        error: (err) => {
-          console.error('Error updating request status', err);
-          alert('User deactivated but error updating request status');
-        }
-      });
-    },
-    error: (err) => {
-      console.error('Error deactivating user', err);
-      alert('Error processing request');
+
+      // Update the request status
+      await this.gdprService.processRequest(request.id_gdprRequest, response).toPromise();
+
+      // load the requests
+      this.loadRequests();
+    } catch (error) {
+      this.error = 'Error processing request'; // Error processing request
+    } finally {
+      this.loading = false;
     }
-  });
-}
+  }
 
 }

@@ -7,22 +7,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class GdprRequestService {
-  private baseUrl = 'http://localhost:8080/api/gdpr';  // API URL
+ /* private baseUrl = 'http://localhost:8080/api/gdpr';  // API URL
 
   constructor(private http: HttpClient) { }
 
-  /*createRequest(request: GdprRequest): Observable<GdprRequest> {
-    return this.http.post<GdprRequest>(this.baseUrl, request);
-  }
-    createRequest(request: GdprRequest): Observable<GdprRequest> {
-      console.log('Sending request:', request);
-      return this.http.post<GdprRequest>(this.baseUrl, request).pipe(
-        tap(
-          response => console.log('Success response:', response),
-          error => console.log('Error response:', error)
-        )
-      );
-    }*/
       createRequest(request: GdprRequest): Observable<GdprRequest> {
         const headers = new HttpHeaders({
           'Content-Type': 'application/json'
@@ -56,10 +44,7 @@ export class GdprRequestService {
         );
       }
 
-  // Get pending requests
-  /*getPendingRequests(): Observable<GdprRequest[]> {
-    return this.http.get<GdprRequest[]>(`${this.baseUrl}/pending`);
-  }*/
+  
     getPendingRequests(): Observable<GdprRequest[]> {
       return this.http.get<GdprRequest[]>(`${this.baseUrl}/pending`).pipe(
         tap(requests => console.log('Pending requests:', requests))
@@ -96,6 +81,30 @@ export class GdprRequestService {
       error => console.log('Error updating request status:', error)
     )
   );
+  }*/
+
+  private apiUrl = 'http://localhost:8080/api/gdpr';
+
+  constructor(private http: HttpClient) {}
+
+  getPendingRequests(): Observable<GdprRequest[]> {
+    return this.http.get<GdprRequest[]>(`${this.apiUrl}/pending`);
+  }
+
+  getProcessedRequests(): Observable<GdprRequest[]> {
+    return this.http.get<GdprRequest[]>(`${this.apiUrl}/processed`);
+  }
+
+  processRequest(requestId: number, response: string): Observable<GdprRequest> {
+    return this.http.put<GdprRequest>(`${this.apiUrl}/${requestId}/processed`, response);
+  }
+
+  deactivateUser(userId: number): Observable<string> {
+    return this.http.put<string>(`${this.apiUrl}/${userId}/deactivate`, {});
+  }
+
+  createRequest(request: GdprRequest): Observable<GdprRequest> {
+    return this.http.post<GdprRequest>(this.apiUrl, request);
   }
 
 }
