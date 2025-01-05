@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Entity representing a user in the application.
  */
-@JsonIgnoreProperties({"password", "postedRatings", "receivedRatings", "items", "exchangesAsInitiator", "exchangesAsReceiver"})
+@JsonIgnoreProperties({ "postedRatings", "receivedRatings", "items", "exchangesAsInitiator", "exchangesAsReceiver"})
 @Entity
 @Table(name = "app_user")
 public class User {
