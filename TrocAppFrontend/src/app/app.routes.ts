@@ -12,11 +12,12 @@ import { ExchangeListComponent } from './exchange-list/exchange-list.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { MyItemsListComponent } from './my-items-list/my-items-list.component';
 import { AuthComponent } from './auth/auth.component';
+import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
     { path: '', component: ViewingItemsMapComponent }, // Default Path (Home Page)
     //Path for user management as admin
-    { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
+    { path: "users-management", component: UsersManagementComponent, canActivate: [authGuard] },
     //Path for viewing items on a map
     { path: "viewing-items-map", component: ViewingItemsMapComponent },
     //Path for viewing a detailed item
@@ -43,7 +44,6 @@ export const routes: Routes = [
     { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
     { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
     { path: 'edit-profil', component: EditProfilComponent, /*canActivate: [authGuard]*/ },
-    { path: 'rating-comment', component: RatingCommentComponent, /*canActivate: [authGuard]*/ },
     { path: 'auth/login', component: AuthComponent},
     { path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' }, // Wildcard route
     
