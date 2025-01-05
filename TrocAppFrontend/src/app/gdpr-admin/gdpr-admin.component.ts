@@ -29,7 +29,7 @@ export class GdprAdminComponent {
     if (this.isAdmin) {
       this.loadRequests();
     } else {
-      this.error = 'You are not authorized to view GDPR requests'; // Message si l'utilisateur n'est pas admin
+      this.error = 'You are not authorized to view GDPR requests'; // Message if user is not authorized to view GDPR requests
     }
   }
 

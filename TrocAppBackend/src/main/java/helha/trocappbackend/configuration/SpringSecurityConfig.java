@@ -42,6 +42,7 @@ public class SpringSecurityConfig {
     JWTFilter jwtFilter;
 
     @Bean
+
     public SecurityFilterChain SecurityFilterChain(final HttpSecurity http) throws Exception {
         return http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
@@ -54,6 +55,7 @@ public class SpringSecurityConfig {
                     authorizeRequests.requestMatchers("/sports").hasRole("user");
                     authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "/auth/login", "/auth/create_account").permitAll();
                     authorizeRequests.anyRequest().authenticated();
+
                 }).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
     }
 

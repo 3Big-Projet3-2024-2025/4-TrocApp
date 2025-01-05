@@ -15,10 +15,18 @@ import { Router } from '@angular/router';
   styleUrl: './gdpr-form.component.css'
 })
 export class GdprFormComponent {
- newRequest!: GdprRequest;
+  newRequest: GdprRequest = new GdprRequest(
+    0, '', '', 'Pending', '', '', false, '', {
+      id: 0,
+      firstName: '',
+      lastName: '',
+      email: '',
+      actif: true
+    }
+  );
   loading = false;
   error: string | null = null;
-  currentUser: any = null; 
+  currentUser: any = null;
 
   constructor(
     private gdprRequestService: GdprRequestService,
@@ -27,64 +35,77 @@ export class GdprFormComponent {
   ) {}
 
   ngOnInit(): void {
-    // Verify if user is logged in
+    this.checkAndInitializeUser();
+  }
+
+  private checkAndInitializeUser(): void {
     const tokenDecoded = this.authService.decodeToken();
     this.currentUser = tokenDecoded ? tokenDecoded : null;
 
     if (!this.currentUser) {
-      this.router.navigate(['/login'], { queryParams: { returnUrl: '/gdpr/request' } });
+      this.router.navigate(['/auth/login'], { 
+        queryParams: { returnUrl: '/gdpr/request' } 
+      });
       return;
     }
 
-    this.newRequest = new GdprRequest(
-      0, '', '', 'Pending', '', '', false, '', this.currentUser
-    );
+    this.newRequest.user = this.currentUser;
   }
 
   submitRequest(): void {
     if (!this.currentUser) {
-      this.error = ' Please log in to submit a request'; //
+      this.error = 'Please log in to submit a request';
+      return;
+
+    }
+
+    this.newRequest.user.firstName = this.currentUser.firstName;
+    this.newRequest.user.lastName = this.currentUser.lastName;
+    this.newRequest.user.email = this.currentUser.email;
+
+    if (!this.validateRequest()) {
       return;
     }
 
     this.error = null;
     this.loading = true;
-
-    // Validation
-    if (!this.newRequest.consent) {
-      this.error = 'Consent is required to submit a GDPR request.';
-      this.loading = false;
-      return;
-    }
-
-    if (!this.newRequest.requesttype?.trim()) {
-      this.error = ' the type of request is required.'; 
-      this.loading = false;
-      return;
-    }
-
-    if (!this.newRequest.justification?.trim()) {
-      this.error = 'justification is required for the GDPR request.'; // 
-      this.loading = false;
-      return;
-    }
-
     this.newRequest.requestdate = new Date().toISOString();
 
-    // Submit the request
     this.gdprRequestService.createRequest(this.newRequest).subscribe({
       next: (response: GdprRequest) => {
-        console.log(' Request submitted successfully:', response); // Request submitted successfully
-        alert(' Request submitted successfully!');
+        console.log('Request submitted successfully:', response);
+        alert('Request submitted successfully!');
         this.loading = false;
         this.resetForm();
       },
       error: (error: any) => {
-        console.error('Error during submission:', error); 
-        this.error = error.error?.message || 'An error occurred while submitting the request'; 
+        console.error('Error during submission:', error);
+        this.error = error.error?.message || 'An error occurred while submitting the request';
         this.loading = false;
       }
     });
+  }
+
+  private validateRequest(): boolean {
+    if (!this.newRequest.consent) {
+      this.error = 'Consent is required to submit a GDPR request.';
+      this.loading = false;
+      return false;
+    }
+
+    if (!this.newRequest.requesttype?.trim()) {
+      this.error = 'The type of request is required.';
+      this.loading = false;
+      return false;
+    }
+
+    if (!this.newRequest.justification?.trim()) {
+      this.error = 'Justification is required for the GDPR request.';
+      this.loading = false;
+      return false;
+    }
+
+    return true;
   }
 
   resetForm(): void {
