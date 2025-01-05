@@ -11,14 +11,47 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * REST controller for managing `Exchange` resources.
+ *
+ * <p>This controller handles HTTP requests for operations related to exchanges,
+ * including creating, retrieving, updating, and deleting exchange records.
+ * Email notifications are sent to the receiver when a new exchange is proposed.</p>
+ *
+ * <p>Endpoints are exposed at `/exchanges`.</p>
+ *
+ * <p>Example usage:</p>
+ * <pre>{@code
+ * // Add a new exchange
+ * POST /exchanges
+ *
+ * // Get all exchanges
+ * GET /exchanges
+ * }</pre>
+ *
+ *  @author Hayriye Dogan
+ *  @see helha.trocappbackend.controllers
+ */
 @RestController
 @RequestMapping("/exchanges")
 public class ExchangeController {
+    /**
+     * Service for managing `Exchange` entities.
+     */
     @Autowired
     private ExchangeService exchangeService;
+    /**
+     * Service for sending email notifications.
+     */
     @Autowired
     private EmailService emailService;
 
+    /**
+     * Adds a new exchange and sends an email notification to the receiver.
+     *
+     * @param exchange The `Exchange` object to be added.
+     * @return A `ResponseEntity` containing the created `Exchange` or a `400 Bad Request` status if the operation fails.
+     */
     @PostMapping
     public ResponseEntity<Exchange> addExchange(@RequestBody Exchange exchange) {
         try {
@@ -36,6 +69,11 @@ public class ExchangeController {
         }
     }
 
+    /**
+     * Retrieves all exchanges from the database.
+     *
+     * @return A `ResponseEntity` containing the list of all exchanges or a `500 Internal Server Error` status if the operation fails.
+     */
     @GetMapping
     public ResponseEntity<List<Exchange>> getAllExchanges() {
         try {
@@ -47,6 +85,12 @@ public class ExchangeController {
         }
     }
 
+    /**
+     * Retrieves all exchanges associated with a specific user.
+     *
+     * @param id The ID of the user.
+     * @return A `ResponseEntity` containing the list of exchanges or a `500 Internal Server Error` status if the operation fails.
+     */
     @GetMapping("/user/{id}")
     public ResponseEntity<List<Exchange>> getExchangesByUserId(@PathVariable int id) {
         try {
@@ -58,6 +102,12 @@ public class ExchangeController {
         }
     }
 
+    /**
+     * Retrieves an exchange by its ID.
+     *
+     * @param id The ID of the exchange.
+     * @return A `ResponseEntity` containing the `Exchange` object or a `404 Not Found` status if the exchange is not found.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Exchange> getExchangeById(@PathVariable int id) {
         try {
@@ -72,6 +122,12 @@ public class ExchangeController {
         }
     }
 
+    /**
+     * Deletes an exchange by its ID.
+     *
+     * @param id The ID of the exchange to delete.
+     * @return A `204 No Content` response if the deletion is successful or a `500 Internal Server Error` status if the operation fails.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteExchangeById(@PathVariable int id) {
         try {
@@ -83,6 +139,16 @@ public class ExchangeController {
         }
     }
 
+    /**
+     * Updates an existing exchange.
+     *
+     * <p>If the status is "Declined", the exchange will not affect item availability.
+     * If the status is accepted, associated items will be marked as unavailable.</p>
+     *
+     * @param id       The ID of the exchange to update.
+     * @param exchange The updated `Exchange` object.
+     * @return A `ResponseEntity` containing the updated `Exchange` or a `400 Bad Request` status if the operation fails.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Exchange> updateExchange(@PathVariable int id,@RequestBody Exchange exchange) {
         try {
