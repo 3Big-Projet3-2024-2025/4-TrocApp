@@ -28,3 +28,16 @@ h4 {
   padding: 10px;
   margin-bottom: 20px;
 }
+
+.parallax-section {
+  background-image: url('/assets/trocapp2.webp');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
