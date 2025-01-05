@@ -13,12 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -62,6 +63,9 @@ public class UserService implements IUserService {
      */
     @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Retrieves a paginated list of users.
@@ -287,4 +291,46 @@ public class UserService implements IUserService {
         user.setBlocked(!user.isBlocked());
         return userRepository.save(user);
     }
+
+    @Override
+    public boolean verifyCurrentPassword(String username, String currentPassword)
+    {
+        // Find the registered user by his username and check if the user exists
+        User foundUser = userRepository.findByUsername(username);
+
+        if (foundUser == null)
+        {
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        // Check password passed with database password
+        return passwordEncoder.matches(currentPassword, foundUser.getPassword());
+    }
+
+    @Override
+    public void updateUserCredentials(String username, String newPassword, String newUsername)
+    {
+        // Find the registered user by his username and check if the user exists
+        User foundUser = userRepository.findByUsername(username);
+
+        if (foundUser == null)
+        {
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        // Update password after checking new password is not empty
+        if (newPassword != null && !newPassword.isEmpty())
+        {
+            foundUser.setPassword(passwordEncoder.encode(newPassword));
+        }
+
+        // Update the username after checking that the new one is not empty
+        if (newUsername != null && !newUsername.isEmpty()) {
+            foundUser.setUsername(newUsername);
+        }
+
+        // Sauvegarder les modifications
+        userRepository.save(foundUser);
+    }
+
 }

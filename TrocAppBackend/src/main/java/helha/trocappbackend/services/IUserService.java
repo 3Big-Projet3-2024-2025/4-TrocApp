@@ -144,4 +144,8 @@ public interface IUserService {
      * @return the updated user
      */
     User toggleBlockUser(int userId);
+
+    boolean verifyCurrentPassword(String username, String currentPassword);
+
+    void updateUserCredentials(String username, String newPassword, String newUsername);
 }
