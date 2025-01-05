@@ -37,7 +37,7 @@ public class UserAuthService implements UserDetailsService {
     public List<GrantedAuthority> getGrantedAuthorities(Set<Role> roles) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getName())); // Supposons que Role a une méthode getName()
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName())); // Supposons que Role a une méthode getName()
         }
         return authorities;
     }

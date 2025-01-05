@@ -45,13 +45,9 @@ public class SpringSecurityConfig {
     public SecurityFilterChain SecurityFilterChain(final HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> {
-                    authorizeRequests.requestMatchers("/sports/all").hasRole("ADMIN");
-                    authorizeRequests.requestMatchers("/sports").hasRole("USER");
                     authorizeRequests.requestMatchers("/users/all").hasRole("admin");
-                    authorizeRequests.requestMatchers("/users/all").hasRole("user");
-                    authorizeRequests.requestMatchers("/users").hasRole("user");
-                    authorizeRequests.requestMatchers("/users").hasRole("admin");
-                    authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs","/users","/auth/login", "/auth/create_account").permitAll();
+                    authorizeRequests.requestMatchers("/sports").hasRole("user");
+                    authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "users", "/auth/login", "/auth/create_account").permitAll();
                     authorizeRequests.anyRequest().authenticated();
                 }).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
     }

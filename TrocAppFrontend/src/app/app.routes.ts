@@ -11,11 +11,12 @@ import { ItemFormComponent } from './item-form/item-form.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { AuthComponent } from './auth/auth.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
     { path: '', component: ViewingItemsMapComponent }, // Default Path (Home Page)
     //Path for user management as admin
-    { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
+    { path: "users-management", component: UsersManagementComponent, canActivate: [authGuard] },
     //Path for viewing items on a map
     { path: "viewing-items-map", component: ViewingItemsMapComponent },
     //Path for viewing a detailed item
