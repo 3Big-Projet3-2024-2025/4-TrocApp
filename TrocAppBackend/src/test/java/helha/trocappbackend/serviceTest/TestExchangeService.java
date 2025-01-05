@@ -24,17 +24,47 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the {@link helha.trocappbackend.services.ExchangeService} class.
+ *
+ * <p>This class uses JUnit 5 and Mockito to test the functionality of the
+ * {@link ExchangeService}. It validates the correct behavior of the service methods
+ * by mocking the {@link helha.trocappbackend.repositories.ExchangeRepository}
+ * and {@link helha.trocappbackend.services.ItemService}.</p>
+ *
+ * <p>Tests include scenarios for successful operations, error handling, and
+ * boundary cases.</p>
+ *
+ * <p>Annotations used:</p>
+ * <ul>
+ *     <li>{@link SpringBootTest}: Indicates that this is a Spring Boot test.</li>
+ *     <li>{@link Mock}: Creates mock objects for `ExchangeRepository` and `ItemService`.</li>
+ *     <li>{@link InjectMocks}: Injects mocked dependencies into the `ExchangeService` instance.</li>
+ *     <li>{@link BeforeEach}: Sets up the test data and initializes mocks before each test.</li>
+ * </ul>
+ * @author Hayriye Dogan
+ * @see helha.trocappbackend.serviceTest
+ */
 @SpringBootTest
 public class TestExchangeService {
+    /**
+     * Mocked instance of the {@link helha.trocappbackend.repositories.ExchangeRepository}.
+     */
     @Mock
     private ExchangeRepository exchangeRepository;
-
+    /**
+     * Mocked instance of the {@link helha.trocappbackend.services.ItemService}.
+     */
     @Mock
     private ItemService itemService;
-
+    /**
+     * Service under test.
+     */
     @InjectMocks
     private ExchangeService exchangeService;
-
+    /**
+     * Test data objects.
+     */
     private Exchange exchange1;
     private Exchange exchange2;
     private User initiator;
@@ -42,6 +72,9 @@ public class TestExchangeService {
     private Item requestedItem;
     private Item offeredItem;
 
+    /**
+     * Initializes test data and mocks before each test.
+     */
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -75,6 +108,9 @@ public class TestExchangeService {
         exchange2.setOfferedObjectId(requestedItem.getId());
     }
 
+    /**
+     * Tests adding an exchange successfully.
+     */
     @Test
     @DisplayName("Add an exchange successfully")
     void addExchange_Success() {
@@ -87,6 +123,9 @@ public class TestExchangeService {
         verify(exchangeRepository, times(1)).save(any(Exchange.class));
     }
 
+    /**
+     * Tests adding an exchange when the repository throws an exception.
+     */
     @Test
     @DisplayName("Add an exchange throws an exception")
     void addExchange_ThrowsException() {
@@ -96,6 +135,9 @@ public class TestExchangeService {
         assertThrows(RuntimeException.class, () -> exchangeService.addExchange(exchange1));
     }
 
+    /**
+     * Tests retrieving all exchanges successfully.
+     */
     @Test
     @DisplayName("Retrieve all exchanges successfully")
     void getAllExchanges_Success() {
@@ -107,6 +149,9 @@ public class TestExchangeService {
         verify(exchangeRepository, times(1)).findAll();
     }
 
+    /**
+     * Tests retrieving an exchange by ID successfully.
+     */
     @Test
     @DisplayName("Retrieve an exchange by ID successfully")
     void getExchangeById_Success() {
@@ -118,6 +163,9 @@ public class TestExchangeService {
         assertEquals(1, result.getId_exchange());
     }
 
+    /**
+     * Tests retrieving an exchange by an ID that does not exist.
+     */
     @Test
     @DisplayName("Retrieve an exchange by ID not found")
     void getExchangeById_NotFound() {
@@ -128,6 +176,9 @@ public class TestExchangeService {
         assertNull(result);
     }
 
+    /**
+     * Tests retrieving all exchanges for a user by their ID.
+     */
     @Test
     @DisplayName("Retrieve all exchanges for a user as initiator")
     void getAllExchangesByUserID_AsInitiator() {
@@ -140,6 +191,9 @@ public class TestExchangeService {
         assertTrue(result.stream().anyMatch(e -> e.getReceiver().getId() == 1));
     }
 
+    /**
+     * Tests deleting an exchange by ID successfully.
+     */
     @Test
     @DisplayName("Delete an exchange by ID successfully")
     void deleteExchangeById_Success() {
@@ -149,6 +203,9 @@ public class TestExchangeService {
         verify(exchangeRepository, times(1)).deleteById(1);
     }
 
+    /**
+     * Tests deleting an exchange by ID when an exception is thrown.
+     */
     @Test
     @DisplayName("Delete an exchange by ID throws an exception")
     void deleteExchangeById_ThrowsException() {
@@ -158,6 +215,9 @@ public class TestExchangeService {
         assertThrows(RuntimeException.class, () -> exchangeService.deleteExchangeById(999));
     }
 
+    /**
+     * Tests updating an exchange successfully and marking items as unavailable when accepted.
+     */
     @Test
     @DisplayName("Update an exchange successfully with accepted true")
     void updateExchange_SuccessWithAcceptedTrue() {
@@ -174,6 +234,9 @@ public class TestExchangeService {
         assertFalse(offeredItem.isAvailable());
     }
 
+    /**
+     * Tests updating an exchange successfully without modifying items when not accepted.
+     */
     @Test
     @DisplayName("Update an exchange successfully with accepted false")
     void updateExchange_SuccessWithAcceptedFalse() {
@@ -187,6 +250,9 @@ public class TestExchangeService {
         verify(itemService, never()).getItemById(anyInt());
     }
 
+    /**
+     * Tests updating an exchange when the exchange does not exist.
+     */
     @Test
     @DisplayName("Update an exchange not found")
     void updateExchange_NotFound() {
@@ -199,6 +265,9 @@ public class TestExchangeService {
                 () -> exchangeService.updateExchange(invalidExchange, true));
     }
 
+    /**
+     * Tests updating an exchange when the repository throws an exception.
+     */
     @Test
     @DisplayName("Update an exchange throws an exception")
     void updateExchange_ThrowsException() {
