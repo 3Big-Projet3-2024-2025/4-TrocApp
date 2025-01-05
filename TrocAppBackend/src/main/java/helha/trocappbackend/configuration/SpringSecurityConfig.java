@@ -1,6 +1,6 @@
 package helha.trocappbackend.configuration;
 
-//import helha.trocappbackend.security.JWTFilter;
+import helha.trocappbackend.security.JWTFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;*/
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
 
 @Configuration
