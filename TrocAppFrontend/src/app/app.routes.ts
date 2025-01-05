@@ -44,7 +44,6 @@ export const routes: Routes = [
     { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
     { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
     { path: 'edit-profil', component: EditProfilComponent, /*canActivate: [authGuard]*/ },
-    { path: 'rating-comment', component: RatingCommentComponent, /*canActivate: [authGuard]*/ },
     { path: 'auth/login', component: AuthComponent},
     { path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' }, // Wildcard route
     
