@@ -26,16 +26,16 @@ export const routes: Routes = [
     {path: 'category-list', component: CategoryListComponent},
     //{ path: '**', redirectTo: '/category-list', pathMatch: 'full' },
     
-    { path: "detailed-view-item/:id", component: DetailedViewItemComponent },
+    { path: "detailed-view-item/:id", component: DetailedViewItemComponent , canActivate: [authGuard]},
     //path for adding an item
-    { path: "item", component: ItemFormComponent },
+    { path: "item", component: ItemFormComponent, canActivate: [authGuard]  },
     //path for updating an item
-    { path: "item/:id", component: ItemFormComponent },
+    { path: "item/:id", component: ItemFormComponent, canActivate: [authGuard]  },
     //path by default 
     { path: "", redirectTo: "/viewing-items-map", pathMatch: "full" },
 
-    {path: "exchanges", component: ExchangeListComponent },
-    { path: "my-items", component: MyItemsListComponent },
+    {path: "exchanges", component: ExchangeListComponent, canActivate: [authGuard]  },
+    { path: "my-items", component: MyItemsListComponent, canActivate: [authGuard]  },
 
     // Path for editing a user
     { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
