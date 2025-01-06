@@ -6,6 +6,7 @@ import { Exchange } from '../models/exchange';
 import { ExchangeService } from '../services/exchange.service';
 import { ItemService } from '../services/item.service';
 import { Item } from '../models/item';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-exchange-list',
@@ -16,13 +17,13 @@ import { Item } from '../models/item';
 })
 export class ExchangeListComponent implements OnInit {
 
-constructor(private exchangeService: ExchangeService, private itemService: ItemService) {}
+constructor(private exchangeService: ExchangeService, private itemService: ItemService, private authService: AuthService) {}
   
   errorMessage: string = "";
 
   myExchanges!: Observable<Exchange[]>;
 
-  userId: number = 1;  //l id de la personne connectée
+  userId!: number | null;  //l id de la personne connectée
 
   exchangeToUpdate: Exchange = {
     id_exchange: -1,
@@ -49,7 +50,8 @@ constructor(private exchangeService: ExchangeService, private itemService: ItemS
         city: "",
         zipCode: -1
       },
-      roles: []
+      roles: [],
+      username:""
     },
     receiver: {
       id: -1,
@@ -67,7 +69,8 @@ constructor(private exchangeService: ExchangeService, private itemService: ItemS
         city: "",
         zipCode: -1
       },
-      roles: []
+      roles: [],
+      username: ""
     },
     requestedObject: null,
     offeredObject: null
@@ -95,6 +98,9 @@ constructor(private exchangeService: ExchangeService, private itemService: ItemS
 
     */
   ngOnInit(): void {
+    this.userId = this.authService.getIDUserConnected() as number;
+    console.log(this.authService.getNameUserConnected())
+    console.log(this.userId);
       this.myExchanges = this.exchangeService.getExchangeByUserId(this.userId).pipe(    
       switchMap(exchanges => 
         forkJoin(
@@ -136,6 +142,9 @@ constructor(private exchangeService: ExchangeService, private itemService: ItemS
     } else {
       exchange.acceptanceDate = this.acceptanceDate;
     }
+    console.log("requested id",exchange.requestedObjectId)
+    console.log("offered id", exchange.offeredObjectId)
+    console.log("exchange", exchange);
     const subs = this.exchangeService.saveExchange(exchange).subscribe({
       next: (exchange)=> {
         // this.router.navigate(["/itemtest"]);

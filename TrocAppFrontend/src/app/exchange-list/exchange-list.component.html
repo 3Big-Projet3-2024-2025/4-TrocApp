@@ -7,7 +7,12 @@
     </tr>
     @for(exchange of myExchanges | async; track $index) {
     <tr>
-        <!-- <td>{{ exchange.id_exchange }}</td> -->
+        <!-- <td>{{ exchange.id_exchange }}</td>
+       <td> {{ exchange.offeredObjectId }}  </td>
+        <td> {{ exchange.requestedObjectId }} ou bien -->
+
+
+
         <td>  <!--{{ exchange.offeredObjectId }}  ou bien --> {{ exchange.offeredObject?.name }} </td>
         <td> <!-- {{ exchange.requestedObjectId }} ou bien --> {{ exchange.requestedObject?.name }} </td> <!--  ou {{requestedItem.name}}  -->
         <td>{{ exchange.proposalDate | date:'dd/MM/yyyy'  }} </td>
