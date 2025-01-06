@@ -19,7 +19,6 @@ public class Item {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private String photo;
-
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;

@@ -42,6 +42,25 @@ public class SpringSecurityConfig {
     JWTFilter jwtFilter;
 
     @Bean
+<<<<<<< HEAD
+    public SecurityFilterChain SecurityFilterChain(final HttpSecurity http) throws Exception {
+        return http
+                .cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(authorizeRequests -> {
+                    authorizeRequests.requestMatchers("/users/all","/users/{id}","/users/update-user","/users/{userId}/roles/{roleId}",
+                            "/users/roles","/users/getAllRoles","/users/{userId}/roles","/users/search","/users/{userId}/items",
+                            "/users/{userId}/block","/ratings","/ratings/add","ratings/received/{userId}","/ratings/posted/{userId}",
+                            "/ratings/{ratingId}","/ratings/average/{userId}").hasRole("admin");
+
+                    authorizeRequests.requestMatchers("/sports","/users/all","/users/{id}","/users/update-user","/users/{userId}/roles/{roleId}",
+                            "/users/roles","/users/getAllRoles","/users/{userId}/roles","/users/search","/users/{userId}/items",
+                            "/users/{userId}/block","/ratings","/ratings/add","ratings/received/{userId}","/ratings/posted/{userId}",
+                            "/ratings/{ratingId}","/ratings/average/{userId}").hasRole("user");
+                    
+                    authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "users", "/auth/login", "/auth/create_account").permitAll();
+                    authorizeRequests.anyRequest().authenticated();
+=======
 
     public SecurityFilterChain SecurityFilterChain(final HttpSecurity http) throws Exception {
         return http.cors(Customizer.withDefaults())
@@ -54,6 +73,7 @@ public class SpringSecurityConfig {
                     authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "users", "/auth/login", "/auth/create_account").permitAll();
                     authorizeRequests.anyRequest().authenticated();
 
+>>>>>>> develop
                 }).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
     }
 

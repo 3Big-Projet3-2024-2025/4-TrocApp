@@ -1,0 +1,137 @@
+/* Card Styles */
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .card-header {
+    padding: 1.5rem;
+  }
+  
+  /* Profile Picture */
+  .profile-picture {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto;
+    background-color: #f8f9fa;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #e9ecef;
+  }
+  
+  .profile-picture i {
+    font-size: 100px;
+    color: #6c757d;
+  }
+  
+  /* Rating Badge */
+  .rating-badge {
+    background-color: #28a745;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 1.1rem;
+  }
+  
+  .rating-badge i {
+    color: #ffd700;
+    margin-right: 5px;
+  }
+  
+  /* Information Sections */
+  .info-section {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+  }
+  
+  .section-title {
+    color: #0d6efd;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #dee2e6;
+  }
+  
+  .info-item {
+    margin-bottom: 1rem;
+  }
+  
+  .info-item label {
+    font-weight: 600;
+    color: #495057;
+    margin-right: 0.5rem;
+  }
+  
+  /* Roles Styles */
+  .roles-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .role-badge {
+    background-color: #17a2b8;
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 15px;
+    font-size: 0.9rem;
+  }
+  
+  /* Items Section */
+  .item-card {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    transition: transform 0.2s;
+  }
+  
+  .item-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .item-content {
+    padding: 1rem;
+  }
+  
+  .item-content h5 {
+    color: #0d6efd;
+    margin-bottom: 0.5rem;
+  }
+  
+  .no-items {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    padding: 1rem;
+  }
+  
+  /* Admin Buttons */
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+  }
+  
+  .btn i {
+    margin-right: 5px;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .profile-picture {
+      width: 150px;
+      height: 150px;
+      margin-bottom: 1rem;
+    }
+  
+    .profile-picture i {
+      font-size: 80px;
+    }
+  
+    .info-section {
+      padding: 0.8rem;
+    }
+  }

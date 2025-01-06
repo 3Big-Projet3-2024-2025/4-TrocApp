@@ -1,0 +1,180 @@
+<div class="container my-5" *ngIf="user">
+    <div class="card shadow">
+      <!-- Header Section -->
+          <!-- Ajouter juste après le header dans la card -->
+      <div class="card-header bg-primary text-white">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2 class="mb-0">Profile Details</h2>
+          <div>
+            <button *ngIf="isAdmin" class="btn btn-warning me-2" (click)="toggleBlockUser()" [class.btn-success]="user.blocked">
+              {{ user.blocked ? 'Unblock User' : 'Block User' }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="user?.blocked" class="alert alert-danger m-3" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        This user is currently blocked
+      </div>
+  
+      <!-- Main Content -->
+      <div class="card-body">
+        <div class="row">
+          <!-- Left Column - Profile Picture & Rating -->
+          <div class="col-md-3 text-center">
+            <div class="profile-picture">
+              <i class="bi bi-person-circle"></i>
+            </div>
+            <div class="mt-3">
+              <span class="rating-badge">
+                <i class="fas fa-star" *ngFor="let star of [].constructor(1)"
+                   [class.text-warning]="star <= rating"
+                   [class.text-secondary]="star > rating">
+                </i>
+                <span class="ms-2">{{rating | number:'1.1-1'}}/5</span>
+              </span>
+            </div>
+          </div>
+         
+  
+          <!-- Right Column - User Information -->
+          <div class="col-md-9">
+            <!-- Personal Information -->
+            <div class="info-section">
+              <h4 class="section-title">Personal Information</h4>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="info-item">
+                    <label>First Name:</label>
+                    <span>{{user.firstName}}</span>
+                  </div>
+                  <div class="info-item">
+                    <label>Last Name:</label>
+                    <span>{{user.lastName}}</span>
+                  </div>
+                  <div class="info-item">
+                    <label>Email:</label>
+                    <span>{{user.email}}</span>
+                  </div>
+                </div>
+  
+                <!-- Address Information -->
+                <div class="col-md-6">
+                  <div class="info-item">
+                    <label>Street:</label>
+                    <span>{{user.address.street}} {{user.address.number}}</span>
+                  </div>
+                  <div class="info-item">
+                    <label>City:</label>
+                    <span>{{user.address.city}}</span>
+                  </div>
+                  <div class="info-item">
+                    <label>Zip Code:</label>
+                    <span>{{user.address.zipCode}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Roles Section -->
+            <div class="info-section">
+              <h4 class="section-title">Roles</h4>
+              <div class="roles-container">
+                <span *ngFor="let role of user.roles" class="role-badge">
+                  {{role.name}}
+                </span>
+              </div>
+            </div>
+  
+            <!-- Listed Items Section -->
+            <div class="comment-section">
+              <h4 class="section-title">Listed Items</h4>
+              <div class="row" *ngIf="userItems && userItems.length > 0">
+                <div class="col-md-4" *ngFor="let item of userItems">
+                  <div class="item-card">
+                    <div class="item-content">
+                      <h5>{{item.name}}</h5>
+                      <p>{{item.description}}</p>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p *ngIf="!userItems || userItems.length === 0" class="no-items">
+                No items listed yet.
+              </p>
+            </div>
+
+            <div class="info-section">
+               
+
+                 
+                    <div class="info-section" *ngIf="user">
+                      <h3 class="h4 mb-3 text-center">Ratings</h3>
+                      
+                      <!-- Liste des évaluations -->
+                      <div class="mb-4" *ngIf="receivedRatings.length > 0">
+                          <div class="card mb-3" *ngFor="let rating of receivedRatings">
+                              <div class="card-body">
+                                  <div class="d-flex justify-content-between">
+                                      <div>
+                                          <p class="card-text">{{rating.comment}}</p>
+                                          <p class="card-text text-muted">Par {{rating.poster.firstName}} {{rating.poster.lastName}}</p>
+                                          <div class="text-warning">
+                                              <i class="fas fa-star" *ngFor="let star of [].constructor(rating.numberStars)"></i>
+                                          </div>
+                                      </div>
+                                      <button *ngIf="rating.poster.id === currentUserId || isAdmin" 
+                                              class="btn btn-danger btn-sm" 
+                                              (click)="confirmDelete(rating.id!, rating.poster.id)">
+                                          <i class="fas fa-trash"></i>
+                                      </button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <!-- Message if no ratings -->
+                      <div class="alert alert-info text-center" *ngIf="receivedRatings.length === 0">
+                          No ratings for this user.
+                      </div>
+
+                      <!-- Rating form-->
+                      <div class="mt-4" *ngIf="hasExchangeHistory">
+                          <h4 class="h5 mb-3">Add a rating</h4>
+                          <!-- Sélection des étoiles -->
+                          <div class="d-flex justify-content-center mb-3">
+                              <i class="fas fa-star fa-2x"
+                                [class.text-warning]="i <= newRating.numberStars"
+                                [class.text-secondary]="i > newRating.numberStars"
+                                (click)="setRating(i)"
+                                *ngFor="let i of [1, 2, 3, 4, 5]"></i>
+                          </div>
+                          <!-- Text area for comments -->
+                          <div class="form-floating mb-3">
+                              <textarea class="form-control" [(ngModel)]="newRating.comment" 
+                                        placeholder="Écrivez votre évaluation ici" style="height: 100px"></textarea>
+                              <label>Your ratings</label>
+                          </div>
+                          <div class="d-grid">
+                              <button class="btn btn-primary" (click)="submitRating()">
+                                  Publish rating
+                              </button>
+                          </div>
+                      </div>
+                    </div>
+
+
+
+
+
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    
+  </div>

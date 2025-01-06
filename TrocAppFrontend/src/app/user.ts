@@ -8,7 +8,7 @@ export interface User {
   lastName: string;
   password?: string;
   rating: number;
-  address: Address;
+  address: Address;  
   addressId: number;
   roles: Role[];
   rolesInput?: string;

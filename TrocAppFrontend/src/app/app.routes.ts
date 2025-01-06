@@ -2,9 +2,6 @@ import { Routes } from '@angular/router';
 import { UsersManagementComponent } from './users-management/users-management.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { EditProfilComponent } from './edit-profil/edit-profil.component';
-import { RatingCommentComponent } from './rating-comment/rating-comment.component';
-
-
 import { ViewingItemsMapComponent } from './viewing-items-map/viewing-items-map.component';
 import { DetailedViewItemComponent } from './detailed-view-item/detailed-view-item.component';
 import { ItemFormComponent } from './item-form/item-form.component';
@@ -43,6 +40,7 @@ export const routes: Routes = [
   
     // Path for editing a user
     { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
+    { path: 'user-profile/:id', component: UserProfileComponent },
 
     
     { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
