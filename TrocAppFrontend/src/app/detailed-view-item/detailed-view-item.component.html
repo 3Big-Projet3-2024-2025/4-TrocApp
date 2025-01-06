@@ -1,27 +1,75 @@
-<h1> Welcome to the detailed view of the selected item</h1>
-
-<h3>Selected Item</h3>
-<table class="table table-striped">
-<tbody>
-  <tr>
-    <td>{{ item.photo }}</td>
-  </tr>
-  <tr>    
-    <td>{{ item.name }}</td>
-  </tr>
-  <tr>
-    <td>{{ item.description }}</td>
-  </tr>
-  <tr>
-    <td>{{ item.category }}</td>
-  </tr>
-  <tr>
-    <td>{{ item.ownerid.getPseudo }}</td>
-  </tr>
-  <tr>
-    <td>
-      <button class="btn btn-primary" (click)="proposeExchange(item.itemId)">Propose an exchange</button>
-    </td>
-  </tr>
-</tbody>
-</table>
+<div class="container">
+  <div class="item-detail-card">
+    <h1>Welcome to the detailed view of the selected item</h1>
+    <h3>Selected Item</h3>
+    
+    <div class="item-photo">
+      <img [src]="item.photo" alt="Item photo">
+    </div>
+    
+    <div class="item-details">
+      <p><strong>Name :</strong> {{ item.name }}</p>
+      <p><strong>Description :</strong> {{ item.description }}</p>
+      <p><strong>Category :</strong> {{ item.category.name }}</p>
+    </div>
+    
+    <div class="owner-details">
+      <p><strong>Owner :</strong> {{ owner.firstName }} {{ owner.lastName }}</p>
+    </div>
+    
+    <div class="btn-container">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalExchange">Propose an exchange</button>
+      <div class="modal" id="ModalExchange">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Information for Exchange Proposal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="accordionExchange" class="accordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Proposal Date</button>
+                            </h2>
+                            <div class="accordion-collapse collapse show" id="collapseOne" data-bs-parent="#accordionExchange">
+                                <div class="accordion-body">
+                                    <div class="input-group mb-3">
+                                        <label for="proposal-date">Propose a date for the exchange</label>
+                                        <input type="date" class="form-control" [(ngModel)]="exchangeToCreate.proposalDate">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Select one of your items to exchange</button>
+                            </h2>
+                            <div class="accordion-collapse collapse" id="collapseTwo" data-bs-parent="#accordionExchange">
+                                <div class="accordion-body">
+                                    <label for="proposed-item">Which of your items do you propose for the Exchange</label>
+                                    @for(item of myItems | async; track $index) {
+                                        <p>id of item : {{item.id}} </p>
+                                        <p>name of item : {{item.name}} </p>
+                                         <p>description of item : {{item.description}} </p>
+                                         <p>photo of item : {{item.photo}} </p>
+                                         <img src="{{item.photo}}" style="width: 5%;" alt="image of item">
+                                         <p>category of the item : {{item.category.name}} </p>
+                                         <p>is it available : {{item.available}} </p>
+                                         <p>who has the item : {{item.owner.firstName}} {{item.owner.lastName}} </p>
+                                         <button class="btn btn-primary" data-bs-dismiss="modal" (click)="proposeExchange(item)">Offer this Item</button>
+                                         <br><br>
+                                         <br><br>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>

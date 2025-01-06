@@ -5,11 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,6 +29,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
+    /*@Bean
     /*@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -42,7 +47,6 @@ public class SpringSecurityConfig {
     JWTFilter jwtFilter;
 
     @Bean
-<<<<<<< HEAD
     public SecurityFilterChain SecurityFilterChain(final HttpSecurity http) throws Exception {
         return http
                 .cors(Customizer.withDefaults())
@@ -58,22 +62,8 @@ public class SpringSecurityConfig {
                             "/users/{userId}/block","/ratings","/ratings/add","ratings/received/{userId}","/ratings/posted/{userId}",
                             "/ratings/{ratingId}","/ratings/average/{userId}").hasRole("user");
                     
-                    authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "users", "/auth/login", "/auth/create_account").permitAll();
+                    authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "users", "/auth/login", "/auth/create_account", "/items/available", "/addresses/{id}", "api/categories/{id}", "/items/{id}").permitAll();
                     authorizeRequests.anyRequest().authenticated();
-=======
-
-    public SecurityFilterChain SecurityFilterChain(final HttpSecurity http) throws Exception {
-        return http.cors(Customizer.withDefaults())
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorizeRequests -> {
-                    authorizeRequests.requestMatchers("/users/all", "/api/categories","/api/categories/{id}",
-                            "/api/gdpr","/api/gdpr/user/{userId}","/api/gdpr/{gdprRequestId}","/api/gdpr/{userId}/deactivate","/api/gdpr/pending","/api/gdpr/processed",
-                            "/api/gdpr/{id}/processed").hasRole("admin");
-                    authorizeRequests.requestMatchers("/sports", "/api/categories", "/api/categories/{id}","/api/gdpr").hasRole("user");
-                    authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "users", "/auth/login", "/auth/create_account").permitAll();
-                    authorizeRequests.anyRequest().authenticated();
-
->>>>>>> develop
                 }).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
     }
 
@@ -90,6 +80,7 @@ public class SpringSecurityConfig {
 //
 //        return new InMemoryUserDetailsManager(user1, user2);
 //    }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
