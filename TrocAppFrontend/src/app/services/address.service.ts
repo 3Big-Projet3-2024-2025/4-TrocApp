@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { map} from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
 
 export interface AddressSuggestion {
   street: string;
@@ -21,14 +22,19 @@ export class AddressService {
   private readonly OPENCAGE_API_URL = 'https://api.opencagedata.com/geocode/v1/json';
   private readonly OPENCAGE_API_KEY = environment.openCageApiKey; 
 
-  private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  };
+  constructor(private httpClient : HttpClient, private cookieService: CookieService) { }
 
-  constructor(private httpClient : HttpClient) { }
-
+  // Method to get the headers with the token
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.cookieService.get('token');
+    return new HttpHeaders({
+      Authorization: 'Bearer ' + token
+    });
+  }
+  // Method to get an address by its ID
     getAddressById(id: number): Observable<any> {
-      return this.httpClient.get(`${this.baseUrl}/${id}`).pipe(
+      const headers = this.getAuthHeaders();
+      return this.httpClient.get(`${this.baseUrl}/${id}`, { headers } ).pipe(
         catchError((error) => {
           console.error(`Error fetching address with ID ${id}:`, error);
           return throwError(() => new Error(`Error fetching address with ID ${id}.`));

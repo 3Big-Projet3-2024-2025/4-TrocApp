@@ -35,7 +35,7 @@ export class UserEditComponent {
     firstName: '',
     lastName: '',
     email: '',
-    address: {
+    address: {         
       zipCode: '',
       city: '',
       street: '',

@@ -1,8 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { Router, RouterModule  } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-auth',

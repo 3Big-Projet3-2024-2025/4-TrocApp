@@ -1,14 +1,18 @@
 package helha.trocappbackend.controllers;
 
 import helha.trocappbackend.models.Category;
+
+import helha.trocappbackend.models.Category;
 import helha.trocappbackend.models.JWT;
 import helha.trocappbackend.models.Role;
 import helha.trocappbackend.repositories.RoleRepository;
 import helha.trocappbackend.repositories.UserRepository;
 import helha.trocappbackend.services.IUserService;
+import helha.trocappbackend.services.IUserService;
 import helha.trocappbackend.services.UserService;
 import helha.trocappbackend.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -20,8 +24,11 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 /**

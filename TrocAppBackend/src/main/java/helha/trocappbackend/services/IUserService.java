@@ -1,6 +1,7 @@
 package helha.trocappbackend.services;
 
 import helha.trocappbackend.models.Item;
+import helha.trocappbackend.models.Item;
 import helha.trocappbackend.models.Role;
 import helha.trocappbackend.models.User;
 import org.springframework.data.domain.Page;
@@ -12,7 +13,18 @@ import java.util.Optional;
 /**
  * Interface for user service operations.
  */
+/**
+ * Interface for user service operations.
+ */
 public interface IUserService {
+
+    /**
+     * Retrieves a paginated list of users.
+     *
+     * @param page the pagination information
+     * @return a paginated list of users
+     */
+    Page<User> getUsers(Pageable page);
 
     /**
      * Retrieves a paginated list of users.
@@ -28,7 +40,20 @@ public interface IUserService {
      * @return a list of all users
      */
     List<User> getUsers();
+    /**
+     * Retrieves a list of all users.
+     *
+     * @return a list of all users
+     */
+    List<User> getUsers();
 
+    /**
+     * Adds a new user.
+     *
+     * @param user the user to add
+     * @return the added user
+     */
+    User addUser(User user);
     /**
      * Adds a new user.
      *
@@ -44,6 +69,13 @@ public interface IUserService {
      * @return the updated user
      */
     User updateUser(User user);
+    /**
+     * Updates an existing user.
+     *
+     * @param user the user to update
+     * @return the updated user
+     */
+    User updateUser(User user);
 
     /**
      * Deletes a user by ID.
@@ -51,7 +83,19 @@ public interface IUserService {
      * @param id the ID of the user to delete
      */
     void deleteUser(int id);
+    /**
+     * Deletes a user by ID.
+     *
+     * @param id the ID of the user to delete
+     */
+    void deleteUser(int id);
 
+    /**
+     * Retrieves a user by ID.
+     *
+     * @param id the ID of the user to retrieve
+     * @return an Optional containing the user if found, or empty if not found
+     */
     /**
      * Retrieves a user by ID.
      *
@@ -68,7 +112,22 @@ public interface IUserService {
      * @return the updated user
      */
     User addRoleToUser(int userId, int roleId);
+    /**
+     * Adds a role to a user.
+     *
+     * @param userId the ID of the user
+     * @param roleId the ID of the role
+     * @return the updated user
+     */
+    User addRoleToUser(int userId, int roleId);
 
+    /**
+     * Retrieves all roles of a user.
+     *
+     * @param id the ID of the user
+     * @return a list of roles of the user
+     */
+    List<Role> getRoles(int id);
     /**
      * Retrieves all roles of a user.
      *
@@ -85,7 +144,20 @@ public interface IUserService {
      * @return the updated user
      */
     User assignRolesToUser(int userId, List<Integer> roleIds);
+    /**
+     * Assigns roles to a user.
+     *
+     * @param userId the ID of the user
+     * @param roleIds the IDs of the roles
+     * @return the updated user
+     */
+    User assignRolesToUser(int userId, List<Integer> roleIds);
 
+    /**
+     * Retrieves all roles.
+     *
+     * @return a list of all roles
+     */
     /**
      * Retrieves all roles.
      *
@@ -98,8 +170,18 @@ public interface IUserService {
      *
      * @return a list of all zip codes
      */
+    /**
+     * Retrieves all zip codes.
+     *
+     * @return a list of all zip codes
+     */
     List<Integer> getAllZipCodes();
 
+    /**
+     * Retrieves all streets.
+     *
+     * @return a list of all streets
+     */
     /**
      * Retrieves all streets.
      *
@@ -112,7 +194,19 @@ public interface IUserService {
      *
      * @return a list of all numbers
      */
+
+    /**
+     * Retrieves all numbers.
+     *
+     * @return a list of all numbers
+     */
     List<String> getAllNumbers();
+
+    /**
+     * Retrieves all cities.
+     *
+     * @return a list of all cities
+     */
 
     /**
      * Retrieves all cities.

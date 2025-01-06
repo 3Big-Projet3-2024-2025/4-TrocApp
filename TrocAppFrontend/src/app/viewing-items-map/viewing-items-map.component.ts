@@ -9,6 +9,7 @@ import { UsersService } from '../services/users.service';
 import { Item } from '../models/item';
 import { User } from '../models/user';
 import { Address } from '../models/adress.model';
+import { map, Observable, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-viewing-items-map',
@@ -19,6 +20,8 @@ import { Address } from '../models/adress.model';
 })
 export class ViewingItemsMapComponent {
   items: Item[] = []; // Property for the items
+  // items!: Observable<Item[]>; // Property for the items
+
   owner!: User; // Property for the owner
   address!: Address; // Property for the address
   map!: Map; // Property for the map
@@ -45,11 +48,13 @@ export class ViewingItemsMapComponent {
     this.loadMarkers();
   }
 
+  // Load the markers for the items
   loadMarkers(): void {
     // Load the items from the database
     this.itemService.getAvailableItem().subscribe(
       (data: any) => {
         this.items = data;
+        console.log(this.items);
   
         // For each item, fetch the owner and the address
         this.items.forEach((item) => {
@@ -73,7 +78,9 @@ export class ViewingItemsMapComponent {
                         iconAnchor: [13, 41],
                         iconUrl: 'assets/marker-icon.png',
                       }),
+                      // Popup with the name of the item
                     }).on('click', () => {
+                      console.log(item.id);
                       this.router.navigate(['/detailed-view-item', item.id]);
                     });
                     marker.addTo(this.map);
@@ -93,9 +100,12 @@ export class ViewingItemsMapComponent {
         });
       },
       (error: any) => {
+        
         console.error('Error fetching items:', error);
       }
     );
   }
   
+
+
 }

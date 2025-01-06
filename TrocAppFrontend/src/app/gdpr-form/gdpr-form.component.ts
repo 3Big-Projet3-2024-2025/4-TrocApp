@@ -1,12 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { GdprRequest } from '../models/gdpr-request.modele';
-import { User } from '../models/user.model';
+import { User } from '../user';
 import { GdprRequestService } from '../services/gdpr-request.service';
 import { NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
+import { Observable }from 'rxjs';
+
 @Component({
   selector: 'app-gdpr-form',
   standalone: true,
@@ -26,10 +29,12 @@ export class GdprFormComponent {
   );
   loading = false;
   error: string | null = null;
-  currentUser: any = null;
+  observableUser!: Observable<User>
+  currentUser!: User;
 
   constructor(
     private gdprRequestService: GdprRequestService,
+    private userService: UsersService,
     private authService: AuthService,
     private router: Router
   ) {}
@@ -39,17 +44,25 @@ export class GdprFormComponent {
   }
 
   private checkAndInitializeUser(): void {
-    const tokenDecoded = this.authService.decodeToken();
-    this.currentUser = tokenDecoded ? tokenDecoded : null;
+    this.observableUser = this.userService.getUserById(this.authService.getIDUserConnected() as number) as Observable<User>;
 
-    if (!this.currentUser) {
+    if (!this.observableUser) {
       this.router.navigate(['/auth/login'], { 
         queryParams: { returnUrl: '/gdpr/request' } 
       });
       return;
     }
 
-    this.newRequest.user = this.currentUser;
+    this.observableUser.subscribe(user => {
+
+      console.log(user);
+
+      this.currentUser = user as User;
+
+      this.newRequest.user.firstName = this.currentUser.firstName;
+      this.newRequest.user.lastName = this.currentUser.lastName;
+      this.newRequest.user.email = this.currentUser.email;
+    });
   }
 
   submitRequest(): void {
@@ -59,9 +72,9 @@ export class GdprFormComponent {
 
     }
 
-    this.newRequest.user.firstName = this.currentUser.firstName;
-    this.newRequest.user.lastName = this.currentUser.lastName;
-    this.newRequest.user.email = this.currentUser.email;
+    //this.newRequest.user.firstName = this.currentUser.firstName;
+    //this.newRequest.user.lastName = this.currentUser.lastName;
+    //this.newRequest.user.email = this.currentUser.email;
 
     if (!this.validateRequest()) {
       return;
@@ -127,6 +140,6 @@ export class GdprFormComponent {
   cancel(): void {
     this.resetForm();
   }
-   
+
 
 }

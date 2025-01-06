@@ -17,6 +17,7 @@ import { CookieService } from 'ngx-cookie-service';
   selector: 'app-edit-profil',
   standalone: true,
   imports: [NgIf,ReactiveFormsModule],
+  imports: [NgIf,ReactiveFormsModule],
   templateUrl: './edit-profil.component.html',
   styleUrl: './edit-profil.component.css'
 })
@@ -251,7 +252,7 @@ export class EditProfilComponent implements OnInit {
       }
     }
 
-  deconnexion(): void
+  logout(): void
   {
     let token = this.authService.getToken();
 

@@ -86,13 +86,16 @@ public class GdprRequestControllerTest {
     @BeforeEach
     void setUp() {
         // Initialize user and gdprRequest objects for the tests
-        user = new User("John", "Doe", "john.doe@example.com", "password123");
+        user = new User("Doha", "Assadi", "doha@gmail.com", "1234");  // User: Doha Assadi
+        user.setId(1);  // Set ID for the user
+
         gdprRequest = new GdprRequest();
-        gdprRequest.setRequesttype("Delete my data");
-        gdprRequest.setUser(user);
-        gdprRequest.setConsent(true);
-        gdprRequest.setJustification("Request to delete data");
+        gdprRequest.setRequesttype("Delete my data");  // Request type
+        gdprRequest.setUser(user);  // Associate the request with the user
+        gdprRequest.setConsent(true);  // User consent given
+        gdprRequest.setJustification("Request to delete data");  // Justification for the request
     }
+
 
     /**
      * Test creating a new GDPR request.

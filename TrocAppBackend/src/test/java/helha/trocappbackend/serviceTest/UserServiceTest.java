@@ -7,8 +7,20 @@ import helha.trocappbackend.repositories.UserRepository;
 import helha.trocappbackend.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import helha.trocappbackend.repositories.AddressRepository;
+import helha.trocappbackend.repositories.ItemRepository;
+import helha.trocappbackend.repositories.RoleRepository;
+import helha.trocappbackend.repositories.UserRepository;
+import helha.trocappbackend.services.UserService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import helha.trocappbackend.models.*;
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 import helha.trocappbackend.models.*;
 import java.util.*;
 
@@ -19,10 +31,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Test class for the UserService.
+ */
 /**
  * Test class for the UserService.
  */

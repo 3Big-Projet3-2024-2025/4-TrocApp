@@ -45,6 +45,7 @@ public class User {
      * The password of the user.
      */
     private String password;
+    private Boolean actif;
 
     /**
      * The field actif of the user
@@ -101,6 +102,13 @@ public class User {
     private List<Exchange> exchangesAsReceiver;
 
     /**
+     * The list of categories associated with the user.
+     */
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Category> categories;
+
+    /**
      * The set of roles assigned to the user.
      */
     @JsonIgnoreProperties("roles")
@@ -140,8 +148,11 @@ public class User {
         this.actif = actif;
     }
 
-    // Autres attributs, getters, et setters
-
+    /**
+     * Gets the unique identifier for the user.
+     *
+     * @return the user ID
+     */
     public int getId() {
         return id;
     }
@@ -398,6 +409,14 @@ public class User {
     }
 
     /**
+     * Gets the list of categories associated with the user.
+     *
+     * @return the list of categories
+     */
+    public List<Category> getCategories() {
+        return categories;
+    
+    /**
      * Gets the set of roles assigned to the user.
      *
      * @return the set of roles
@@ -406,12 +425,24 @@ public class User {
         return roles;
     }
 
-    public Boolean getActif() {
-        return actif;
+
+
+    /**
+     * Sets the list of categories associated with the user.
+     *
+     * @param categories the list of categories
+     */
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
-    public void setActif(Boolean actif) {
-        this.actif = actif;
+    /**
+     * Gets the set of roles assigned to the user.
+     *
+     * @return the set of roles
+     */
+    public Set<Role> getRoles() {
+        return roles;
     }
 
     /**
@@ -432,5 +463,15 @@ public class User {
     public void removeRole(Role role) {
         this.roles.remove(role);
         role.getUsers().remove(this);
+    }
+
+    public Boolean getActif() {
+        return actif;
+    }
+
+    public void setActif(Boolean actif) {
+        this.actif = actif;
+    }
+
     }
 }

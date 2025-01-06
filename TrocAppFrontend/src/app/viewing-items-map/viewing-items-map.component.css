@@ -31,6 +31,13 @@ html, body {
   padding: 0;
 }
 
+h4 {
+  border: 1px solid black;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
 .parallax-section {
   background-image: url('/assets/trocapp2.webp');
   background-attachment: fixed;
