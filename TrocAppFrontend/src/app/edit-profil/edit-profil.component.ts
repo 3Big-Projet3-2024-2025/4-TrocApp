@@ -11,10 +11,12 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { AddressSuggestion } from '../services/address.service';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-edit-profil',
   standalone: true,
+  imports: [NgIf,ReactiveFormsModule],
   imports: [NgIf,ReactiveFormsModule],
   templateUrl: './edit-profil.component.html',
   styleUrl: './edit-profil.component.css'
@@ -34,6 +36,7 @@ export class EditProfilComponent implements OnInit {
     private usersService: UsersService,
     private addressService: AddressService,
     private authService: AuthService, // Injection of the AuthService
+    private cookieService: CookieService,
     private router: Router
     
   ) {
@@ -248,4 +251,15 @@ export class EditProfilComponent implements OnInit {
         });
       }
     }
+
+  logout(): void
+  {
+    let token = this.authService.getToken();
+
+    if (token)
+    {
+      this.cookieService.delete("token");
+    }
+    this.router.navigate(["/auth/login"]);
+  }
 }
