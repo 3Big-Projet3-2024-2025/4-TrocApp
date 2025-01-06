@@ -82,7 +82,8 @@ public class GeocodingService {
      */
     public String formatAddress(Address address) {
         return address.getStreet() + ", " +
-                address.getNumber() + ", " +
+                address.getNumber() + ", "
+                +
                 address.getCity() + ", " +
                 address.getZipCode();
     }
