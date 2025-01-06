@@ -292,6 +292,14 @@ public class UserService implements IUserService {
         return userRepository.save(user);
     }
 
+    /**
+     * Verifies if the current password provided matches the password stored in the database for the given username.
+     *
+     * @param username        the username of the user whose password needs to be verified.
+     * @param currentPassword the current password provided by the user.
+     * @return {@code true} if the provided password matches the stored password, {@code false} otherwise.
+     * @throws UsernameNotFoundException if no user is found with the given username.
+     */
     @Override
     public boolean verifyCurrentPassword(String username, String currentPassword)
     {
@@ -307,6 +315,14 @@ public class UserService implements IUserService {
         return passwordEncoder.matches(currentPassword, foundUser.getPassword());
     }
 
+    /**
+     * Updates the credentials (password and/or username) of a user identified by their current username.
+     *
+     * @param username    the current username of the user whose credentials need to be updated.
+     * @param newPassword the new password to set. If {@code null} or empty, the password is not updated.
+     * @param newUsername the new username to set. If {@code null} or empty, the username is not updated.
+     * @throws UsernameNotFoundException if no user is found with the given username.
+     * */
     @Override
     public void updateUserCredentials(String username, String newPassword, String newUsername)
     {

@@ -20,6 +20,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Test class for the UserService.
@@ -56,6 +58,17 @@ public class UserServiceTest {
      */
     @Mock
     private ItemRepository itemRepository;
+
+    /**
+     * Mocked PasswordEncoder for testing
+     */
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    /**
+     * User variable to simulate a user during tests
+     */
+    private User testUser;
 
     /**
      * Initializes mocks before each test.
@@ -134,7 +147,7 @@ public class UserServiceTest {
         when(userRepository.existsById(1)).thenReturn(false);
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> userService.updateUser(user));
-        assertEquals("Utilisateur avec ID 1 introuvable.", exception.getMessage());
+        assertEquals("User with ID 1 not found.", exception.getMessage());
 
         verify(userRepository, times(1)).existsById(1);
         verify(userRepository, never()).save(any(User.class));
@@ -165,7 +178,7 @@ public class UserServiceTest {
         when(userRepository.existsById(1)).thenReturn(false);
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> userService.deleteUser(1));
-        assertEquals("Utilisateur avec ID 1 introuvable.", exception.getMessage());
+        assertEquals("User with ID 1 not found.", exception.getMessage());
 
         verify(userRepository, times(1)).existsById(1);
         verify(userRepository, never()).deleteById(anyInt());
@@ -230,5 +243,159 @@ public class UserServiceTest {
         assertEquals(2, result.size());
         verify(userRepository, times(1)).findById(1);
         verify(itemRepository, times(1)).findByOwner(user);
+    }
+
+    /**
+     * Tests for the verifyCurrentPassword method.
+     * Verifies that the method correctly validates user passwords
+     * and handles cases where the user is not found.
+     */
+    @Test
+    @DisplayName("Should successfully verify correct password")
+    void verifyCurrentPassword_WithValidCredentials_ShouldReturnTrue() {
+        // Initialize
+        testUser = new User();
+        testUser.setUsername("testUser");
+        testUser.setPassword("encodedPassword");
+
+        // Arrange
+        when(userRepository.findByUsername("testUser")).thenReturn(testUser);
+        when(passwordEncoder.matches("correctPassword", "encodedPassword")).thenReturn(true);
+
+        // Act
+        boolean result = userService.verifyCurrentPassword("testUser", "correctPassword");
+
+        // Assert
+        assertTrue(result);
+        verify(userRepository).findByUsername("testUser");
+        verify(passwordEncoder).matches("correctPassword", "encodedPassword");
+    }
+
+    @Test
+    @DisplayName("Should fail verification with incorrect password")
+    void verifyCurrentPassword_WithInvalidPassword_ShouldReturnFalse() {
+        // Initialize
+        testUser = new User();
+        testUser.setUsername("testUser");
+        testUser.setPassword("encodedPassword");
+
+        // Arrange
+        when(userRepository.findByUsername("testUser")).thenReturn(testUser);
+        when(passwordEncoder.matches("wrongPassword", "encodedPassword")).thenReturn(false);
+
+        // Act
+        boolean result = userService.verifyCurrentPassword("testUser", "wrongPassword");
+
+        // Assert
+        assertFalse(result);
+        verify(userRepository).findByUsername("testUser");
+        verify(passwordEncoder).matches("wrongPassword", "encodedPassword");
+    }
+
+    @Test
+    @DisplayName("Should throw exception when user not found during password verification")
+    void verifyCurrentPassword_WithNonexistentUser_ShouldThrowException() {
+        // Initialize
+        testUser = new User();
+        testUser.setUsername("testUser");
+        testUser.setPassword("encodedPassword");
+
+        // Arrange
+        when(userRepository.findByUsername("nonexistentUser")).thenReturn(null);
+
+        // Act & Assert
+        assertThrows(UsernameNotFoundException.class,
+                () -> userService.verifyCurrentPassword("nonexistentUser", "anyPassword"));
+        verify(userRepository).findByUsername("nonexistentUser");
+        verifyNoInteractions(passwordEncoder);
+    }
+
+    /**
+     * Tests for the updateUserCredentials method.
+     * Verifies that the method correctly updates user credentials
+     * and handles various input scenarios appropriately.
+     */
+    @Test
+    @DisplayName("Should successfully update both username and password")
+    void updateUserCredentials_WithBothNewUsernameAndPassword_ShouldUpdateBoth() {
+        // Initialize
+        testUser = new User();
+        testUser.setUsername("testUser");
+        testUser.setPassword("encodedPassword");
+
+        // Arrange
+        when(userRepository.findByUsername("testUser")).thenReturn(testUser);
+        when(passwordEncoder.encode("newPassword")).thenReturn("newEncodedPassword");
+        when(userRepository.save(any(User.class))).thenReturn(testUser);
+
+        // Act
+        userService.updateUserCredentials("testUser", "newPassword", "newUsername");
+
+        // Assert
+        assertEquals("newUsername", testUser.getUsername());
+        assertEquals("newEncodedPassword", testUser.getPassword());
+        verify(userRepository).save(testUser);
+    }
+
+    @Test
+    @DisplayName("Should update only username when password is null")
+    void updateUserCredentials_WithOnlyNewUsername_ShouldUpdateOnlyUsername() {
+        // Initialize
+        testUser = new User();
+        testUser.setUsername("testUser");
+        testUser.setPassword("encodedPassword");
+
+        // Arrange
+        when(userRepository.findByUsername("testUser")).thenReturn(testUser);
+        when(userRepository.save(any(User.class))).thenReturn(testUser);
+
+        // Act
+        userService.updateUserCredentials("testUser", null, "newUsername");
+
+        // Assert
+        assertEquals("newUsername", testUser.getUsername());
+        assertEquals("encodedPassword", testUser.getPassword());
+        verify(userRepository).save(testUser);
+        verifyNoInteractions(passwordEncoder);
+    }
+
+    @Test
+    @DisplayName("Should update only password when username is null")
+    void updateUserCredentials_WithOnlyNewPassword_ShouldUpdateOnlyPassword() {
+        // Initialize
+        testUser = new User();
+        testUser.setUsername("testUser");
+        testUser.setPassword("encodedPassword");
+
+        // Arrange
+        when(userRepository.findByUsername("testUser")).thenReturn(testUser);
+        when(passwordEncoder.encode("newPassword")).thenReturn("newEncodedPassword");
+        when(userRepository.save(any(User.class))).thenReturn(testUser);
+
+        // Act
+        userService.updateUserCredentials("testUser", "newPassword", null);
+
+        // Assert
+        assertEquals("testUser", testUser.getUsername());
+        assertEquals("newEncodedPassword", testUser.getPassword());
+        verify(userRepository).save(testUser);
+    }
+
+    @Test
+    @DisplayName("Should throw exception when user not found during credentials update")
+    void updateUserCredentials_WithNonexistentUser_ShouldThrowException() {
+        // Initialize
+        testUser = new User();
+        testUser.setUsername("testUser");
+        testUser.setPassword("encodedPassword");
+
+        // Arrange
+        when(userRepository.findByUsername("nonexistentUser")).thenReturn(null);
+
+        // Act & Assert
+        assertThrows(UsernameNotFoundException.class,
+                () -> userService.updateUserCredentials("nonexistentUser", "newPassword", "newUsername"));
+        verify(userRepository).findByUsername("nonexistentUser");
+        verifyNoInteractions(passwordEncoder);
     }
 }

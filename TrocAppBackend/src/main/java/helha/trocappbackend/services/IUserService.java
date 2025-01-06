@@ -145,7 +145,21 @@ public interface IUserService {
      */
     User toggleBlockUser(int userId);
 
+    /**
+     * Verifies if the provided current password matches the stored password for the specified user.
+     *
+     * @param username the username of the user
+     * @param currentPassword the current password to verify
+     * @return true if the password matches, false otherwise
+     */
     boolean verifyCurrentPassword(String username, String currentPassword);
 
+    /**
+     * Updates the user's credentials, including their password and/or username.
+     *
+     * @param username the current username of the user
+     * @param newPassword the new password to set, if provided (can be null or empty)
+     * @param newUsername the new username to set, if provided (can be null or empty)
+     */
     void updateUserCredentials(String username, String newPassword, String newUsername);
 }

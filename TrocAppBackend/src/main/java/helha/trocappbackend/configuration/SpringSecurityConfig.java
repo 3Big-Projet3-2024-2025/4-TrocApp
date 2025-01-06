@@ -26,16 +26,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
-    /*@Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection if not required
-                .authorizeHttpRequests((requests) -> requests
-                        .anyRequest().permitAll() // Allows all requests without authentication
-                );
-        return http.build();
-    }*/
-
     @Autowired
     UserDetailsService userDetailsService;
 
@@ -49,50 +39,20 @@ public class SpringSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> {
                     authorizeRequests.requestMatchers(
-                            "/api/categories",
-                            "/users/all",
-                            "/users/{id}",
-                            "/users/update-user",
-                            "/users/{userId}/roles/{roleId}",
-                            "/users/roles",
-                            "/users/getAllRoles",
-                            "/users/{userId}/roles",
-                            "/users/search",
-                            "/users/{userId}/items",
-                            "/users/{userId}/block",
-                            "/ratings",
-                            "/ratings/add",
-                            "ratings/received/{userId}",
-                            "/ratings/posted/{userId}",
-                            "/ratings/{ratingId}",
-                            "/ratings/average/{userId}",
-                            "/api/gdpr/user/{userId}",
-                            "/api/gdpr/{gdprRequestId}",
-                            "/api/gdpr/{userId}/deactivate",
-                            "/api/gdpr/pending",
-                            "/api/gdpr/processed",
-                            "/api/gdpr/{id}/processed").hasAnyRole("admin", "user");
-                    authorizeRequests.requestMatchers("/api/categories/{id}").hasRole("admin");
-                    authorizeRequests.requestMatchers("/api/gdpr").hasRole("user");
-                    authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "/auth/login", "/auth/create_account").permitAll();
+                            "/api/categories", "/api/categories/{id}", "/users/all","/users/{id}","/users/update-user",
+                            "/users/{userId}/roles/{roleId}","/users/roles","/users/getAllRoles","/users/{userId}/roles",
+                            "/users/search","/users/{userId}/items","/users/{userId}/block","/ratings","/ratings/add",
+                            "ratings/received/{userId}","/ratings/posted/{userId}","/ratings/{ratingId}", "/ratings/average/{userId}",
+                            "/api/gdpr/user/{userId}","/api/gdpr/{gdprRequestId}","/api/gdpr/{userId}/deactivate","/api/gdpr/pending",
+                            "/api/gdpr/processed","/api/gdpr/{id}/processed", "/items", "/items/available","/items/user/{id}",
+                            "/items/{id}", "/exchanges", "/exchanges/user/{id}", "/exchanges/{id}").hasAnyRole("admin", "user");
+                    authorizeRequests.requestMatchers("/api/categories/{id}","/exchanges", "/exchanges/user/{id}", "/exchanges/{id}").hasRole("admin");
+                    authorizeRequests.requestMatchers("/api/gdpr","/exchanges", "/exchanges/user/{id}", "/exchanges/{id}").hasRole("user");
+                    authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "users", "/auth/login", "/auth/create_account", "/items/available","/addresses/{id}","api/categories/{id}","/items/{id}").permitAll();
                     authorizeRequests.anyRequest().authenticated();
 
                 }).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
     }
-
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user1 = User.builder()
-//                        .username("user")
-//                        .password(passwordEncoder().encode("user"))
-//                        .roles("USER").build();
-//        UserDetails user2 = User.builder()
-//                .username("admin")
-//                .password(passwordEncoder().encode("admin"))
-//                .roles("USER","ADMIN").build();
-//
-//        return new InMemoryUserDetailsManager(user1, user2);
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
