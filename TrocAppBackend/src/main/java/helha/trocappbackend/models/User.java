@@ -45,6 +45,10 @@ public class User {
      * The password of the user.
      */
     private String password;
+
+    /**
+     * The field actif of the user
+     */
     private Boolean actif;
 
     /**
@@ -97,11 +101,6 @@ public class User {
     private List<Exchange> exchangesAsReceiver;
 
     /**
-     * The list of categories associated with the user.
-     */
-
-
-    /**
      * The set of roles assigned to the user.
      */
     @JsonIgnoreProperties("roles")
@@ -112,6 +111,12 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+
+    /**
+     *
+     */
+    @OneToMany(mappedBy = "user")
+    private List <GdprRequest> gdprRequests ;
 
     /**
      * Default constructor.
@@ -125,13 +130,8 @@ public class User {
      * @param lastName the last name of the user
      * @param email the email address of the user
      * @param password the password of the user
+     * @param actif check if the user is actif
      */
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
     public User(String firstName, String lastName, String email, String password, boolean actif) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -140,23 +140,7 @@ public class User {
         this.actif = actif;
     }
 
-
     // Autres attributs, getters, et setters
-
-    /**
-     * Gets the unique identifier for the user.
-     *
-     * @return the user ID
-     */
-    public void addRole(Role role) {
-        this.roles.add(role);
-        role.getUsers().add(this);
-    }
-
-    public void removeRole(Role role) {
-        this.roles.remove(role);
-        role.getUsers().remove(this);
-    }
 
     public int getId() {
         return id;
@@ -351,9 +335,13 @@ public class User {
         this.receivedRatings = receivedRatings;
     }
 
-    /*public List<GdprRequest> getGdprRequests() {
+    public List<GdprRequest> getGdprRequests() {
         return gdprRequests;
-    }*/
+    }
+
+    public void setGdprRequests(List<GdprRequest> gdprRequests) {
+        this.gdprRequests = gdprRequests;
+    }
 
     /**
      * Gets the list of items owned by the user for exchange.
@@ -407,24 +395,6 @@ public class User {
      */
     public void setExchangesAsReceiver(List<Exchange> exchangesAsReceiver) {
         this.exchangesAsReceiver = exchangesAsReceiver;
-    }
-
-    /**
-     * Gets the list of categories associated with the user.
-     *
-     * @return the list of categories
-     */
-    public List<Category> getCategories() {
-        return categories;
-    }
-
-    /**
-     * Sets the list of categories associated with the user.
-     *
-     * @param categories the list of categories
-     */
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
     }
 
     /**

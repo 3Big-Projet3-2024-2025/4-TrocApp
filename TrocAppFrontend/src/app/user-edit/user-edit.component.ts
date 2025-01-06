@@ -35,20 +35,19 @@ export class UserEditComponent {
     firstName: '',
     lastName: '',
     email: '',
-    address: {         
+    address: {
       zipCode: '',
       city: '',
       street: '',
-      number: '',
-      longitude: 0,
-      latitude: 0
+      number: ''
     },
     rating: 0,
     addressId: 0,
     roles: [],
     rolesInput: '',
-    blocked: false
-  };
+    blocked: false,
+    actif: true
+};
 
   // Arrays to hold address-related data
   zipCodes: number[] = [];  

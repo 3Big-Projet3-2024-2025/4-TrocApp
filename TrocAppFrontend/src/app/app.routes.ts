@@ -50,8 +50,8 @@ export const routes: Routes = [
     //{ path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' }, // Wildcard route
     
     // Path for the GDPR form
-    {path : 'gdpr-form', component: GdprFormComponent},
+    {path : 'gdpr-form', component: GdprFormComponent, canActivate: [authGuard] },
     // Path for the GDPR admin page
-    {path : 'gdpr-admin', component: GdprAdminComponent}
+    {path : 'gdpr-admin', component: GdprAdminComponent, canActivate: [authGuard]}
     
 ];

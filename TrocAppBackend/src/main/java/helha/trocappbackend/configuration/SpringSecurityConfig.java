@@ -4,6 +4,7 @@ import helha.trocappbackend.security.JWTFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -47,12 +48,32 @@ public class SpringSecurityConfig {
         return http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> {
-                    authorizeRequests.requestMatchers("/api/categories", "/users/all","/users/{id}","/users/update-user","/users/{userId}/roles/{roleId}",
-                            "/users/roles","/users/getAllRoles","/users/{userId}/roles","/users/search","/users/{userId}/items",
-                            "/users/{userId}/block","/ratings","/ratings/add","ratings/received/{userId}","/ratings/posted/{userId}",
-                            "/ratings/{ratingId}","/ratings/average/{userId}").hasAnyRole("admin", "user");
+                    authorizeRequests.requestMatchers(
+                            "/api/categories",
+                            "/users/all",
+                            "/users/{id}",
+                            "/users/update-user",
+                            "/users/{userId}/roles/{roleId}",
+                            "/users/roles",
+                            "/users/getAllRoles",
+                            "/users/{userId}/roles",
+                            "/users/search",
+                            "/users/{userId}/items",
+                            "/users/{userId}/block",
+                            "/ratings",
+                            "/ratings/add",
+                            "ratings/received/{userId}",
+                            "/ratings/posted/{userId}",
+                            "/ratings/{ratingId}",
+                            "/ratings/average/{userId}",
+                            "/api/gdpr/user/{userId}",
+                            "/api/gdpr/{gdprRequestId}",
+                            "/api/gdpr/{userId}/deactivate",
+                            "/api/gdpr/pending",
+                            "/api/gdpr/processed",
+                            "/api/gdpr/{id}/processed").hasAnyRole("admin", "user");
                     authorizeRequests.requestMatchers("/api/categories/{id}").hasRole("admin");
-                    authorizeRequests.requestMatchers("/sports").hasRole("user");
+                    authorizeRequests.requestMatchers("/api/gdpr").hasRole("user");
                     authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "/auth/login", "/auth/create_account").permitAll();
                     authorizeRequests.anyRequest().authenticated();
 

@@ -12,4 +12,5 @@ export interface User {
   addressId: number;
   roles: Role[];
   rolesInput?: string;
+  actif: boolean;
 }
