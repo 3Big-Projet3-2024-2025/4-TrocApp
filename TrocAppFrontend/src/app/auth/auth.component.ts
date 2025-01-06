@@ -20,7 +20,7 @@ export class AuthComponent {
 
   constructor(private service: AuthService, private cookieService: CookieService, private router: Router) { }
 
-  verifierLogin() {
+  login() {
     this.service.login(this.username, this.password).subscribe({
       next: (token) => {
         console.log(token);

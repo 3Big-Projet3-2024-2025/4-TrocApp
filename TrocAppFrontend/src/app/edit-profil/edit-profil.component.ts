@@ -11,6 +11,7 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { AddressSuggestion } from '../services/address.service';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-edit-profil',
@@ -34,6 +35,7 @@ export class EditProfilComponent implements OnInit {
     private usersService: UsersService,
     private addressService: AddressService,
     private authService: AuthService, // Injection of the AuthService
+    private cookieService: CookieService,
     private router: Router
     
   ) {
@@ -248,4 +250,15 @@ export class EditProfilComponent implements OnInit {
         });
       }
     }
+
+  deconnexion(): void
+  {
+    let token = this.authService.getToken();
+
+    if (token)
+    {
+      this.cookieService.delete("token");
+    }
+    this.router.navigate(["/auth/login"]);
+  }
 }
