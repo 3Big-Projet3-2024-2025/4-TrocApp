@@ -48,6 +48,11 @@ public class User {
     private Boolean actif;
 
     /**
+     * The field actif of the user
+     */
+    private Boolean actif;
+
+    /**
      * The address of the user.
      */
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -116,6 +121,12 @@ public class User {
     private Set<Role> roles;
 
     /**
+     *
+     */
+    @OneToMany(mappedBy = "user")
+    private List <GdprRequest> gdprRequests ;
+
+    /**
      * Default constructor.
      */
     public User() {}
@@ -127,13 +138,8 @@ public class User {
      * @param lastName the last name of the user
      * @param email the email address of the user
      * @param password the password of the user
+     * @param actif check if the user is actif
      */
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
     public User(String firstName, String lastName, String email, String password, boolean actif) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -141,7 +147,6 @@ public class User {
         this.password = password;
         this.actif = actif;
     }
-
 
     /**
      * Gets the unique identifier for the user.
@@ -341,6 +346,14 @@ public class User {
         this.receivedRatings = receivedRatings;
     }
 
+    public List<GdprRequest> getGdprRequests() {
+        return gdprRequests;
+    }
+
+    public void setGdprRequests(List<GdprRequest> gdprRequests) {
+        this.gdprRequests = gdprRequests;
+    }
+
     /**
      * Gets the list of items owned by the user for exchange.
      *
@@ -402,7 +415,17 @@ public class User {
      */
     public List<Category> getCategories() {
         return categories;
+    
+    /**
+     * Gets the set of roles assigned to the user.
+     *
+     * @return the set of roles
+     */
+    public Set<Role> getRoles() {
+        return roles;
     }
+
+
 
     /**
      * Sets the list of categories associated with the user.
@@ -442,10 +465,6 @@ public class User {
         role.getUsers().remove(this);
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
     public Boolean getActif() {
         return actif;
     }
@@ -454,15 +473,5 @@ public class User {
         this.actif = actif;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public Boolean getActif() {
-        return actif;
-    }
-
-    public void setActif(Boolean actif) {
-        this.actif = actif;
     }
 }

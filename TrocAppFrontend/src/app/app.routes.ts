@@ -10,9 +10,9 @@ import { CategoryListComponent } from './category-list/category-list.component';
 import { MyItemsListComponent } from './my-items-list/my-items-list.component';
 import { GdprFormComponent } from './gdpr-form/gdpr-form.component';
 import { GdprAdminComponent } from './gdpr-admin/gdpr-admin.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AuthComponent } from './auth/auth.component';
 import { authGuard } from './auth.guard';
-
 export const routes: Routes = [
     { path: '', component: ViewingItemsMapComponent }, // Default Path (Home Page)
     //Path for user management as admin
@@ -22,7 +22,7 @@ export const routes: Routes = [
     //Path for viewing a detailed item
     { path: "detailed-view-item", component: DetailedViewItemComponent },
     //{ path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
-    {path: 'category-list', component: CategoryListComponent},
+    {path: 'category-list', component: CategoryListComponent, canActivate: [authGuard]},
     //{ path: '**', redirectTo: '/category-list', pathMatch: 'full' },
     
     { path: "detailed-view-item/:id", component: DetailedViewItemComponent , canActivate: [authGuard]},
@@ -38,7 +38,7 @@ export const routes: Routes = [
 
     // Path for editing a user
     { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
-    { path: 'user-profile/:id', component: UserProfileComponent },
+    { path: 'user-profile/:id', component: UserProfileComponent, canActivate: [authGuard] },
 
     
     { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },

@@ -6,7 +6,8 @@ export class User {
     password: string;        
     addressId: number;       
     rating: number;  
-    actif: boolean = true; // Default value set to true
+    actif: boolean = true; // Par défaut, un utilisateur est actif        
+  
    
     constructor(
       id: number, 
