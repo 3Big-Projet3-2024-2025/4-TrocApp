@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Item } from '../models/item';
 import { AsyncPipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-my-items-list',
@@ -14,17 +15,18 @@ import { Router } from '@angular/router';
 })
 export class MyItemsListComponent implements OnInit {
 
-  constructor(private itemService: ItemService, private router: Router) {}
+  constructor(private itemService: ItemService, private router: Router, private authService: AuthService) {}
   
   myItems!: Observable<Item[]>;       //////////////available seulement
 
+  userId!: number | null;  //l id de la personne connectée
+
   ngOnInit() {
+    this.userId = this.authService.getIDUserConnected() as number;
     this.myItems = this.itemService.getItemByUserId(this.userId) as Observable<Item[]>;
   }
 
   errorMessage = "";
-
-  userId: number = 3;  //l id de la personne connectée
 
 
   updateItem(item: Item) {
@@ -32,8 +34,8 @@ export class MyItemsListComponent implements OnInit {
   }
 
   deleteItem(item: Item) {
-    const sub = this.itemService.deleteItem(item.id).subscribe((itemsList) => {
-      this.myItems = itemsList as Observable<Item[]>;
+    const sub = this.itemService.deleteItem(item.id).subscribe(() => {
+      this.myItems = this.itemService.getItemByUserId(this.userId as number) as Observable<Item[]>;
     });
   }
 
