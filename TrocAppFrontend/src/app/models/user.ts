@@ -10,4 +10,5 @@ export interface User {
     rating: number; // Note de l'utilisateur
     roles: Role[]; // Liste des rôles de l'utilisateur
     rolesInput?: string;
+    actif ?: boolean; 
   }

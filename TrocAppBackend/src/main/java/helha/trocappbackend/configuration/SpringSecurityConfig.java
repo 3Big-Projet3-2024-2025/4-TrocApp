@@ -4,14 +4,14 @@ import helha.trocappbackend.security.JWTFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
-//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -25,7 +25,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
-    @Bean
+    /*@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection if not required
@@ -33,24 +33,29 @@ public class SpringSecurityConfig {
                         .anyRequest().permitAll() // Allows all requests without authentication
                 );
         return http.build();
+    }*/
+
+    @Autowired
+    UserDetailsService userDetailsService;
+
+    @Autowired
+    JWTFilter jwtFilter;
+
+    @Bean
+
+    public SecurityFilterChain SecurityFilterChain(final HttpSecurity http) throws Exception {
+        return http.cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(authorizeRequests -> {
+                    authorizeRequests.requestMatchers("/users/all", "/api/categories","/api/categories/{id}",
+                            "/api/gdpr","/api/gdpr/user/{userId}","/api/gdpr/{gdprRequestId}","/api/gdpr/{userId}/deactivate","/api/gdpr/pending","/api/gdpr/processed",
+                            "/api/gdpr/{id}/processed").hasRole("admin");
+                    authorizeRequests.requestMatchers("/sports", "/api/categories", "/api/categories/{id}","/api/gdpr").hasRole("user");
+                    authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "users", "/auth/login", "/auth/create_account").permitAll();
+                    authorizeRequests.anyRequest().authenticated();
+
+                }).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
     }
-
-    //@Autowired
-    //UserDetailsService;
-
-    //@Autowired
-    //JWTFilter jwtFilter;
-
-    //@Bean
-    //public SecurityFilterChain(final HttpSecurity http) throws Exception {
-        //return http.csrf(AbstractHttpConfigurer::disable)
-                //.authorizeHttpRequests(authorizeRequests -> {
-                    //authorizeRequests.requestMatchers("/sports/all").hasRole("ADMIN");
-                    //authorizeRequests.requestMatchers("/sports").hasRole("USER");
-                    //authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs","/user","/auth/login").permitAll();
-                    //authorizeRequests.anyRequest().authenticated();
-                //}).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
-    //}
 
 //    @Bean
 //    public UserDetailsService userDetailsService() {
@@ -65,16 +70,16 @@ public class SpringSecurityConfig {
 //
 //        return new InMemoryUserDetailsManager(user1, user2);
 //    }
-    /*
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationManager(HttpSecurity http,PasswordEncoder passwordEncoder) throws Exception {
+    public AuthenticationManager authenticationManager(HttpSecurity http,PasswordEncoder passwordEncoder) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuiler = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuiler.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
         return authenticationManagerBuiler.build();
-    }*/
+    }
 }

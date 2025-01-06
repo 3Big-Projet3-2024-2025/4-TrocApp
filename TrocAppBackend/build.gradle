@@ -18,7 +18,9 @@ repositories {
 }
 
 dependencies {
-		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 		testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 		implementation 'io.jsonwebtoken:jjwt:0.12.6'
 		implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -43,6 +45,7 @@ dependencies {
 		implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.2'
 		implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
 	implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
+
 }
 
 	tasks.named('test') {

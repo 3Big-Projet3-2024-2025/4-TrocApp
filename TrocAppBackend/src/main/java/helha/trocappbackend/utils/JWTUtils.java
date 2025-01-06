@@ -38,6 +38,8 @@ public class JWTUtils {
                         .expiration(new Date(new Date().getTime()+expiration))
                         .add("roles",user.getAuthorities())
                         .add("id",userInternal.getId())
+                        .add("unique_name",user.getUsername())
+                        .add("email", userInternal.getEmail())
                         .build())
                 .signWith(SignatureAlgorithm.HS512,secret).compact();
     }

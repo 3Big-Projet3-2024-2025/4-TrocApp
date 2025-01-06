@@ -12,11 +12,15 @@ import { ItemFormComponent } from './item-form/item-form.component';
 //import { ItemDetTestComponent } from './item-det-test/item-det-test.component';
 //import { ExchangeListComponent } from './exchange-list/exchange-list.component';
 import { CategoryListComponent } from './category-list/category-list.component';
+import { AuthComponent } from './auth/auth.component';
+import { GdprFormComponent } from './gdpr-form/gdpr-form.component';
+import { GdprAdminComponent } from './gdpr-admin/gdpr-admin.component';
+import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
     { path: '', component: ViewingItemsMapComponent }, // Default Path (Home Page)
     //Path for user management as admin
-    { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
+    { path: "users-management", component: UsersManagementComponent, canActivate: [authGuard] },
     //Path for viewing items on a map
     { path: "viewing-items-map", component: ViewingItemsMapComponent },
     //Path for viewing a detailed item
@@ -44,7 +48,12 @@ export const routes: Routes = [
     { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
     { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
     { path: 'edit-profil', component: EditProfilComponent, /*canActivate: [authGuard]*/ },
-    { path: 'rating-comment', component: RatingCommentComponent, /*canActivate: [authGuard]*/ },
-    { path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' }, // Wildcard route
+    { path: 'auth/login', component: AuthComponent},
+    //{ path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' }, // Wildcard route
+
+    // Path for the GDPR form
+    {path : 'gdpr-form', component: GdprFormComponent},
+    // Path for the GDPR admin page
+    {path : 'gdpr-admin', component: GdprAdminComponent}
     
 ];

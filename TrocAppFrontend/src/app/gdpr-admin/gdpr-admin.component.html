@@ -1,0 +1,60 @@
+<div class="container mt-4" *ngIf="isAdmin">
+  <h2 class="text-center">GDPR Request Management</h2>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="alert alert-danger mt-3">{{ error }}</div>
+
+  <!-- Pending Requests Section -->
+  <div class="mt-5">
+    <h3>Pending Requests</h3>
+    <ul class="list-group">
+      <li *ngFor="let request of pendingRequests" class="list-group-item">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <p><strong>{{ request.user.firstName }} {{ request.user.lastName }}</strong></p>
+            <p>Email: {{ request.user.email }}</p>
+            <p>Request Type: {{ request.requesttype }}</p>
+            <p>Request Date: {{ request.requestdate | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+          </div>
+          <div>
+            <button 
+              [disabled]="loading"
+              (click)="processRequest(request, true)"
+              class="btn btn-primary">
+              Approve
+            </button>
+            <button 
+              [disabled]="loading"
+              (click)="processRequest(request, false)"
+              class="btn btn-danger ms-2">
+              Reject
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Processed Requests Section -->
+  <div class="mt-5">
+    <h3>Processed Requests</h3>
+    <ul class="list-group">
+      <li *ngFor="let request of processedRequests" class="list-group-item">
+        <div>
+          <p><strong>{{ request.user.firstName }} {{ request.user.lastName }}</strong></p>
+          <p>Email: {{ request.user.email }}</p>
+          <p>Request Type: {{ request.requesttype }}</p>
+          <p>Status: <strong>{{ request.status }}</strong></p>
+          <p>Request Date: {{ request.requestdate | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+          <p><strong>Administrator's Response:</strong> {{ request.response }}</p>
+          <p>Response Date: {{ request.responsedate | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Message if user is not an admin -->
+<div *ngIf="!isAdmin">
+  <p class="alert alert-warning">You are not authorized to view this content.</p>
+</div>

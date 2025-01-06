@@ -10,11 +10,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
+@Transactional(readOnly = true)
 @Service
 public class UserAuthService implements UserDetailsService {
 
@@ -37,7 +38,7 @@ public class UserAuthService implements UserDetailsService {
     public List<GrantedAuthority> getGrantedAuthorities(Set<Role> roles) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getName())); // Supposons que Role a une méthode getName()
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName())); // Supposons que Role a une méthode getName()
         }
         return authorities;
     }
