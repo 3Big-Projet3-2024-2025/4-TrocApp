@@ -2,15 +2,14 @@ import { Routes } from '@angular/router';
 import { UsersManagementComponent } from './users-management/users-management.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { EditProfilComponent } from './edit-profil/edit-profil.component';
-import { RatingCommentComponent } from './rating-comment/rating-comment.component';
-
-
 import { ViewingItemsMapComponent } from './viewing-items-map/viewing-items-map.component';
 import { DetailedViewItemComponent } from './detailed-view-item/detailed-view-item.component';
 import { ItemFormComponent } from './item-form/item-form.component';
 import { ExchangeListComponent } from './exchange-list/exchange-list.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { MyItemsListComponent } from './my-items-list/my-items-list.component';
+import { GdprFormComponent } from './gdpr-form/gdpr-form.component';
+import { GdprAdminComponent } from './gdpr-admin/gdpr-admin.component';
 import { AuthComponent } from './auth/auth.component';
 import { authGuard } from './auth.guard';
 
@@ -39,6 +38,7 @@ export const routes: Routes = [
 
     // Path for editing a user
     { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
+    { path: 'user-profile/:id', component: UserProfileComponent },
 
     
     { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
@@ -46,5 +46,10 @@ export const routes: Routes = [
     { path: 'edit-profil', component: EditProfilComponent, /*canActivate: [authGuard]*/ },
     { path: 'auth/login', component: AuthComponent},
     { path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' }, // Wildcard route
+
+    // Path for the GDPR form
+    {path : 'gdpr-form', component: GdprFormComponent},
+    // Path for the GDPR admin page
+    {path : 'gdpr-admin', component: GdprAdminComponent}
     
 ];

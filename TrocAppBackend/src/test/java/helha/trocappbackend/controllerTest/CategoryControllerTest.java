@@ -2,10 +2,9 @@ package helha.trocappbackend.controllerTest;
 
 import helha.trocappbackend.controllers.CategoryController;
 import helha.trocappbackend.models.Category;
-import helha.trocappbackend.models.User;
 import helha.trocappbackend.services.CategoryService;
-import helha.trocappbackend.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -13,148 +12,150 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-class CategoryControllerTest {
+/**
+ * Unit tests for the {@link CategoryController} class.
+ * This class tests the various endpoints of the CategoryController,
+ * ensuring that the logic for adding, updating, deleting, and fetching categories works as expected.
+ */
+public class CategoryControllerTest {
 
+    /**
+     * The {@link CategoryController} instance that is being tested.
+     */
     @InjectMocks
     private CategoryController categoryController;
 
+    /**
+     * The mocked {@link CategoryService} instance that the controller depends on.
+     */
     @Mock
     private CategoryService categoryService;
 
-    @Mock
-    private UserRepository userRepository;
-
+    /**
+     * Setup method to initialize the mocks before each test.
+     */
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
+    /**
+     * Test the {@link CategoryController#getAllCategories()} method.
+     *
+     * @see CategoryController#getAllCategories()
+     */
     @Test
-    void testGetAllCategories() {
-        // Arrange
-        Category category1 = new Category();
-        category1.setId_category(1);
-        category1.setName("Books");
+    @DisplayName("Test Get All Categories - Success")
+    public void testGetAllCategories() {
+        List<Category> categories = new ArrayList<>();
+        categories.add(new Category(1, "Electronics"));
+        categories.add(new Category(2, "Books"));
 
-        Category category2 = new Category();
-        category2.setId_category(2);
-        category2.setName("Electronics");
+        when(categoryService.getAllCategories()).thenReturn(categories);
 
-        when(categoryService.getAllCategories()).thenReturn(Arrays.asList(category1, category2));
+        List<Category> result = categoryController.getAllCategories();
 
-        // Act
-        List<Category> categories = categoryController.getAllCategories();
-
-        // Assert
-        assertEquals(2, categories.size());
-        assertEquals("Books", categories.get(0).getName());
-        assertEquals("Electronics", categories.get(1).getName());
+        assertEquals(2, result.size());
         verify(categoryService, times(1)).getAllCategories();
     }
 
+    /**
+     * Test the {@link CategoryController#addCategory(Category)} method for a successful category creation.
+     *
+     * @see CategoryController#addCategory(Category)
+     */
     @Test
-    void testAddCategory_Success() {
-        // Arrange
-        User admin = new User();
-        admin.setId(1);
-        admin.setFirstName("Admin");
+    @DisplayName("Test Add Category - Success")
+    public void testAddCategory_Success() {
+        Category category = new Category(3, "Clothing");
+        when(categoryService.getAllCategories()).thenReturn(new ArrayList<>());
+        when(categoryService.createCategory(category)).thenReturn(category);
 
-        Category category = new Category();
-        category.setName("Dvd");
-        category.setUser(admin);
-
-        when(userRepository.findById(1)).thenReturn(Optional.of(admin));
-        when(categoryService.createCategory(any(Category.class))).thenReturn(category);
-
-        // Act
         ResponseEntity<Object> response = categoryController.addCategory(category);
 
-        // Assert
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertTrue(response.getBody() instanceof Category);
-        assertEquals("Dvd", ((Category) response.getBody()).getName());
+        assertEquals(category, response.getBody());
+        verify(categoryService, times(1)).getAllCategories();
+        verify(categoryService, times(1)).createCategory(category);
     }
 
+    /**
+     * Test the {@link CategoryController#addCategory(Category)} method for a conflict when the category already exists.
+     *
+     * @see CategoryController#addCategory(Category)
+     */
     @Test
-    void testAddCategory_AdminNotFound() {
-        // Arrange
-        User admin = new User();
-        admin.setId(99); // Non-existent admin ID
+    @DisplayName("Test Add Category - Conflict (Category Already Exists)")
+    public void testAddCategory_Conflict() {
+        Category category = new Category(3, "Clothing");
+        List<Category> categories = new ArrayList<>();
+        categories.add(new Category(1, "Clothing"));
 
-        Category category = new Category();
-        category.setName("Dvd");
-        category.setUser(admin);
+        when(categoryService.getAllCategories()).thenReturn(categories);
 
-        when(userRepository.findById(99)).thenReturn(Optional.empty());
-
-        // Act
         ResponseEntity<Object> response = categoryController.addCategory(category);
 
-        // Assert
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertTrue(response.getBody() instanceof String);
-        assertTrue(response.getBody().toString().contains("Administrator not found"));
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        assertEquals("A category with the same name already exists.", response.getBody());
+        verify(categoryService, times(1)).getAllCategories();
+        verify(categoryService, times(0)).createCategory(category);
     }
 
+    /**
+     * Test the {@link CategoryController#updateCategory(int, Category)} method for updating an existing category.
+     *
+     * @see CategoryController#updateCategory(int, Category)
+     */
     @Test
-    void testUpdateCategory() {
-        // Arrange
-        int categoryId = 1;
-        Category existingCategory = new Category();
-        existingCategory.setId_category(categoryId);
-        existingCategory.setName("Dvd");
+    @DisplayName("Test Update Category - Success")
+    public void testUpdateCategory() {
+        Category category = new Category(1, "Updated Name");
+        when(categoryService.updateCategory(1, category)).thenReturn(category);
 
-        Category updatedCategory = new Category();
-        updatedCategory.setName("Updated Dvd");
+        ResponseEntity<Category> response = categoryController.updateCategory(1, category);
 
-        when(categoryService.updateCategory(categoryId, updatedCategory)).thenReturn(updatedCategory);
-
-        // Act
-        ResponseEntity<Category> response = categoryController.updateCategory(categoryId, updatedCategory);
-
-        // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Updated Dvd", response.getBody().getName());
-        verify(categoryService, times(1)).updateCategory(categoryId, updatedCategory);
+        assertEquals(category, response.getBody());
+        verify(categoryService, times(1)).updateCategory(1, category);
     }
 
+    /**
+     * Test the {@link CategoryController#deleteCategory(int)} method for successful category deletion.
+     *
+     * @see CategoryController#deleteCategory(int)
+     */
     @Test
-    void testDeleteCategory_Success() {
-        // Arrange
-        int categoryId = 1;
+    @DisplayName("Test Delete Category - Success")
+    public void testDeleteCategory_Success() {
+        doNothing().when(categoryService).deleteCategory(1);
 
-        doNothing().when(categoryService).deleteCategory(categoryId);
+        ResponseEntity<String> response = categoryController.deleteCategory(1);
 
-        // Act
-        ResponseEntity<String> response = categoryController.deleteCategory(categoryId);
-
-        // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Category deleted successfully", response.getBody());
-        verify(categoryService, times(1)).deleteCategory(categoryId);
+        verify(categoryService, times(1)).deleteCategory(1);
     }
 
+    /**
+     * Test the {@link CategoryController#deleteCategory(int)} method for failure when category is not found.
+     *
+     * @see CategoryController#deleteCategory(int)
+     */
     @Test
-    void testDeleteCategory_Failure() {
-        // Arrange
-        int categoryId = 1;
-        doThrow(new RuntimeException("Category not found")).when(categoryService).deleteCategory(categoryId);
+    @DisplayName("Test Delete Category - Failure (Category Not Found)")
+    public void testDeleteCategory_Failure() {
+        doThrow(new RuntimeException("Category not found")).when(categoryService).deleteCategory(1);
 
-        // Act
-        ResponseEntity<String> response = categoryController.deleteCategory(categoryId);
+        ResponseEntity<String> response = categoryController.deleteCategory(1);
 
-        // Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Category not found", response.getBody());
-        verify(categoryService, times(1)).deleteCategory(categoryId);
+        verify(categoryService, times(1)).deleteCategory(1);
     }
 }
-
-

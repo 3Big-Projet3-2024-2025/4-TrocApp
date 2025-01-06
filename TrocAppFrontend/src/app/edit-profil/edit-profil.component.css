@@ -1,0 +1,28 @@
+.dropdown-menu {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .dropdown-item {
+    cursor: pointer;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f8f9fa;
+  }
+  
+  /* Form validation styles */
+  .form-control.ng-touched.ng-invalid {
+    border-color: #dc3545;
+  }
+  
+  .text-danger {
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+  }
+  .toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }

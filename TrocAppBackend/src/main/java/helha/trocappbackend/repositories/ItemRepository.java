@@ -1,7 +1,9 @@
 package helha.trocappbackend.repositories;
 
 import helha.trocappbackend.models.Item;
+import helha.trocappbackend.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
 /**
  * Repository interface for managing Item entities.
@@ -12,5 +14,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *  @see helha.trocappbackend.repositories
  */
 public interface ItemRepository extends JpaRepository<Item, Integer> {
-
+    List<Item> findByOwner(User owner);
 }

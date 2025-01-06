@@ -1,0 +1,74 @@
+/* users-management.component.css */
+.progress {
+    height: 10px;
+    border-radius: 5px;
+  }
+
+  .fas.fa-star {
+    font-size: 0.9rem;
+  }
+  
+  .text-warning {
+    color: #ffc107;
+  }
+  
+  .text-secondary {
+    color: #dee2e6;
+  }
+  
+  .badge {
+    font-size: 0.8em;
+    padding: 0.4em 0.6em;
+  }
+  
+  .btn-group .btn {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .table-responsive {
+    border-radius: 0.25rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .table th {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  
+  .table td {
+    vertical-align: middle;
+  }
+  
+  /* Animation pour la notification */
+  .alert {
+    animation: slideIn 0.3s ease-out;
+  }
+
+  .display-6 {
+    font-weight: 600;
+    letter-spacing: -0.5px;
+  }
+  
+  .border-bottom {
+    border-color: #e9ecef !important;
+  }
+  
+  /* Animation subtile pour l'icône */
+  .bi-people-fill {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .display-6:hover .bi-people-fill {
+    transform: scale(1.1);
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }

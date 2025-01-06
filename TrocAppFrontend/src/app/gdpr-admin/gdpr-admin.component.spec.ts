@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RatingCommentComponent } from './rating-comment.component';
+import { GdprAdminComponent } from './gdpr-admin.component';
 
-describe('RatingCommentComponent', () => {
-  let component: RatingCommentComponent;
-  let fixture: ComponentFixture<RatingCommentComponent>;
+describe('GdprAdminComponent', () => {
+  let component: GdprAdminComponent;
+  let fixture: ComponentFixture<GdprAdminComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RatingCommentComponent]
+      imports: [GdprAdminComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(RatingCommentComponent);
+    fixture = TestBed.createComponent(GdprAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

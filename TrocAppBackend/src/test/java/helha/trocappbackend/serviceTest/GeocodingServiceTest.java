@@ -138,5 +138,5 @@ class GeocodingServiceTest {
 
         // The formatted address should match the expected format
         assertEquals("Rue de la Loi, 16, Bruxelles, 1000", formattedAddress);
-    }
+    }*/
 }

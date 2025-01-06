@@ -23,7 +23,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class DetailedViewItemComponent {
 
-  id_selected_item!: number; // Property for the selected item ID
+  item!: Item; // Property for the item
+  owner!: User; // Property for the owner of the item
+  category!: Category; // Property for the category of the item
+
+  idSelectedItem!: number; // Property for the selected item ID
 
   item!: Item; // Property for the item
   owner!: User; // Property for the owner of the item

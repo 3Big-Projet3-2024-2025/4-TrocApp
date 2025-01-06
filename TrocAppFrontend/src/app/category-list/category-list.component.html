@@ -1,13 +1,22 @@
 <div class="category-list">
   <h2>List of Categories</h2>
-
-  <!-- Formulaire pour ajouter une nouvelle catégorie -->
+  
+  <!-- Add Category Form -->
   <form (ngSubmit)="onSubmit()" #categoryForm="ngForm">
     <div>
       <label for="name">Name of category</label>
-      <input type="text" id="name" required [(ngModel)]="newCategory.name" name="name">
+      <input type="text" 
+             id="name" 
+             required 
+             [(ngModel)]="newCategory.name" 
+             name="name"
+             placeholder="Enter category name">
     </div>
-    <button type="submit" [disabled]="!categoryForm.form.valid">Add Category</button>
+    <button type="submit" 
+            [disabled]="!categoryForm.form.valid"
+            class="btn-add">
+      Add Category
+    </button>
   </form>
 
   <!-- Message display -->
@@ -15,16 +24,27 @@
     {{ message }}
   </div>
 
+  <!-- Categories List -->
   <ul>
     <li *ngFor="let category of categories">
-      <span class="category-name">{{ category.name }}</span>
-      <button (click)="startEditing(category)">Modify</button>
-      <button (click)="deleteCategory(category.id_category)">Delete</button>
-    
-      <div *ngIf="editingCategory && editingCategory.id_category === category.id_category" class="edit-container">
-        <input [(ngModel)]="editingCategory.name" placeholder="New category name"/>
-        <button (click)="updateCategoryName()">Save</button>
-        <button (click)="cancelEditing()">Cancel</button>
+      <!-- Normal View -->
+      <div class="category-item" *ngIf="!(editingCategory && editingCategory.id_category === category.id_category)">
+        <span class="category-name">{{ category.name }}</span>
+        <div class="button-group">
+          <button class="btn-modify" (click)="startEditing(category)">Modify</button>
+          <button class="btn-delete" (click)="deleteCategory(category.id_category)">Delete</button>
+        </div>
+      </div>
+      
+      <!-- Edit View -->
+      <div class="category-item edit-mode" *ngIf="editingCategory && editingCategory.id_category === category.id_category">
+        <input [(ngModel)]="editingCategory.name" 
+               placeholder="New category name"
+               autofocus>
+        <div class="button-group">
+          <button class="btn-save" (click)="updateCategoryName()">Save</button>
+          <button class="btn-cancel" (click)="cancelEditing()">Cancel</button>
+        </div>
       </div>
     </li>
   </ul>

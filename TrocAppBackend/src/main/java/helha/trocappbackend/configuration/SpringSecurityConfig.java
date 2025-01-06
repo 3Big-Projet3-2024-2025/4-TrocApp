@@ -43,11 +43,21 @@ public class SpringSecurityConfig {
 
     @Bean
     public SecurityFilterChain SecurityFilterChain(final HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable)
+        return http
+                .cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> {
-                    authorizeRequests.requestMatchers("/users/all").hasRole("admin");
-                    authorizeRequests.requestMatchers("/sports").hasRole("user");
-                    authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "users", "/auth/login", "/auth/create_account").permitAll();
+                    authorizeRequests.requestMatchers("/users/all","/users/{id}","/users/update-user","/users/{userId}/roles/{roleId}",
+                            "/users/roles","/users/getAllRoles","/users/{userId}/roles","/users/search","/users/{userId}/items",
+                            "/users/{userId}/block","/ratings","/ratings/add","ratings/received/{userId}","/ratings/posted/{userId}",
+                            "/ratings/{ratingId}","/ratings/average/{userId}").hasRole("admin");
+
+                    authorizeRequests.requestMatchers("/sports","/users/all","/users/{id}","/users/update-user","/users/{userId}/roles/{roleId}",
+                            "/users/roles","/users/getAllRoles","/users/{userId}/roles","/users/search","/users/{userId}/items",
+                            "/users/{userId}/block","/ratings","/ratings/add","ratings/received/{userId}","/ratings/posted/{userId}",
+                            "/ratings/{ratingId}","/ratings/average/{userId}").hasRole("user");
+                    
+                    authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "users", "/auth/login", "/auth/create_account", "/items/available", "/addresses/{id}", "api/categories/{id}", "/items/{id}").permitAll();
                     authorizeRequests.anyRequest().authenticated();
                 }).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
     }
@@ -65,6 +75,7 @@ public class SpringSecurityConfig {
 //
 //        return new InMemoryUserDetailsManager(user1, user2);
 //    }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
