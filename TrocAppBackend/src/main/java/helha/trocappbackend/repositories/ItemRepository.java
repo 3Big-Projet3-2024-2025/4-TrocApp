@@ -9,4 +9,5 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Integer> {
     List<Item> findByOwner(User owner);
 
+
 }

@@ -45,8 +45,9 @@ export class UserEditComponent {
     addressId: 0,
     roles: [],
     rolesInput: '',
-    blocked: false
-  };
+    blocked: false,
+    actif: true
+};
 
   // Arrays to hold address-related data
   zipCodes: number[] = [];  

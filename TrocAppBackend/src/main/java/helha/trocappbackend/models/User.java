@@ -45,6 +45,7 @@ public class User {
      * The password of the user.
      */
     private String password;
+    private Boolean actif;
 
     /**
      * The address of the user.
@@ -133,6 +134,14 @@ public class User {
         this.email = email;
         this.password = password;
     }
+    public User(String firstName, String lastName, String email, String password, boolean actif) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.actif = actif;
+    }
+
 
     /**
      * Gets the unique identifier for the user.
@@ -431,5 +440,29 @@ public class User {
     public void removeRole(Role role) {
         this.roles.remove(role);
         role.getUsers().remove(this);
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public Boolean getActif() {
+        return actif;
+    }
+
+    public void setActif(Boolean actif) {
+        this.actif = actif;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public Boolean getActif() {
+        return actif;
+    }
+
+    public void setActif(Boolean actif) {
+        this.actif = actif;
     }
 }

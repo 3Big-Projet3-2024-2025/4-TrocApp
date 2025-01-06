@@ -14,6 +14,8 @@ public class Item {
 
     private String name;
     private String description;
+
+
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private String photo;

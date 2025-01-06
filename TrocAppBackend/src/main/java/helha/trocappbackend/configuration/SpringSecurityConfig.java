@@ -42,6 +42,7 @@ public class SpringSecurityConfig {
     JWTFilter jwtFilter;
 
     @Bean
+<<<<<<< HEAD
     public SecurityFilterChain SecurityFilterChain(final HttpSecurity http) throws Exception {
         return http
                 .cors(Customizer.withDefaults())
@@ -59,6 +60,20 @@ public class SpringSecurityConfig {
                     
                     authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "users", "/auth/login", "/auth/create_account").permitAll();
                     authorizeRequests.anyRequest().authenticated();
+=======
+
+    public SecurityFilterChain SecurityFilterChain(final HttpSecurity http) throws Exception {
+        return http.cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(authorizeRequests -> {
+                    authorizeRequests.requestMatchers("/users/all", "/api/categories","/api/categories/{id}",
+                            "/api/gdpr","/api/gdpr/user/{userId}","/api/gdpr/{gdprRequestId}","/api/gdpr/{userId}/deactivate","/api/gdpr/pending","/api/gdpr/processed",
+                            "/api/gdpr/{id}/processed").hasRole("admin");
+                    authorizeRequests.requestMatchers("/sports", "/api/categories", "/api/categories/{id}","/api/gdpr").hasRole("user");
+                    authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "users", "/auth/login", "/auth/create_account").permitAll();
+                    authorizeRequests.anyRequest().authenticated();
+
+>>>>>>> develop
                 }).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
     }
 

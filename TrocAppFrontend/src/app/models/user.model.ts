@@ -5,8 +5,8 @@ export class User {
     email: string;           
     password: string;        
     addressId: number;       
-    rating: number;          
-  
+    rating: number;  
+    actif: boolean = true; // Default value set to true
    
     constructor(
       id: number, 
@@ -15,7 +15,8 @@ export class User {
       email: string, 
       password: string, 
       addressId: number, 
-      rating: number
+      rating: number,
+      actif: boolean
     ) {
       this.id = id;
       this.firstName = firstName;
@@ -24,6 +25,7 @@ export class User {
       this.password = password;
       this.addressId = addressId;
       this.rating = rating;
+      this.actif = actif;
     }
   }
   
