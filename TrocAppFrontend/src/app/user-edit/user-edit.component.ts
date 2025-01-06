@@ -3,32 +3,39 @@ import { FormsModule } from '@angular/forms';
 import { User } from '../user';
 import { UsersService } from '../services/users.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgFor, NgIf} from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Role } from '../role';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
-
 @Component({
   selector: 'app-user-edit',
   standalone: true,
-  imports: [FormsModule,NgFor,NgIf,AsyncPipe],
+  imports: [FormsModule, NgIf, AsyncPipe],
   templateUrl: './user-edit.component.html',
   styleUrl: './user-edit.component.css'
 })
 export class UserEditComponent {
-  //editingUser2: User | null = null;
-  roleList! : Observable<Role[]>;
-  listeRoleSelectionnes! : number[];
+  // Observable to hold the list of roles
+  roleList!: Observable<Role[]>;
+
+  // Array to hold selected role IDs
+  listeRoleSelectionnes!: number[];
+
+  // The user being edited
   user!: User;
+
+  // Message and status for success/error
   message: string | null = null;
   success: boolean = false;
-  editingUser: User = {  // Initialisation avec des valeurs par défaut
+
+  // Default empty user object for editing
+  editingUser: User = { 
     id: 0,
     firstName: '',
     lastName: '',
     email: '',
-    address: {          // L'initialisation de address doit être un objet Address
+    address: {         
       zipCode: '',
       city: '',
       street: '',
@@ -37,18 +44,21 @@ export class UserEditComponent {
     rating: 0,
     addressId: 0,
     roles: [],
-    rolesInput: ''
-  };
+    rolesInput: '',
+    blocked: false,
+    actif: true
+};
 
+  // Arrays to hold address-related data
   zipCodes: number[] = [];  
   streets: string[] = [];
   numbers: string[] = [];
   cities: string[] = [];
 
-
-  // Dictionnaire de rôles par ID utilisateur
+  // Dictionary to store roles by user ID
   roles: { [userId: number]: Role[] } = {};
 
+  // Available roles to assign to the user
   availableRoles: Role[] = [];
 
   constructor(
@@ -58,86 +68,70 @@ export class UserEditComponent {
   ) {}
 
   ngOnInit(): void {
-       // Charger tous les rôles disponibles
+    // Fetch all available roles when component is initialized
     this.usersService.getAllRoles().subscribe(roles => {
-      // Stocker les rôles dans le dictionnaire
+      // Store the roles in the dictionary, using user ID as the key
       this.roles[this.editingUser.id] = roles;
     });
 
-    this.usersService.getZipCodes().subscribe(zipCodes => {
-      this.zipCodes = zipCodes;  // Récupère la liste des codes postaux depuis l'API
-    });
-
-    this.usersService.getNumbers().subscribe(numbers => {
-      this.numbers = numbers;  // Récupère la liste des codes postaux depuis l'API
-    });
-
-    this.usersService.getStreets().subscribe(streets => {
-      this.streets = streets;  // Récupère la liste des codes postaux depuis l'API
-    });
-
-    this.usersService.getCities().subscribe(cities => {
-      this.cities = cities;  // Récupère la liste des codes postaux depuis l'API
-    });
-
+    // Fetch user details based on the route parameter (user ID)
     this.route.params.subscribe(params => {
-      if (params["id"])
-      {
+      if (params["id"]) {
         const subscribe = this.usersService.getUserById(params["id"]).subscribe(user => {
-          this.editingUser = user as User;
-          subscribe.unsubscribe();
-        })
+          this.editingUser = user as User;  // Set the editing user
+          subscribe.unsubscribe();  // Unsubscribe after fetching the user
+        });
       }
     });
 
+    // Fetch the list of available roles from the API
     this.roleList = this.usersService.getRoles() as Observable<Role[]>;
   }
 
-
-  
-
- 
+  // Check if a role is selected for the user
   isRoleSelected(role: Role): boolean {
-    // Vérifier si le rôle est déjà attribué à l'utilisateur
     return this.editingUser.roles.some(r => r.id === role.id);
   }
 
+  // Toggle the assignment of a role for the user
   toggleRole(role: Role): void {
     const index = this.editingUser.roles.findIndex(r => r.id === role.id);
 
     if (index !== -1) {
-        // Rôle présent, le retirer
-        this.editingUser.roles.splice(index, 1);
+      // If role is already assigned, remove it
+      this.editingUser.roles.splice(index, 1);
     } else {
-        // Rôle absent, l'ajouter
-        this.editingUser.roles.push(role);
+      // If role is not assigned, add it
+      this.editingUser.roles.push(role);
     }
 
-    // Mettre à jour la liste des rôles dans la base de données
+    // Update the user's roles in the database
     const updatedRoleIds = this.editingUser.roles.map(r => r.id);
-
     this.usersService.updateUserRoles(this.editingUser.id, updatedRoleIds).subscribe({
-        next: () => console.log(`Roles successfully updated for user ${this.editingUser.id}`),
-        error: (err) => console.error('Error updating roles:', err)
+      next: () => console.log(`Roles successfully updated for user ${this.editingUser.id}`),
+      error: (err) => console.error('Error updating roles:', err)
     });
-}
-
-  submitEditForm(): void {
-
-      this.usersService.updateUser(this.editingUser).subscribe({
-        next: (user) => {
-          this.message = 'Utilisateur mis à jour avec succès.';
-          this.success = true;
-          setTimeout(() => this.router.navigate(['/']), 2000);  // Retourne à la liste après 2 secondes
-        },
-        error: (error) => {
-          this.message = 'Erreur lors de la mise à jour de l\'utilisateur.';
-          this.success = false;
-        }
-      });
   }
 
+  // Submit the edit form to update the user
+  submitEditForm(): void {
+    this.usersService.updateUser(this.editingUser).subscribe({
+      next: (user) => {
+        // On success, display a success message and navigate to the users list
+        this.message = 'User successfully updated.';
+        this.success = true;
+        setTimeout(() => this.router.navigate(['/users-management']), 2000);  // Navigate back after 2 seconds
+      },
+      error: (error) => {
+        // On error, display an error message
+        this.message = 'Error during user update.';
+        this.success = false;
+      }
+    });
+  }
+
+  // Navigate back to the users list page
   goBack(): void {
-    this.router.navigate(['/users-management']);  // Retourne à la page de liste des utilisateurs
+    this.router.navigate(['/users-management']);  // Navigate to user management page
   }
 }

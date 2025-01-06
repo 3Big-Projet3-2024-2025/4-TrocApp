@@ -36,4 +36,9 @@ export class ExchangeService {
   getExchangeByUserId(id: number): Observable<Exchange[]> {
     return this.http.get<Exchange[]>(this.backendURL+"/user/"+id);
   }
+
+  getAllExchangesByUserID(userId: number): Observable<Exchange[]> {
+    return this.http.get<Exchange[]>(`${this.backendURL}/user/${userId}`);
+  }
+
 }

@@ -1,0 +1,94 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Submit a GDPR Request</h2>
+  
+  <!-- Form with validation -->
+  <form (ngSubmit)="submitRequest()" #gdprForm="ngForm" class="needs-validation" novalidate>
+    
+    <!-- Read-only First Name field -->
+    <div class="mb-3">
+      <label for="firstName" class="form-label">First Name:</label>
+      <input 
+        type="text" 
+        id="firstName" 
+        class="form-control" 
+        [(ngModel)]="newRequest.user.firstName" 
+        name="firstName" 
+        readonly
+      >
+    </div>
+
+    <!-- Read-only Last Name field -->
+    <div class="mb-3">
+      <label for="lastName" class="form-label">Last Name:</label>
+      <input 
+        type="text" 
+        id="lastName" 
+        class="form-control" 
+        [(ngModel)]="newRequest.user.lastName" 
+        name="lastName" 
+        readonly
+      >
+    </div>
+
+    <!-- Read-only Email field -->
+    <div class="mb-3">
+      <label for="email" class="form-label">Email:</label>
+      <input 
+        type="email" 
+        id="email" 
+        class="form-control" 
+        [(ngModel)]="newRequest.user.email" 
+        name="email" 
+        readonly
+      >
+    </div>
+
+    <!-- Editable Request Type field -->
+    <div class="mb-3">
+      <label for="requesttype" class="form-label">Request Type:</label>
+      <input 
+        type="text" 
+        id="requesttype" 
+        class="form-control" 
+        [(ngModel)]="newRequest.requesttype" 
+        name="requesttype" 
+        required
+      >
+    </div>
+
+    <!-- Editable Justification field -->
+    <div class="mb-3">
+      <label for="justification" class="form-label">Justification:</label>
+      <textarea 
+        id="justification" 
+        class="form-control" 
+        [(ngModel)]="newRequest.justification" 
+        name="justification" 
+        required
+      ></textarea>
+    </div>
+
+    <!-- Consent checkbox -->
+    <div class="form-check mb-3">
+      <input 
+        type="checkbox" 
+        class="form-check-input" 
+        [(ngModel)]="newRequest.consent" 
+        name="consent" 
+        required
+      >
+      <label class="form-check-label" for="consent">
+        I give my consent
+      </label>
+    </div>
+
+    <!-- Form buttons -->
+    <div class="d-flex justify-content-between">
+      <!-- Disable submit button if form is invalid -->
+      <button type="submit" class="btn btn-primary" [disabled]="!gdprForm.valid || !newRequest.consent || !newRequest.justification">
+        Submit
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

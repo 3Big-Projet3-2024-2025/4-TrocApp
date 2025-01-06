@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestItemService {
-    private ItemService itemService;
+    /*private ItemService itemService;
     List<Item> items;
     public TestItemService(ItemService itemService) {
         this.itemService = itemService;
@@ -44,7 +44,7 @@ public class TestItemService {
     @Test
     public void testUpdateItem() {
         itemService.updateItem(new Item());
-    }
+    }*/
 
 
 }

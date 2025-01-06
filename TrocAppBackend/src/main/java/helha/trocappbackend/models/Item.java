@@ -14,10 +14,11 @@ public class Item {
 
     private String name;
     private String description;
+
+
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private String photo;
-
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
