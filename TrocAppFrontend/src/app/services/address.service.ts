@@ -24,12 +24,14 @@ export class AddressService {
 
   constructor(private httpClient : HttpClient, private cookieService: CookieService) { }
 
+  // Method to get the headers with the token
   private getAuthHeaders(): HttpHeaders {
     const token = this.cookieService.get('token');
     return new HttpHeaders({
       Authorization: 'Bearer ' + token
     });
   }
+  // Method to get an address by its ID
     getAddressById(id: number): Observable<any> {
       const headers = this.getAuthHeaders();
       return this.httpClient.get(`${this.baseUrl}/${id}`, { headers } ).pipe(
