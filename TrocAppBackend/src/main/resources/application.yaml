@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: TrocAppBackend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/TrocApp  # Name of the database
+    username: postgres  # User PostgreSQL
+    password: main01  # Password PostgreSQL
+  jpa:
+    hibernate:
+      ddl-auto: update # Création de la base de données
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect  #Dialect PostgreSQL for Hibernate
+#  security:
+#    user:
+#      name: admin
+#      password: admin
+  mail:
+    host: smtp.office365.com
+    port: 587
+    username: la226220@student.helha.be
+    password: mdp
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+
+nominatim:
+  api:
+    url: https://nominatim.openstreetmap.org/ # URL for the Nominatim API
+
+
+jwt:
+  secret: fjkdfngdbjzebnhubvshubsgdvgbjhn435345fsdnbvxhcbghxcbvxcvxfjkdfngdbjzebnhubvshubsgdvgbjhn435345fsdnbvxhcbghxcbvxcvx
+  expirationTokenMs: 3600000
+  expirationRefreshTokenMs: 604800000

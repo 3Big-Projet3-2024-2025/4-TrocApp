@@ -1,0 +1,51 @@
+<div class="category-list">
+  <h2>List of Categories</h2>
+  
+  <!-- Add Category Form -->
+  <form (ngSubmit)="onSubmit()" #categoryForm="ngForm">
+    <div>
+      <label for="name">Name of category</label>
+      <input type="text" 
+             id="name" 
+             required 
+             [(ngModel)]="newCategory.name" 
+             name="name"
+             placeholder="Enter category name">
+    </div>
+    <button type="submit" 
+            [disabled]="!categoryForm.form.valid"
+            class="btn-add">
+      Add Category
+    </button>
+  </form>
+
+  <!-- Message display -->
+  <div *ngIf="message" class="message">
+    {{ message }}
+  </div>
+
+  <!-- Categories List -->
+  <ul>
+    <li *ngFor="let category of categories">
+      <!-- Normal View -->
+      <div class="category-item" *ngIf="!(editingCategory && editingCategory.id_category === category.id_category)">
+        <span class="category-name">{{ category.name }}</span>
+        <div class="button-group">
+          <button class="btn-modify" (click)="startEditing(category)">Modify</button>
+          <button class="btn-delete" (click)="deleteCategory(category.id_category)">Delete</button>
+        </div>
+      </div>
+      
+      <!-- Edit View -->
+      <div class="category-item edit-mode" *ngIf="editingCategory && editingCategory.id_category === category.id_category">
+        <input [(ngModel)]="editingCategory.name" 
+               placeholder="New category name"
+               autofocus>
+        <div class="button-group">
+          <button class="btn-save" (click)="updateCategoryName()">Save</button>
+          <button class="btn-cancel" (click)="cancelEditing()">Cancel</button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

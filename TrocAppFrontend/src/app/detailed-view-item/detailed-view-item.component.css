@@ -1,0 +1,76 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .item-detail-card {
+    background-color: white;
+    border-radius: 15px;
+    border: 2px solid #007bff;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.1);
+    max-width: 800px;
+    width: 100%;
+  }
+
+  .item-detail-card h1 {
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+  }
+
+  .item-detail-card h3 {
+    color: #0056b3;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+
+  .item-photo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  .item-photo img {
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .item-details {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .item-details p {
+    margin: 10px 0;
+    font-size: 16px;
+  }
+
+  .owner-details {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .btn-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
