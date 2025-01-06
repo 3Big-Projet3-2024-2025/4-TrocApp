@@ -5,13 +5,12 @@ import { EditProfilComponent } from './edit-profil/edit-profil.component';
 import { ViewingItemsMapComponent } from './viewing-items-map/viewing-items-map.component';
 import { DetailedViewItemComponent } from './detailed-view-item/detailed-view-item.component';
 import { ItemFormComponent } from './item-form/item-form.component';
-//import { ItemtestComponent } from './itemtest/itemtest.component';
-//import { ItemDetTestComponent } from './item-det-test/item-det-test.component';
-//import { ExchangeListComponent } from './exchange-list/exchange-list.component';
+import { ExchangeListComponent } from './exchange-list/exchange-list.component';
 import { CategoryListComponent } from './category-list/category-list.component';
-import { AuthComponent } from './auth/auth.component';
+import { MyItemsListComponent } from './my-items-list/my-items-list.component';
 import { GdprFormComponent } from './gdpr-form/gdpr-form.component';
 import { GdprAdminComponent } from './gdpr-admin/gdpr-admin.component';
+import { AuthComponent } from './auth/auth.component';
 import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
@@ -26,18 +25,17 @@ export const routes: Routes = [
     {path: 'category-list', component: CategoryListComponent},
     //{ path: '**', redirectTo: '/category-list', pathMatch: 'full' },
     
-    { path: "detailed-view-item/:id", component: DetailedViewItemComponent },
+    { path: "detailed-view-item/:id", component: DetailedViewItemComponent , canActivate: [authGuard]},
     //path for adding an item
-    { path: "item", component: ItemFormComponent },
+    { path: "item", component: ItemFormComponent, canActivate: [authGuard]  },
     //path for updating an item
-    { path: "item/:id", component: ItemFormComponent },
+    { path: "item/:id", component: ItemFormComponent, canActivate: [authGuard]  },
     //path by default 
     { path: "", redirectTo: "/viewing-items-map", pathMatch: "full" },
 
-    // { path: "itemDetTest/:id", component: ItemDetTestComponent },
-    // {path: "exchanges", component: ExchangeListComponent },
-    // { path: "itemtest", component: ItemtestComponent }
-  
+    {path: "exchanges", component: ExchangeListComponent, canActivate: [authGuard]  },
+    { path: "my-items", component: MyItemsListComponent, canActivate: [authGuard]  },
+
     // Path for editing a user
     { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
     { path: 'user-profile/:id', component: UserProfileComponent },
@@ -47,7 +45,7 @@ export const routes: Routes = [
     { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
     { path: 'edit-profil', component: EditProfilComponent, /*canActivate: [authGuard]*/ },
     { path: 'auth/login', component: AuthComponent},
-    //{ path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' }, // Wildcard route
+    { path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' }, // Wildcard route
 
     // Path for the GDPR form
     {path : 'gdpr-form', component: GdprFormComponent},

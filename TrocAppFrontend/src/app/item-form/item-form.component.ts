@@ -7,6 +7,9 @@ import { Item } from '../models/item';
 import { Category } from '../models/category.model';
 import { AsyncPipe } from '@angular/common';
 import { CategoryService } from '../services/category.service';
+import { UsersService } from '../users.service';
+import { User } from '../user';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-item-form',
@@ -17,9 +20,12 @@ import { CategoryService } from '../services/category.service';
 })
 export class ItemFormComponent implements OnInit {
   
-  constructor(private itemService: ItemService, private route: ActivatedRoute, private router: Router, private categoryService: CategoryService) {}
+  constructor(private itemService: ItemService, private route: ActivatedRoute, private router: Router, private categoryService: CategoryService, private userService: UsersService, private authService: AuthService) {}
   
+  userId!: number | null;
+
   ngOnInit(): void {
+    this.userId = this.authService.getIDUserConnected();
     this.categoryList = this.categoryService.getCategories() as Observable<Category[]>;
     this.route.params.subscribe(params=> {
       if(params["id"]) {
@@ -32,6 +38,7 @@ export class ItemFormComponent implements OnInit {
       }
     })
   }
+
 
   availableItems!: Observable<Item[]>;
 
@@ -54,14 +61,15 @@ export class ItemFormComponent implements OnInit {
       user: undefined
     },
     owner: {
-      id: 3,
+      id: -1,
       firstName: "",
       lastName: "",
-      email: "",
+      email: "lalalalma",
       password: "",
       rating: -1,
       address: null,
-      roles: [] 
+      roles: [] ,
+      username: ""
     }
   }
 
@@ -83,15 +91,17 @@ export class ItemFormComponent implements OnInit {
 
 
   saveItem() {
+    this.itemToSave.owner.id = this.userId as number;
     const sub = this.itemService.saveItem(this.itemToSave).subscribe({
       next: (item) => {
         console.log(this.itemToSave);
         console.log(item);
-        this.router.navigate(["/"]);
+        this.router.navigate(["/my-items"]);
         sub.unsubscribe();
       },
       error: (error) => {
         this.errorMessage = error.error;
+        console.log(this.itemToSave);
         sub.unsubscribe();
       }
     })

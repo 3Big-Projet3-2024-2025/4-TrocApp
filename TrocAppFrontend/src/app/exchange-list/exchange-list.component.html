@@ -1,0 +1,76 @@
+
+
+<table>
+    <tr>
+        <!-- <th>id of exchange</th>--><th>offered item</th><th>requested item</th><th>proposal date for exchange</th><th>acceptance date for exchange</th> 
+        <th>status of exchange</th><th>initiator of exchange</th><th>receiver of exchange</th>
+    </tr>
+    @for(exchange of myExchanges | async; track $index) {
+    <tr>
+        <!-- <td>{{ exchange.id_exchange }}</td>
+       <td> {{ exchange.offeredObjectId }}  </td>
+        <td> {{ exchange.requestedObjectId }} ou bien -->
+
+
+
+        <td>  <!--{{ exchange.offeredObjectId }}  ou bien --> {{ exchange.offeredObject?.name }} </td>
+        <td> <!-- {{ exchange.requestedObjectId }} ou bien --> {{ exchange.requestedObject?.name }} </td> <!--  ou {{requestedItem.name}}  -->
+        <td>{{ exchange.proposalDate | date:'dd/MM/yyyy'  }} </td>
+        <td>{{ exchange.acceptanceDate | date:'dd/MM/yyyy' }}</td>
+        <td>{{ exchange.status }}</td>
+        <td>{{ exchange.initiator.firstName }}  {{exchange.initiator.lastName}}</td>
+        <td>{{ exchange.receiver.firstName }}  {{exchange.receiver.lastName}}</td>
+        @if(userId==exchange.receiver.id && exchange.status=="Proposed") {
+            <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalExchangeAccept" (click)="dateConfirmed = null; acceptanceDate = ''">Accept Exchange</button> </td>
+            <td> <button type="button" class="btn btn-danger" (click)="declineExchange(exchange)">Decline Exchange</button> </td>
+        }
+        @if(exchange.status=="In Progress") {
+            <td> <button type="button" class="btn btn-success" (click)="markAsDone(exchange)">Mark as Done</button> </td>
+        }
+        
+        <div class="modal" id="ModalExchangeAccept">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Information for Exchange Acceptance</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                                <h4>
+                                  This is a proposal date for the exchange :
+                                </h4>
+                                   <h5 style="text-align: center;"> {{ exchange.proposalDate  | date:'dd/MM/yyyy' }} </h5>
+                                   <h4> Do you confirm it ?</h4>
+                                   <div class="d-flex justify-content-center mb-3">
+                                    <button type="button" class="btn btn-success mx-2" (click)="dateConfirmed=true">Yes</button>
+                                    <button type="button" class="btn btn-danger mx-2" (click)="dateConfirmed=false">No</button>
+                                   </div>
+                                    
+                                    @if(dateConfirmed==false) {
+                                    <div class="mb-4">
+                                            <label for="acceptance-date">Choose a date for the exchange</label>
+                                        <div class="input-group mb-3">
+                                            <input type="date" class="form-control" [(ngModel)]="acceptanceDate">
+                                        </div>
+                                    </div>
+
+                                    } @if(dateConfirmed==true) {
+                                        <h5 style="text-align: center;"> The proposed date {{ exchange.proposalDate  | date:'dd/MM/yyyy'  }} is confirmed</h5>
+                                    }
+                                     <!-- @if(exchange.status == "in progress")   pas afficher bt et avoir bt voir  -->
+                                    @if(dateConfirmed==true || acceptanceDate) {
+                                        <button class="btn btn-primary" data-bs-dismiss="modal" (click)="acceptExchange(exchange)">Accept Exchange</button> 
+                                    }
+                                    @else{
+                                     <button class="btn btn-primary" disabled>Accept Exchange</button> 
+                                    }
+                                    <div class="form-text">please confirm the proposal date or choose a new date to be able to accept the exchange</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </tr>
+
+    }
+</table>
+<p style="color: red;">{{errorMessage}}</p>

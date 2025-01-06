@@ -29,10 +29,16 @@ export class DetailedViewItemComponent {
 
   idSelectedItem!: number; // Property for the selected item ID
 
+  item!: Item; // Property for the item
+  owner!: User; // Property for the owner of the item
+  category!: Category; // Property for the category of the item
+
   myItems!: Observable<Item[]>;
-  userId!: number | null;  //l id de la personne connectÃ©e
+  userId!: number | null;  //l id de la personne connectée
   receiverId!: number;
   requestedObjectIdCurrent!: number;
+
+  idSelectedItem2!: number;
   
     exchangeToCreate: Exchange = {
       id_exchange: -1,
@@ -86,6 +92,7 @@ export class DetailedViewItemComponent {
     }
 
 
+
   // Initialization 
   ngOnInit(): void {
     this.userId = this.authService.getIDUserConnected() as number;
@@ -96,22 +103,22 @@ export class DetailedViewItemComponent {
 
   constructor( private itemService: ItemService, private usersService : UsersService, private categoryService : CategoryService, private exchangeService: ExchangeService, private authService: AuthService, private router: Router, private route: ActivatedRoute) { }
 
-  // Function to load the data of the item
   loadDataItem() {
     this.route.params.subscribe(params => {
       if(params["id"]) {
-        this.idSelectedItem = params["id"];
+        this.idSelectedItem2 = params["id"];
+        this.requestedObjectIdCurrent = this.idSelectedItem2;
       }
     });
-
-    // Get the item by its ID
-    this.itemService.getItem(this.idSelectedItem).subscribe({
+    this.itemService.getItem(this.idSelectedItem2).subscribe({
       next: (data) => {
         this.item = data as Item;
+        console.log(this.item);
+        console.log("categ idddd",this.item.category.id_category)
 
-        // Get the category of the item
         this.categoryService.getCategoryById(this.item.category.id_category).subscribe({
           next: (data: any) => {
+            console.log("categ id",this.item.category.id_category)
             this.category = data;
           },
           error: (error: any) => {
@@ -119,7 +126,6 @@ export class DetailedViewItemComponent {
           }
         });
 
-        // Get the owner of the item
         this.usersService.getUserById(this.item.owner.id).subscribe({
           next: (data: any) => {
             this.owner = data;
@@ -139,10 +145,12 @@ export class DetailedViewItemComponent {
   proposeExchange(item: Item) {
     this.receiverId = this.item.owner.id;
     this.exchangeToCreate.initiator.id = this.userId as number;
+    // console.log("item que j proposeitem);
     this.exchangeToCreate.receiver.id = this.receiverId;
     this.exchangeToCreate.requestedObjectId = this.requestedObjectIdCurrent;
     this.exchangeToCreate.offeredObjectId = item.id;
     this.exchangeToCreate.status = "Proposed"
+    // this.exchangeToCreate.proposalDate = this.proposalDate;
     const subs = this.exchangeService.saveExchange(this.exchangeToCreate).subscribe({
       next: (exchange) => {
         this.router.navigate(["/exchanges"]);
