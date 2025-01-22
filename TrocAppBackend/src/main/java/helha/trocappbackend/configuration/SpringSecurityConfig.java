@@ -39,17 +39,19 @@ public class SpringSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> {
                     authorizeRequests.requestMatchers(
-                            "/api/categories", "/api/categories/{id}", "/users/all","/users/{id}","/users/update-user",
+                            "/api/gdpr","/api/categories", "/api/categories/{id}", "/users/all","/users/{id}","/users/update-user",
                             "/users/{userId}/roles/{roleId}","/users/roles","/users/getAllRoles","/users/{userId}/roles",
                             "/users/search","/users/{userId}/items","/users/{userId}/block","/ratings","/ratings/add",
                             "ratings/received/{userId}","/ratings/posted/{userId}","/ratings/{ratingId}", "/ratings/average/{userId}",
                             "/api/gdpr/user/{userId}","/api/gdpr/{gdprRequestId}","/api/gdpr/{userId}/deactivate","/api/gdpr/pending",
                             "/api/gdpr/processed","/api/gdpr/{id}/processed", "/items", "/items/available","/items/user/{id}",
-                            "/items/{id}", "/exchanges", "/exchanges/user/{id}", "/exchanges/{id}").hasAnyRole("admin", "user");
-                    authorizeRequests.requestMatchers("/api/categories/{id}","/exchanges", "/exchanges/user/{id}", "/exchanges/{id}").hasRole("admin");
-                    authorizeRequests.requestMatchers("/api/gdpr","/exchanges", "/exchanges/user/{id}", "/exchanges/{id}").hasRole("user");
+                            "/items/{id}", "/exchanges", "/exchanges/user/{id}", "/exchanges/{id}").hasAnyAuthority("ROLE_admin", "ROLE_user");
+                    authorizeRequests.requestMatchers("/exchanges", "/exchanges/user/{id}", "/exchanges/{id}").hasAuthority("ROLE_admin");
+                    authorizeRequests.requestMatchers("/exchanges", "/exchanges/user/{id}", "/exchanges/{id}").hasAuthority("ROLE_user");
                     authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "users", "/auth/login", "/auth/create_account", "/items/available","/addresses/{id}","api/categories/{id}","/items/{id}").permitAll();
                     authorizeRequests.anyRequest().authenticated();
+
+
 
                 }).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
     }
