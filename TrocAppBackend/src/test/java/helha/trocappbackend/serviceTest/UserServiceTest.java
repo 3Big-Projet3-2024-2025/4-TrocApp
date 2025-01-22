@@ -211,6 +211,9 @@ public class UserServiceTest {
     void testAddRoleToUser() {
         User user = new User();
         Role role = new Role();
+
+        role.setUsers(new HashSet<>());
+
         when(userRepository.findById(1)).thenReturn(Optional.of(user));
         when(roleRepository.findById(1)).thenReturn(Optional.of(role));
         when(userRepository.save(user)).thenReturn(user);
@@ -221,6 +224,10 @@ public class UserServiceTest {
         verify(userRepository, times(1)).findById(1);
         verify(roleRepository, times(1)).findById(1);
         verify(userRepository, times(1)).save(user);
+
+
+        assertTrue(user.getRoles().contains(role));
+        assertTrue(role.getUsers().contains(user));
     }
 
     /**
