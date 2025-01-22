@@ -48,9 +48,9 @@ export const routes: Routes = [
     {path : 'gdpr-admin', component: GdprAdminComponent, canActivate: [authGuard]},
 
     
-    { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
-    { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
-    { path: 'edit-profil', component: EditProfilComponent, /*canActivate: [authGuard]*/ },
+    { path: "users-management", component: UsersManagementComponent, canActivate: [authGuard] },
+    { path: 'edit/:id', component: UserEditComponent, canActivate: [authGuard] },
+    { path: 'edit-profil', component: EditProfilComponent, canActivate: [authGuard] },
     { path: 'auth/login', component: AuthComponent},
     { path: 'inscription', component: RegistrationFormComponent},
     { path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' }, // Wildcard route

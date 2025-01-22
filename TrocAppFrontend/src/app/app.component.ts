@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { NgFor,CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from './auth.service';
 
 
 
@@ -24,12 +25,18 @@ export class AppComponent {
 
   constructor(
     private userService: UsersService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.searchResults$ = this.userService.getSearchResults();
   }
 
-  ngOnInit() {}
+  isAdmin = false;
+
+  ngOnInit()
+  {
+    this.isAdmin = this.authService.isAdmin();
+  }
 
   onSearch(event: any) {
     this.userService.search(this.searchTerm);
