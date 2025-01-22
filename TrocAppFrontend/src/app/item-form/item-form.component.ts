@@ -7,7 +7,7 @@ import { Item } from '../models/item';
 import { Category } from '../models/category.model';
 import { AsyncPipe } from '@angular/common';
 import { CategoryService } from '../services/category.service';
-import { UsersService } from '../users.service';
+import { UsersService } from '../services/users.service';
 import { User } from '../user';
 import { AuthService } from '../auth.service';
 

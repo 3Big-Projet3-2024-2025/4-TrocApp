@@ -3,13 +3,15 @@ package helha.trocappbackend.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 /**
  * Entity representing a user in the application.
  */
-@JsonIgnoreProperties({ "postedRatings", "receivedRatings", "items", "exchangesAsInitiator", "exchangesAsReceiver"})
+@JsonIgnoreProperties({"gdprRequests", "postedRatings", "receivedRatings", "items", "exchangesAsInitiator", "exchangesAsReceiver"})
 @Entity
 @Table(name = "app_user")
 public class User {
@@ -45,7 +47,6 @@ public class User {
      * The password of the user.
      */
     private String password;
-    private Boolean actif;
 
     /**
      * The field actif of the user
@@ -102,13 +103,6 @@ public class User {
     private List<Exchange> exchangesAsReceiver;
 
     /**
-     * The list of categories associated with the user.
-     */
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Category> categories;
-
-    /**
      * The set of roles assigned to the user.
      */
     @JsonIgnoreProperties("roles")
@@ -118,7 +112,8 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles;
+
+    private Set<Role> roles = new HashSet<>();
 
     /**
      *
@@ -146,6 +141,8 @@ public class User {
         this.email = email;
         this.password = password;
         this.actif = actif;
+
+        this.roles = new HashSet<>();
     }
 
     /**
@@ -407,35 +404,7 @@ public class User {
     public void setExchangesAsReceiver(List<Exchange> exchangesAsReceiver) {
         this.exchangesAsReceiver = exchangesAsReceiver;
     }
-
-    /**
-     * Gets the list of categories associated with the user.
-     *
-     * @return the list of categories
-     */
-    public List<Category> getCategories() {
-        return categories;
     
-    /**
-     * Gets the set of roles assigned to the user.
-     *
-     * @return the set of roles
-     */
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-
-
-    /**
-     * Sets the list of categories associated with the user.
-     *
-     * @param categories the list of categories
-     */
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
-    }
-
     /**
      * Gets the set of roles assigned to the user.
      *
@@ -451,6 +420,11 @@ public class User {
      * @param role the role to add
      */
     public void addRole(Role role) {
+        if (this.roles == null)
+        {
+            this.roles = new HashSet<>();
+        }
+
         this.roles.add(role);
         role.getUsers().add(this);
     }
@@ -471,7 +445,5 @@ public class User {
 
     public void setActif(Boolean actif) {
         this.actif = actif;
-    }
-
     }
 }

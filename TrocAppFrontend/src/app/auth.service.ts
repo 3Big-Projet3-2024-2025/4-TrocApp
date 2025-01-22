@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
+import { User } from './models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,16 @@ export class AuthService {
     return this.http.post("http://localhost:8080/auth/login", body, { headers });
   }
 
+  saveUser(utilisateur: User): Observable<User>
+  {
+    const token = this.cookieService.get("token");
 
+    return this.http.post<User>("http://localhost:8080/auth/create_account", utilisateur, {
+      headers : {
+        "Authorization" : "Bearer "+ token
+      }
+    });
+  }
 
   getToken(): string
   {

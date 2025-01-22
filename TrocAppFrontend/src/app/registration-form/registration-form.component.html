@@ -1,0 +1,87 @@
+<section class="p-3 p-md-4 p-xl-5">
+    <div class="container">
+        <div class="card border-light-subtle shadow-sm" style="border: 0;">
+            <div class="row g-0">
+                <div class="col-12 col-md-6">
+                    <div class="card-body p-3 p-md-4 p-xl-5">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-5">
+                                    <h2 class="h3">Inscription</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row gy-3 gy-md-4 overflow-hidden">
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="username" placeholder="Username" required [(ngModel)]="userToAdd.username">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="email" placeholder="name@example.com" required [(ngModel)]="userToAdd.email">
+                                    <label for="email">Email <span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="firstName" placeholder="First Name" required [(ngModel)]="userToAdd.firstName">
+                                    <label for="firstName">First Name <span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="lastName" placeholder="Last Name" required [(ngModel)]="userToAdd.lastName">
+                                    <label for="lastName">Last Name <span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="password" class="form-control" id="password" placeholder="Password" required [(ngModel)]="userToAdd.password">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="card-body p-3 p-md-4 p-xl-5">
+                        <div class="row gy-3 gy-md-4 overflow-hidden">
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="street" placeholder="Street" required [(ngModel)]="userToAdd.address!.street">
+                                    <label for="street">Street <span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="number" placeholder="Number" required [(ngModel)]="userToAdd.address!.number">
+                                    <label for="number">Number <span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="city" placeholder="City" required [(ngModel)]="userToAdd.address!.city">
+                                    <label for="city">City <span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="zipCode" placeholder="Zip Code" required [(ngModel)]="userToAdd.address!.zipCode">
+                                    <label for="zipCode">Zip Code <span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-grid">
+                                    <button class="btn bsb-btn-xl btn-primary" (click)="saveUser()">Inscription</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

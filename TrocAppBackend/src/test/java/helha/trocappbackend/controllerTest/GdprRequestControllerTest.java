@@ -86,7 +86,7 @@ public class GdprRequestControllerTest {
     @BeforeEach
     void setUp() {
         // Initialize user and gdprRequest objects for the tests
-        user = new User("Doha", "Assadi", "doha@gmail.com", "1234");  // User: Doha Assadi
+        user = new User("Doha", "Assadi", "doha@gmail.com", "1234", true);  // User: Doha Assadi
         user.setId(1);  // Set ID for the user
 
         gdprRequest = new GdprRequest();

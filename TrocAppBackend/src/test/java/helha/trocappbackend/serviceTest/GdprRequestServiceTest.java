@@ -65,7 +65,7 @@ class GdprRequestServiceTest {
     @DisplayName("Test creating a GDPR request successfully")
     public void testCreateGdprRequest() {
         // Setup test data with the new user details
-        User user = new User("Doha", "Assadi", "doha@gmail.com", "1234");
+        User user = new User("Doha", "Assadi", "doha@gmail.com", "1234", true);
         user.setId(1); // Set ID manually for test
 
         // Mock repository behavior

@@ -12,6 +12,8 @@ import { GdprFormComponent } from './gdpr-form/gdpr-form.component';
 import { GdprAdminComponent } from './gdpr-admin/gdpr-admin.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AuthComponent } from './auth/auth.component';
+import { RegistrationFormComponent } from './registration-form/registration-form.component';
+
 import { authGuard } from './auth.guard';
 export const routes: Routes = [
     { path: '', component: ViewingItemsMapComponent }, // Default Path (Home Page)
@@ -40,16 +42,17 @@ export const routes: Routes = [
     { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
     { path: 'user-profile/:id', component: UserProfileComponent, canActivate: [authGuard] },
 
-    
-    { path: "users-management", component: UsersManagementComponent, /*canActivate: [authGuard]*/ },
-    { path: 'edit/:id', component: UserEditComponent, /*canActivate: [authGuard]*/ },
-    { path: 'edit-profil', component: EditProfilComponent, /*canActivate: [authGuard]*/ },
-    { path: 'auth/login', component: AuthComponent},
-    { path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' }, // Wildcard route
-
     // Path for the GDPR form
-    {path : 'gdpr-form', component: GdprFormComponent},
+    {path : 'gdpr-form', component: GdprFormComponent, canActivate: [authGuard]},
     // Path for the GDPR admin page
-    {path : 'gdpr-admin', component: GdprAdminComponent}
+    {path : 'gdpr-admin', component: GdprAdminComponent, canActivate: [authGuard]},
+
+    
+    { path: "users-management", component: UsersManagementComponent, canActivate: [authGuard] },
+    { path: 'edit/:id', component: UserEditComponent, canActivate: [authGuard] },
+    { path: 'edit-profil', component: EditProfilComponent, canActivate: [authGuard] },
+    { path: 'auth/login', component: AuthComponent},
+    { path: 'inscription', component: RegistrationFormComponent},
+    { path: '**', redirectTo: 'viewing-items-map', pathMatch: 'full' }, // Wildcard route
     
 ];

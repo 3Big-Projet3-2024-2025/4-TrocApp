@@ -3,12 +3,13 @@ import { Component } from '@angular/core';
 import { GdprRequest } from '../models/gdpr-request.modele';
 import { User } from '../user';
 import { GdprRequestService } from '../services/gdpr-request.service';
-import { NgFor, NgIf } from '@angular/common';
+import { DatePipe, formatDate, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
 import { Observable }from 'rxjs';
+import moment from 'moment';
 
 @Component({
   selector: 'app-gdpr-form',
@@ -20,7 +21,7 @@ import { Observable }from 'rxjs';
 export class GdprFormComponent {
   newRequest: GdprRequest = new GdprRequest(
     0, '', '', 'Pending', '', '', false, '', {
-      id: 0,
+      id: -1,
       firstName: '',
       lastName: '',
       email: '',
@@ -37,7 +38,7 @@ export class GdprFormComponent {
     private userService: UsersService,
     private authService: AuthService,
     private router: Router
-  ) {}
+    ) {}
 
   ngOnInit(): void {
     this.checkAndInitializeUser();
@@ -59,6 +60,7 @@ export class GdprFormComponent {
 
       this.currentUser = user as User;
 
+      this.newRequest.user.id = this.currentUser.id;
       this.newRequest.user.firstName = this.currentUser.firstName;
       this.newRequest.user.lastName = this.currentUser.lastName;
       this.newRequest.user.email = this.currentUser.email;
@@ -82,7 +84,7 @@ export class GdprFormComponent {
 
     this.error = null;
     this.loading = true;
-    this.newRequest.requestdate = new Date().toISOString();
+    this.newRequest.requestdate = moment().format("yyyy-MM-DD HH:mm:ss");
 
     this.gdprRequestService.createRequest(this.newRequest).subscribe({
       next: (response: GdprRequest) => {

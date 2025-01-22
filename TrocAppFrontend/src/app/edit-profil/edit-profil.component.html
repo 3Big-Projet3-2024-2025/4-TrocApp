@@ -12,6 +12,10 @@
           <button class="btn btn-primary mt-3" (click)="toggleEdit()">
             {{ isEditing ? 'Cancel' : 'Edit Profile' }}
           </button>
+          <br>
+          <button class="btn btn-danger" (click)="logout()">
+            Log out
+          </button>
         </div>
       </div>
   
@@ -133,10 +137,6 @@
                       [disabled]="!profileForm.valid || !isEditing">
                 Save Profile
               </button>
-
-              </button class="btn btn-danger" (click)="logout()">
-                Log out
-              <button>
             </div>
           }
         </form>

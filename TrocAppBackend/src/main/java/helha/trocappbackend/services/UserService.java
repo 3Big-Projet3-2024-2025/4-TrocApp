@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -271,6 +272,7 @@ public class UserService implements IUserService {
      * @param userId the ID of the user
      * @return a list of items owned by the user
      */
+    @Transactional(readOnly = true)
     @Override
     public List<Item> getUserItems(int userId) {
         User user = userRepository.findById(userId)

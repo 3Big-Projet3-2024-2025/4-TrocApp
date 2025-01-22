@@ -49,7 +49,7 @@ public class EmailService {
     public void sendEmail(String to, String subject, String text) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            String smtpUser = "la226220@student.helha.be";
+            String smtpUser = "la225699@student.helha.be";
             message.setFrom(smtpUser);
             message.setTo(to);
             message.setSubject(subject);

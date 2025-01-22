@@ -21,7 +21,6 @@ import java.util.Set;
  * REST controller for managing users.
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path="/users")
 public class UserController {
 

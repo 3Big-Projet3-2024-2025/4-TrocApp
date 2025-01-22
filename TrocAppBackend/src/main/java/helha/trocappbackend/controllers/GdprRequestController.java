@@ -21,9 +21,8 @@ import java.util.NoSuchElementException;
  * It allows creating, retrieving, processing, and deactivating users based on GDPR requests.
  * It also includes email notifications when a request is processed.
  */
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/gdpr")
+@RequestMapping(path = "/api/gdpr")
 public class GdprRequestController {
 
     @Autowired
