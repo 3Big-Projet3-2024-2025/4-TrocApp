@@ -1,10 +1,8 @@
 package helha.trocappbackend.controllers;
 
-import helha.trocappbackend.models.Category;
+import helha.trocappbackend.models.*;
 
 import helha.trocappbackend.models.Category;
-import helha.trocappbackend.models.JWT;
-import helha.trocappbackend.models.Role;
 import helha.trocappbackend.repositories.RoleRepository;
 import helha.trocappbackend.repositories.UserRepository;
 import helha.trocappbackend.services.IUserService;
@@ -49,6 +47,9 @@ public class AuthenticationController {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    AddressController addressController;
 
     @Autowired
     private IUserService userService;
@@ -104,6 +105,9 @@ public class AuthenticationController {
                     .orElseThrow(() -> new RuntimeException("Role with name ‘user’ not found."));
 
             user.addRole(roleDefault);
+
+            // Save the address
+            ResponseEntity<Object> savedAddress = addressController.addAddress(user.getAddress());
 
             // Save the user
             helha.trocappbackend.models.User savedUser = userService.addUser(user);
