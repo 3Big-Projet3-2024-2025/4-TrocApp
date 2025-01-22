@@ -27,33 +27,12 @@ public interface IUserService {
     Page<User> getUsers(Pageable page);
 
     /**
-     * Retrieves a paginated list of users.
-     *
-     * @param page the pagination information
-     * @return a paginated list of users
-     */
-    Page<User> getUsers(Pageable page);
-
-    /**
-     * Retrieves a list of all users.
-     *
-     * @return a list of all users
-     */
-    List<User> getUsers();
-    /**
      * Retrieves a list of all users.
      *
      * @return a list of all users
      */
     List<User> getUsers();
 
-    /**
-     * Adds a new user.
-     *
-     * @param user the user to add
-     * @return the added user
-     */
-    User addUser(User user);
     /**
      * Adds a new user.
      *
@@ -69,20 +48,7 @@ public interface IUserService {
      * @return the updated user
      */
     User updateUser(User user);
-    /**
-     * Updates an existing user.
-     *
-     * @param user the user to update
-     * @return the updated user
-     */
-    User updateUser(User user);
 
-    /**
-     * Deletes a user by ID.
-     *
-     * @param id the ID of the user to delete
-     */
-    void deleteUser(int id);
     /**
      * Deletes a user by ID.
      *
@@ -112,14 +78,6 @@ public interface IUserService {
      * @return the updated user
      */
     User addRoleToUser(int userId, int roleId);
-    /**
-     * Adds a role to a user.
-     *
-     * @param userId the ID of the user
-     * @param roleId the ID of the role
-     * @return the updated user
-     */
-    User addRoleToUser(int userId, int roleId);
 
     /**
      * Retrieves all roles of a user.
@@ -128,22 +86,7 @@ public interface IUserService {
      * @return a list of roles of the user
      */
     List<Role> getRoles(int id);
-    /**
-     * Retrieves all roles of a user.
-     *
-     * @param id the ID of the user
-     * @return a list of roles of the user
-     */
-    List<Role> getRoles(int id);
 
-    /**
-     * Assigns roles to a user.
-     *
-     * @param userId the ID of the user
-     * @param roleIds the IDs of the roles
-     * @return the updated user
-     */
-    User assignRolesToUser(int userId, List<Integer> roleIds);
     /**
      * Assigns roles to a user.
      *

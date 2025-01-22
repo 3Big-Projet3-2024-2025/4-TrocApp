@@ -34,6 +34,7 @@ export class UserEditComponent {
     id: 0,
     firstName: '',
     lastName: '',
+    username: '',
     email: '',
     address: {         
       zipCode: '',
@@ -78,7 +79,9 @@ export class UserEditComponent {
     this.route.params.subscribe(params => {
       if (params["id"]) {
         const subscribe = this.usersService.getUserById(params["id"]).subscribe(user => {
+          console.log(user);
           this.editingUser = user as User;  // Set the editing user
+          console.log(this.editingUser);
           subscribe.unsubscribe();  // Unsubscribe after fetching the user
         });
       }

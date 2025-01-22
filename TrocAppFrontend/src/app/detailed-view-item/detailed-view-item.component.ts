@@ -11,13 +11,13 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { Exchange } from '../models/exchange';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-detailed-view-item',
   standalone: true,
-  imports: [HttpClientModule, AsyncPipe, FormsModule],
+  imports: [HttpClientModule, AsyncPipe, FormsModule, CommonModule],
   templateUrl: './detailed-view-item.component.html',
   styleUrl: './detailed-view-item.component.css'
 })
@@ -28,10 +28,6 @@ export class DetailedViewItemComponent {
   category!: Category; // Property for the category of the item
 
   idSelectedItem!: number; // Property for the selected item ID
-
-  item!: Item; // Property for the item
-  owner!: User; // Property for the owner of the item
-  category!: Category; // Property for the category of the item
 
   myItems!: Observable<Item[]>;
   userId!: number | null;  //l id de la personne connectée
@@ -91,12 +87,13 @@ export class DetailedViewItemComponent {
       offeredObject: null
     }
 
-
-
   // Initialization 
   ngOnInit(): void {
     this.userId = this.authService.getIDUserConnected() as number;
     this.myItems = this.itemService.getItemByUserId(this.userId) as Observable<Item[]>;
+
+    console.log(this.userId);
+    console.log(this.myItems);
 
     this.loadDataItem();
   } 
@@ -106,6 +103,7 @@ export class DetailedViewItemComponent {
   loadDataItem() {
     this.route.params.subscribe(params => {
       if(params["id"]) {
+        console.log(params["id"]);
         this.idSelectedItem2 = params["id"];
         this.requestedObjectIdCurrent = this.idSelectedItem2;
       }
