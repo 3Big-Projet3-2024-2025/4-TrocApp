@@ -80,7 +80,7 @@ export class UserProfileComponent implements OnInit {
     this.exchangeService.getAllExchangesByUserID(currentUserId).subscribe({
       next: (exchanges) => {
         this.hasExchangeHistory = exchanges.some(exchange => 
-          exchange.initiator.id === targetUserId || exchange.receiver.id === targetUserId
+          exchange.initiator.id == targetUserId || exchange.receiver.id == targetUserId
         );
       },
       error: (error) => console.error('Error checking exchange history:', error)
