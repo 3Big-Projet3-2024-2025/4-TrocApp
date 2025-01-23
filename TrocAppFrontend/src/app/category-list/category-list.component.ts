@@ -82,7 +82,7 @@ export class CategoryListComponent implements OnInit {
         this.message = 'Category deleted successfully.';
       },
       error => {
-        this.message = 'Failed to delete category it contains items.';
+        this.message = 'Failed to delete category. It contains items.';
         console.error('Error deleting category', error);
       }
     );

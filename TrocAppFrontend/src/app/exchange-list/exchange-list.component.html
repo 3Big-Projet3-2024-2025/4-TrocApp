@@ -2,8 +2,8 @@
 
 <table>
     <tr>
-        <!-- <th>id of exchange</th>--><th>offered item</th><th>requested item</th><th>proposal date for exchange</th><th>acceptance date for exchange</th> 
-        <th>status of exchange</th><th>initiator of exchange</th><th>receiver of exchange</th>
+        <!-- <th>id of exchange</th>--><th>Offered item</th><th>Requested item</th><th>Proposal date for exchange</th><th>Acceptance date for exchange</th> 
+        <th>Status of exchange</th><th>Initiator of exchange</th><th>Receiver of exchange</th>
     </tr>
     @for(exchange of myExchanges | async; track $index) {
     <tr>
@@ -25,7 +25,7 @@
             <td> <button type="button" class="btn btn-danger" (click)="declineExchange(exchange)">Decline Exchange</button> </td>
         }
         @if(exchange.status=="In Progress") {
-            <td> <button type="button" class="btn btn-success" (click)="markAsDone(exchange)">Mark as Done</button> </td>
+            <td> <button type="button" class="btn btn-success" (click)="markAsDone(exchange)">Mark as Completed</button> </td>
         }
         
         <div class="modal" id="ModalExchangeAccept">

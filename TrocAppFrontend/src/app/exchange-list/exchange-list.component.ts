@@ -198,7 +198,7 @@ constructor(private exchangeService: ExchangeService, private itemService: ItemS
         sub.unsubscribe();
       }
     });
-    exchange.status = "Done";
+    exchange.status = "Completed";
 
     const subs = this.exchangeService.saveExchange(exchange).subscribe({
       next: (exchange)=> {
