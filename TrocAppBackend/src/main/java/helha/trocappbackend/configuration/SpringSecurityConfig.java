@@ -38,19 +38,15 @@ public class SpringSecurityConfig {
         return http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> {
+                    authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "users","/users/{id}","/auth/login", "/auth/create_account", "/items/available","/addresses/{id}","api/categories/{id}","/items/{id}").permitAll();
                     authorizeRequests.requestMatchers(
-                            "/api/gdpr","/api/categories", "/api/categories/{id}", "/users/all","/users/{id}","/users/update-user",
+                            "/api/gdpr","/api/categories", "/users/all","/users/update-user",
                             "/users/{userId}/roles/{roleId}","/users/roles","/users/getAllRoles","/users/{userId}/roles",
                             "/users/search","/users/{userId}/items","/users/{userId}/block","/ratings","/ratings/add",
                             "ratings/received/{userId}","/ratings/posted/{userId}","/ratings/{ratingId}", "/ratings/average/{userId}",
                             "/api/gdpr/user/{userId}","/api/gdpr/{gdprRequestId}","/api/gdpr/{userId}/deactivate","/api/gdpr/pending",
-                            "/api/gdpr/processed","/api/gdpr/{id}/processed", "/items", "/items/available","/items/user/{id}",
-                            "/items/{id}", "/exchanges", "/exchanges/user/{id}", "/exchanges/{id}").hasAnyAuthority("ROLE_admin", "ROLE_user");
-                    authorizeRequests.requestMatchers("/exchanges", "/exchanges/user/{id}", "/exchanges/{id}").hasAuthority("ROLE_admin");
-                    authorizeRequests.requestMatchers("/exchanges", "/exchanges/user/{id}", "/exchanges/{id}").hasAuthority("ROLE_user");
-                    authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs", "users", "/auth/login", "/auth/create_account", "/items/available","/addresses/{id}","api/categories/{id}","/items/{id}").permitAll();
-                    authorizeRequests.anyRequest().authenticated();
-
+                            "/api/gdpr/processed","/api/gdpr/{id}/processed", "/items","/items/user/{id}", "/exchanges", "/exchanges/user/{id}", "/exchanges/{id}").hasAnyAuthority("ROLE_admin", "ROLE_user");
+                    authorizeRequests.anyRequest().permitAll();
 
 
                 }).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
