@@ -53,9 +53,16 @@
 
               @if (isAdmin)
               {
-                <li class="nav-item">
-                  <a class="nav-link" routerLink="/users-management" routerLinkActive>User Management</a>
-                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Management
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" routerLink="/users-management" routerLinkActive>User</a></li>
+                    <li><a class="dropdown-item" routerLink="/category-list" routerLinkActive>Category</a></li>
+                    <li><a class="dropdown-item" routerLink="/gdpr-admin" routerLinkActive>GDPR Request</a></li>
+                  </ul>
+                 </li>
               }
   
               <li class="nav-item">
@@ -64,12 +71,7 @@
               <li class="nav-item">
                 <a class="nav-link" routerLink="/item" routerLinkActive>Item</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/viewing-items-map" routerLinkActive>Explore Map</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/category-list" routerLinkActive>Category</a>
-              </li>
+            
               <!--
               <li class="nav-item">
                   <a class="nav-link" routerLink="/rating-comment" routerLinkActive>Rating</a>
@@ -81,13 +83,6 @@
               <li class="nav-item">
                 <a class="nav-link" routerLink="/gdpr-form" routerLinkActive>GDPR Request</a>
               </li>
-
-              @if (isAdmin)
-              {
-                <li class="nav-item">
-                  <a class="nav-link" routerLink="/gdpr-admin" routerLinkActive>GDPRRequest Management</a>
-                </li>
-              }
           </ul>
           <!-- Search Form -->
           <form class="d-flex position-relative" role="search">
@@ -210,7 +205,7 @@
       </a>
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
-        &copy; 2024 Your Company. All rights reserved.
+        &copy; TrocApp - HELHa 2024. All rights reserved.
       <a class="text-body" href="https://mdbootstrap.com/">MDBootstrap.com</a>
     </div>
     <!-- Copyright -->

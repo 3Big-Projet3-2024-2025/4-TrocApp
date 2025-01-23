@@ -67,7 +67,11 @@ export class ExchangeService {
   }
 
   getAllExchangesByUserID(userId: number): Observable<Exchange[]> {
-    return this.http.get<Exchange[]>(`${this.backendURL}/user/${userId}`);
+    const token = this.cookieService.get("token");
+    return this.http.get<Exchange[]>(`${this.backendURL}/user/${userId}`, { headers: {
+      "Authorization" : "Bearer "+token
+      }
+    });
   }
 
 }
